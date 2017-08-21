@@ -14,7 +14,7 @@ body{
 <body>
 <%@ include file="top.jsp" %>
 <br>
-<%@ include file="join.jsp" %>
+<%@ include file="schedule.jsp" %>
 
 </body>
 </html>
