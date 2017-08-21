@@ -5,6 +5,15 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
+<style>
+table{
+	width: 70%;
+	height: 70%;
+	margin: 40px auto;
+	}
+
+</style>
+
 </head>
 <body>
 <h1> [ 회원가입 ]</h1>
