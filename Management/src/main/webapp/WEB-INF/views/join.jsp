@@ -7,13 +7,7 @@
 <title>Insert title here</title>
 </head>
 <body>
-<<<<<<< HEAD
-
-join 파일도 push and commit 요망
-싫은데 ㅋ
-=======
 <h1> [ 회원가입 ]</h1>
->>>>>>> branch 'master' of https://github.com/SESmanagement/SESmanagement.git
 <table>
 	<tr>
 	<!-- 아이디로 쓸 학번 -->
