@@ -10,14 +10,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 @Controller
-public class HomeController {
+@RequestMapping("/member")
+public class MemberController {
 	
-	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
-	
-	@RequestMapping(value = "/", method = RequestMethod.GET)
-	public String home(Locale locale, Model model) {
-		logger.info("Welcome home! The client locale is {}.", locale);
-		
-		return "home";
+	@RequestMapping(value = "join", method = RequestMethod.GET)
+	public String join() {
+		return "join";
 	}
+	
 }
