@@ -5,10 +5,16 @@
 <head>
 	<title>Home</title>
 </head>
+<style>
+body{
+	background-color: white;
+}
+</style>
+
 <body>
-<h1>
-<a href="member/join"> 회원가입 페이지로</a>
-</h1>
+<%@ include file="top.jsp" %>
+<br>
+<%@ include file="join.jsp" %>
 
 </body>
 </html>

@@ -10,7 +10,10 @@ table{
 	width: 50%;
 	height: 50%;
 	margin: auto;
+	background-color: white;
+	color: black;
 	}
+	
 
 </style>
 
