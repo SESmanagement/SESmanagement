@@ -1,7 +1,5 @@
 package com.spring.manage.controller;
 
-import java.text.DateFormat;
-import java.util.Date;
 import java.util.Locale;
 
 import org.slf4j.Logger;
@@ -22,10 +20,4 @@ public class HomeController {
 		
 		return "home";
 	}
-	
-	@RequestMapping(value = "join", method = RequestMethod.GET)
-	public String join() {
-		return "join";
-	}
-	
 }

@@ -7,9 +7,9 @@
 <title>Insert title here</title>
 <style>
 table{
-	width: 70%;
-	height: 70%;
-	margin: 40px auto;
+	width: 50%;
+	height: 50%;
+	margin: auto;
 	}
 
 </style>
