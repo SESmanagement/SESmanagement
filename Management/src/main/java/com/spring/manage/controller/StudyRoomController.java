@@ -5,12 +5,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 @Controller
-@RequestMapping("/member")
-public class MemberController {
+@RequestMapping("/studyroom")
+public class StudyRoomController {
 	
-	@RequestMapping(value = "join", method = RequestMethod.GET)
-	public String join() {
-		return "join";
-		
+	@RequestMapping(value = "rooms", method = RequestMethod.GET)
+	public String rooms() {
+		return "rooms";
 	}
 }
