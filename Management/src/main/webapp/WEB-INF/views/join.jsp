@@ -9,6 +9,7 @@
 <body>
 
 join 파일도 push and commit 요망
+싫은데 ㅋ
 <table>
 	<tr>
 		<td></td>

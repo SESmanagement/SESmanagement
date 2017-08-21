@@ -6,17 +6,7 @@
 </head>
 <body>
 <h1>
-	Hello world!  
-	yun
-	ulala 0821dd
-	test1
-	test222
-	test333
-	test444
-	test555
-	test666
-	test777
-	test888
+ This is my area.
 </h1>
 
 <P>  The time on the server is ${serverTime}. </P>
