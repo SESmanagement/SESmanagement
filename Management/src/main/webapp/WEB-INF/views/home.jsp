@@ -7,7 +7,7 @@
 </head>
 <body>
 <h1>
-<a href="join"> 회원가입 페이지로</a>
+<a href="member/join"> 회원가입 페이지로</a>
 </h1>
 
 </body>

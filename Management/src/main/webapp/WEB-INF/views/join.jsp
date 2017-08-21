@@ -17,7 +17,7 @@ table{
 </head>
 <body>
 <h1> [ 회원가입 ]</h1>
-<form action="join" method="post" enctype="">
+<form action="/member/join" method="post" enctype="">
 	<table>
 		<tr>
 		<!-- 아이디로 쓸 학번 -->
