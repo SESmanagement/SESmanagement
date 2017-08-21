@@ -36,9 +36,10 @@
 	</tr>
 	<tr>
 		<td>주소</td>
-		<td><input type="text" readonly><input type="button"></td>
+		<td><input type="text" readonly><input type="button" value="주소찾기"></td>
 	</tr>
 	<tr>
+		<td></td>
 		<td><input type="text" placeholder="나머지 주소를 입력해주세요."></td>
 	</tr>
 	<tr>
@@ -46,12 +47,8 @@
 		<td><input type="email"></td>
 	</tr>
 	<tr>
-		<td></td>
-		<td></td>
-	</tr>
-	<tr>
 		<td>사진</td>
-		<td></td>
+		<td><input type="file"></td>
 	</tr>
 </table>
 
