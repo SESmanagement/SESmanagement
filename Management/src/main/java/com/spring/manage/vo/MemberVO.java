@@ -5,7 +5,7 @@ import java.util.Date;
 public class MemberVO {
 	
 	private int student_num;	//학번
-	private int pwd;			//비밀번호
+	private String pwd;			//비밀번호
 	private int member_num;		//기수번호
 	private String name;		//이름
 	private String sex;			//성별
@@ -26,13 +26,14 @@ public class MemberVO {
 				+ ", sex=" + sex + ", zip=" + zip + ", address=" + address + ", email=" + email + ", photo=" + photo
 				+ ", birthdate=" + birthdate + ", start_date=" + start_date + ", end_date=" + end_date + "]";
 	}
-	
+
 
 	//기본생성자
 	public MemberVO() {}
 	
+
 	//명시적생성자
-	public MemberVO(int student_num, int pwd, int member_num, String name, String sex, String zip, String address,
+	public MemberVO(int student_num, String pwd, int member_num, String name, String sex, String zip, String address,
 			String email, String photo, Date birthdate, Date start_date, Date end_date) {
 		this.student_num = student_num;
 		this.pwd = pwd;
@@ -53,15 +54,21 @@ public class MemberVO {
 	public int getStudent_num() {
 		return student_num;
 	}
+
 	public void setStudent_num(int student_num) {
 		this.student_num = student_num;
 	}
-	public int getPwd() {
+
+	
+	public String getPwd() {
 		return pwd;
 	}
-	public void setPwd(int pwd) {
+
+	public void setPwd(String pwd) {
 		this.pwd = pwd;
 	}
+
+
 	public int getMember_num() {
 		return member_num;
 	}

@@ -5,22 +5,10 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
-<style>
-table{
-	width: 50%;
-	height: 50%;
-	margin: auto;
-	background-color: white;
-	color: black;
-	}
-	
-
-</style>
-
 </head>
 <body>
 <h1> [ 회원가입 ]</h1>
-<form action="/member/join" method="post" enctype="">
+<form action="/member/join" method="post" enctype="multipart/form-data">
 	<table>
 		<tr>
 		<!-- 아이디로 쓸 학번 -->
@@ -64,7 +52,7 @@ table{
 			<td><input type="file"></td>
 		</tr>
 		<tr>
-			<td><input type="submit" value="회원가입"></td>
+			<td><input type="submit" value="수정완료"></td>
 			<td></td>
 		</tr>
 	</table>
