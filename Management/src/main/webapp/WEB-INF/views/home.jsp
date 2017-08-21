@@ -1,4 +1,5 @@
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <%@ page session="false" %>
 <html>
 <head>
@@ -6,17 +7,8 @@
 </head>
 <body>
 <h1>
-	Hello world!  
-	yun
-	ulala 0821dd
-	test1
-	test222
-	test333
-	test444
-	test555
-	test666
-	test777
-	test888
+테스트그만해!!!!!!!!
+<a href="join"> 회원가입 페이지로</a>
 </h1>
 
 <P>  The time on the server is ${serverTime}. </P>
