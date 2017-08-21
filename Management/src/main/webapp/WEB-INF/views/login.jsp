@@ -8,7 +8,7 @@
 </head>
 <body>
 
-<form action="member/login">
+<form action="member/login" method="post">
 	<table>
 		<tr>
 			<td>학번</td>
