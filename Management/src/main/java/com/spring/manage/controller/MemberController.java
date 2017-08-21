@@ -22,7 +22,8 @@ public class MemberController {
 	public String login(HttpSession session, int student_num, String pwd, MemberVO vo){
 		vo.setStudent_num(student_num);
 		vo.setPwd(pwd);
-		service.login(vo);
+		vo = service.login(vo);
+		session.setAttribute("vo", vo);
 		return "home";
 	}
 	

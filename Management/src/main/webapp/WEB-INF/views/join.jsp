@@ -11,7 +11,7 @@
 <form action="/member/join" method="post" enctype="multipart/form-data">
 	<table>
 		<tr>
-		<!-- 아이디로 쓸 학번 -->
+			<!-- 아이디로 쓸 학번 -->
 			<td>학번</td>
 			<td><input type="text" id="student_num" name="student_num"></td>
 		</tr>
@@ -25,15 +25,15 @@
 		</tr>
 		<tr>
 			<td>기수</td>
-			<td> <!-- 이부분은 나중에 vo에서 불러오기 --></td>
+			<td> ${vo.member_num }</td>
 		</tr>
 		<tr>
 			<td>이름</td>
-			<td><!-- 나중에 vo에서 불러오기 --></td>
+			<td> ${vo.name }</td>
 		</tr>
 		<tr>
 			<td>성별</td>
-			<td><!-- 나중에 vo에서 불러오기 --></td>
+			<td> ${vo.sex }</td>
 		</tr>
 		<tr>
 			<td>주소</td>

@@ -4,6 +4,6 @@ import com.spring.manage.vo.MemberVO;
 
 public interface MemberService {
 
-	public void login(MemberVO vo);
+	public MemberVO login(MemberVO vo);
 
 }

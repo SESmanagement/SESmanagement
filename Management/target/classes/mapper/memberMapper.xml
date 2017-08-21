@@ -6,5 +6,9 @@
 <!-- 회원정보 처리 SQL -->
 <mapper namespace="com.spring.manage.dao.MemberMapper">
 
+	<select id="login" parameterType="MemberVO" resultType="MemberVO">
+		select * from member where student_id = #{student_id} and pwd=#{pwd}
+	</select>
+
 	
 </mapper>
