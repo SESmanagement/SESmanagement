@@ -7,6 +7,9 @@
 <body>
 <h1>
  This is my area.
+ hello my name is jh kim 
+ who are you?
+ i'm fine thank u.
 </h1>
 
 <P>  The time on the server is ${serverTime}. </P>
