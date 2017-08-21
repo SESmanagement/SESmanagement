@@ -5,9 +5,19 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
-</head>
-<body>
+<style>
+table{
+	width: 50%;
+	height: 50%;
+	margin: auto;
+	font-size: 20pt;
+	}
+</style>
 
+</head>
+
+<body>
+<br><br><br><br><br><br><br><br>
 <table border="1">
 	<tr>
 		<th>月</th>
