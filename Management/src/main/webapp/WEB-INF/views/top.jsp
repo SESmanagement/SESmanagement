@@ -29,7 +29,7 @@
     <li>
       <a href="">스터디룸예약</a>
       <ul class="sub">
-        <li><a href="">스터디룸 보기</a></li>
+        <li><a href="studyroom/rooms">스터디룸 보기</a></li>
         <li><a href="">스터디룸 예약상황</a></li>
       </ul>  
     </li>

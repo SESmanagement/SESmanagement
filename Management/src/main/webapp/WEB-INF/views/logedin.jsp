@@ -8,7 +8,10 @@
 </head>
 <body>
 
-${sessionScope.name } 님이 로그인 중입니다.
+${sessionScope.vo.name } 님이 로그인 중입니다.
+<form action="member/logout" method="post">
+<input type="submit" value="로그아웃">
+</form>
 
 </body>
 </html>

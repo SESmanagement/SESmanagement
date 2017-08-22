@@ -16,9 +16,11 @@ public class Interceptor extends HandlerInterceptorAdapter{
 			
 			HttpSession session = request.getSession();
 			MemberVO vo = (MemberVO)session.getAttribute("vo");			
-			
 			if(vo.getAddress() == null) {
 				request.getRequestDispatcher("member/join");
+				return false;
+			}
+			else if(vo.getStudent_num() == 0){
 				return false;
 			}
 			else return true;

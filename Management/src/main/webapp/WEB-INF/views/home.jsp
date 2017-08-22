@@ -13,12 +13,13 @@ body{
 </style>
 
 <body>
+테스트: ${sessionScope.vo.name }
 <%@ include file="top.jsp" %>
 <br>
-<c:if test="${sessionScope.name == null }">
+<c:if test="${sessionScope.vo.name == null}">
 <%@ include file="login.jsp" %>
 </c:if>
-<c:if test="${sessionScope.name != null }">
+<c:if test="${sessionScope.vo.name != null}">
 <%@ include file="logedin.jsp" %>
 </c:if>
 </body>
