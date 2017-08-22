@@ -26,21 +26,18 @@
 	
 	<beans:bean id="Interceptor" class="com.spring.manage.util.Interceptor"></beans:bean>
 	
-<<<<<<< HEAD
 <!-- 	<mvc:interceptors> -->
 <!-- 		<mvc:interceptor> -->
 <!-- 			<mvc:mapping path="/studyroom/**" /> -->
 <!-- 			<beans:ref bean="Interceptor" /> -->
 <!-- 		</mvc:interceptor> -->
 <!-- 	</mvc:interceptors> -->
-=======
 	<mvc:interceptors>
 		<interceptor>
 			<mvc:mapping path="/studyroom/**" />
 			<beans:ref bean="Interceptor" />
 		</interceptor>
 	</mvc:interceptors>
->>>>>>> branch 'master' of https://github.com/SESmanagement/SESmanagement.git
 	
 	
 	
