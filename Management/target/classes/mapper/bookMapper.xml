@@ -4,7 +4,7 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <!-- 도서등록  SQL -->
-<mapper namespace="com.spring.manage.dao.bookMapper">
+<mapper namespace="com.spring.manage.dao.BookMapper">
 
 
 	
