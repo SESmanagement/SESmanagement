@@ -10,6 +10,7 @@ public class StudyRoomController {
 	
 	@RequestMapping(value = "rooms", method = RequestMethod.GET)
 	public String rooms() {
+		System.out.println("여기로 옵니까 안옵니까");
 		return "rooms";
 	}
 }

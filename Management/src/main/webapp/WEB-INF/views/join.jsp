@@ -13,7 +13,7 @@
 		<tr>
 			<!-- 아이디로 쓸 학번 -->
 			<td>학번</td>
-			<td><input type="text" id="student_num" name="student_num"></td>
+			<td>${vo.student_num }</td>
 		</tr>
 		<tr>
 			<td>비밀번호</td>
