@@ -28,7 +28,7 @@
 	
 	<mvc:interceptors>
 		<interceptor>
-			<mvc:mapping path="/member/**" />
+			<mvc:mapping path="/studyroom/**" />
 			<beans:ref bean="Interceptor" />
 		</interceptor>
 	</mvc:interceptors>

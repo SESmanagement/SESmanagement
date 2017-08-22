@@ -24,9 +24,14 @@ public class MemberController {
 		vo.setPwd(pwd);
 		vo = service.login(vo);
 		session.setAttribute("vo", vo);
-		return "home";
+		return "redirect:/";
 	}
 	
+	@RequestMapping(value = "logout", method = RequestMethod.POST)
+	public String logout(HttpSession session) {
+		session.invalidate();
+		return "redirect:/";
+	}
 	
 	@RequestMapping(value = "join", method = RequestMethod.GET)
 	public String join() {

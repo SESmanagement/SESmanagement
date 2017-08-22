@@ -3,8 +3,19 @@
 <!DOCTYPE html>
 <html>
 <head>
+<script src="/manage/resources/js/jquery-3.2.1.min.js"></script>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
+<script>
+	$(function(){
+		if("${vo.address}" == ""){
+			alert('회원정보 입력 후 이용해주세요.');
+		}
+	});
+</script>
+
+
+
 </head>
 <body>
 <h1> [ 회원가입 ]</h1>
@@ -13,7 +24,7 @@
 		<tr>
 			<!-- 아이디로 쓸 학번 -->
 			<td>학번</td>
-			<td><input type="text" id="student_num" name="student_num"></td>
+			<td>${vo.student_num }</td>
 		</tr>
 		<tr>
 			<td>비밀번호</td>
