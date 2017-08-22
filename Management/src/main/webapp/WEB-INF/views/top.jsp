@@ -33,11 +33,11 @@
       </ul>
     </li>
     <li>
-      <a href="">스터디룸예약</a>
+      <a href="/manage/studyroom/rooms">스터디룸예약</a>
       <ul class="sub">
-        <li><a href="">Humming Bird</a></li>
-        <li><a href="">Hawk</a></li>
-        <li><a href="">Crow</a></li>
+        <li><a href="/manage/studyroom/rooms">스터디룸 현황조회</a></li>
+        <li><a href="">내 예약현황</a></li>
+        <li><a href="">스터디룸 이용안내</a></li>
       </ul>  
     </li>
     <li>

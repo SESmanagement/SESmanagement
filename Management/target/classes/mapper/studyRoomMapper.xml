@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 스터디룸 예약처리 처리 SQL -->
+<mapper namespace="com.spring.manage.dao.StudyRoomMapper">
+	
+	<!-- 마우스 오버시 해당 스터디룸(studyroom_num) 예약현황 툴팁 띄우기 -->
+	<select id="showInside" parameterType="int" resultType="StudyRoomVO">
+		SELECT * FROM STUDYROOM WHERE STUDYROOM_NUM = #{studyroom_num}
+	</select>
+	
+</mapper>
