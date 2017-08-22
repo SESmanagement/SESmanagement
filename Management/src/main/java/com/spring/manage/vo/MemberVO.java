@@ -18,15 +18,6 @@ public class MemberVO {
 	private Date end_date;		//기수종료일
 	
 	
-	
-	//toString 오버라이딩
-	@Override
-	public String toString() {
-		return "MemberVO [student_num=" + student_num + ", pwd=" + pwd + ", member_num=" + member_num + ", name=" + name
-				+ ", sex=" + sex + ", zip=" + zip + ", address=" + address + ", email=" + email + ", photo=" + photo
-				+ ", birthdate=" + birthdate + ", start_date=" + start_date + ", end_date=" + end_date + "]";
-	}
-
 
 	//기본생성자
 	public MemberVO() {}
@@ -132,6 +123,15 @@ public class MemberVO {
 	
 	
 	
+	//toString 오버라이딩
+	@Override
+	public String toString() {
+		return "MemberVO [student_num=" + student_num + ", pwd=" + pwd + ", member_num=" + member_num + ", name=" + name
+				+ ", sex=" + sex + ", zip=" + zip + ", address=" + address + ", email=" + email + ", photo=" + photo
+				+ ", birthdate=" + birthdate + ", start_date=" + start_date + ", end_date=" + end_date + "]";
+	}
+	
 	
 
 }
+
