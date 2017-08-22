@@ -5,10 +5,12 @@
 <configuration>
 	<typeAliases>
 		<typeAlias type="com.spring.manage.vo.MemberVO" alias="MemberVO" />
+		<typeAlias type="com.spring.manage.vo.BookVO" alias="BookVO" />
 		<typeAlias type="com.spring.manage.vo.StudyRoomVO" alias="StudyRoomVO" />
 	</typeAliases>
 	<mappers>
 		<mapper resource="mapper/memberMapper.xml" />
+		<mapper resource="mapper/BookMapper.xml" />
 		<mapper resource="mapper/studyRoomMapper.xml" />
 	</mappers>
 </configuration>

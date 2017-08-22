@@ -1,5 +1,7 @@
 package com.spring.manage.dao;
 
+import com.spring.manage.vo.BookVO;
+
 public interface BookMapper {
-	public int insert();
+	public int insert(BookVO vo);
 }

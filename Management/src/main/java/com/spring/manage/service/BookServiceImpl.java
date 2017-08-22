@@ -4,6 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.spring.manage.dao.BookDAO;
+import com.spring.manage.vo.BookVO;
+
 
 @Service
 public class BookServiceImpl implements BookService{
@@ -12,8 +14,7 @@ public class BookServiceImpl implements BookService{
 	private BookDAO dao;
 
 	@Override
-	public int insert() {
-		dao.insert();
-		return 0;
-	}
+	public int insert(BookVO vo) {
+		return dao.insert(vo);
+	} 
 }

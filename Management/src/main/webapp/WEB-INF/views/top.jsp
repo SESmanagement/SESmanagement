@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -20,6 +21,7 @@
       <a href="/manage">HOME</a>
     </li>
     <li>
+    <!-- user -->
       <a href="">도서예약</a>
       <ul class="sub">
         <li><a href="">책 목록</a></li>
@@ -49,7 +51,19 @@
         <li><a href="">대출한 책 확인</a></li>
         <li><a href="">스터디룸 예약 확인</a></li>
         <li><a href="">소모임 확인</a></li>
+<<<<<<< HEAD
+      </ul> 
+      
+      <!-- admin -->
+    <c:if test="${vo.student_num == 'admin'}">
+         <ul class="sub">
+        <li><a href="registBook"><input type = "button" id="registBook" value="도서등록"></a></li>
+		<li><a href="home"><input type = "button" id="goBack" value="메인으로"></a></li>
+      </ul> 
+	</c:if>
+=======
       </ul>  
+>>>>>>> branch 'master' of https://github.com/SESmanagement/SESmanagement.git
     </li>
   </ul>
 </nav>
