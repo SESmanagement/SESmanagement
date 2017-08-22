@@ -37,18 +37,17 @@
     <li>
       <a href="">소모임</a>
       <ul class="sub">
-        <li><a href="">Brown Horse</a></li>
-        <li><a href="">Race Horse</a></li>
-        <li><a href="">Tall Horse</a></li>
+        <li><a href="">모집중인 소모임</a></li>
+        <li><a href="">종료된 소모임</a></li>
       </ul>  
     </li>
     <li>
       <a href="">마이페이지</a>
       <ul class="sub">
-        <li><a href="">Cheesy</a></li>
-        <li><a href="">More Ketchup</a></li>
-        <li><a href="">Some Mustard</a></li>
-        <li><a href="">Extra Butter</a></li>
+        <li><a href="">스케줄 확인</a></li>
+        <li><a href="">대출한 책 확인</a></li>
+        <li><a href="">스터디룸 예약 확인</a></li>
+        <li><a href="">소모임 확인</a></li>
       </ul>  
     </li>
   </ul>
