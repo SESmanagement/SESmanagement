@@ -17,8 +17,6 @@ public class MemberVO {
 	private Date start_date;	//기수시작일
 	private Date end_date;		//기수종료일
 	
-	
-
 	//기본생성자
 	public MemberVO() {}
 	
