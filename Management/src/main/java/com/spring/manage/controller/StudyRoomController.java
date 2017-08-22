@@ -22,10 +22,6 @@ public class StudyRoomController {
 	// top메뉴 ->스터디룸 현황조회(top-스터디룸 예약-메뉴 포함)로 이동
 	@RequestMapping(value = "rooms", method = RequestMethod.GET)
 	public String rooms() {
-<<<<<<< HEAD
-=======
-		System.out.println("음");
->>>>>>> branch 'master' of https://github.com/SESmanagement/SESmanagement.git
 		return "studyroom/rooms";
 	}
 	
