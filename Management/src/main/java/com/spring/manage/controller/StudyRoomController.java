@@ -22,7 +22,8 @@ public class StudyRoomController {
 	// top메뉴 ->스터디룸 현황조회(top-스터디룸 예약-메뉴 포함)로 이동
 	@RequestMapping(value = "rooms", method = RequestMethod.GET)
 	public String rooms() {
-		return "studyroom/rooms";
+		System.out.println("아아아앙아아아아아");
+		return "/manage/studyroom/rooms";
 	}
 	
 	// 마우스 오버시 해당 스터디룸(studyroom_num) 예약현황 툴팁 띄우기
@@ -38,7 +39,7 @@ public class StudyRoomController {
 	public String reserveRoomForm(int studyroom_num, ArrayList<StudyRoomVO> srList, Model model) {
 		srList = service.showInside(studyroom_num);
 		model.addAttribute(srList);
-		return "studyroom/reserveRoomForm";
+		return "/manage/studyroom/reserveRoomForm";
 	}
 	
 	

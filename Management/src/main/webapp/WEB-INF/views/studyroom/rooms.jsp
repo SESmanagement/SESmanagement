@@ -8,6 +8,7 @@
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css" />
 	<link rel="stylesheet" href="/manage/resources/css/style.css" />
 	<script src="/manage/resources/js/jquery-3.2.1.js"></script>
+	
 <style type="text/css">
  	[class="sr"] { 
  		position:relative; 
@@ -27,30 +28,11 @@
  		font-size:12px; 
  		background-color:#fafafa; 
  	}
+ 	
 </style>
 </head>
 <body>
 <script>
-
-// //마우스 오버시 해당 스터디룸(studyroom_num) 예약현황 팝업창 띄우기
-// 	function showInside(studyroom_num) {
-// 		$.ajax({
-// 			url: "/manage/studyroom/showInside",
-// 			type: "get",
-// 			data: {"studyroom_num": studyroom_num},
-// 			success: function(result) { 
-// 				$(".srList").empty();
-//  				$(result).each(function(index, item) {
-// 					var addRow = "<tr><td>"+item.studyroom_num+"</td>";
-// 					addRow += "<td>"+item.sr_seat_num+"</td>";
-// 					addRow += "<td>"+item.rechargable+"</td>";
-// 					addRow += "<td>"+item.seated_status+"</td></tr>";
-// 					$(".srList").append(addRow);
-// 				}) // each
-// 			} // success
-// 		}); // ajax
-// 	} // showInside
-	
 
 	// 해당 스터디룸(studyroom_num)에 마우스 오버시 툴팁 띄우기
 	function showInside(studyroom_num){

@@ -16,9 +16,7 @@ public class Interceptor extends HandlerInterceptorAdapter{
 			
 			HttpSession session = request.getSession();
 			MemberVO vo = (MemberVO)session.getAttribute("vo");
-			System.out.println("?ù∏?Ñ∞?Öâ?Ñ∞"+vo);
 			if(vo.getAddress() == null) {
-				System.out.println("addressÍ∞? null?ù¥Î©? ?ì§?ñ¥?ò¥");
 				response.sendRedirect("/manage/member/join");
 				return false;
 			}
