@@ -11,6 +11,7 @@
  <meta name="viewport" content="width=device-width">
 </head>
 <body>
+테스트: ${sessionScope.vo.name }
 <div class="wrap">
 <span class="decor"></span>
 <nav>
