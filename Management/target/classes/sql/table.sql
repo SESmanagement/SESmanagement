@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+
 CREATE TABLE SUGGESTION					
 (					
 	BOOK_NUM NUMBER PRIMARY KEY,				
@@ -11,7 +11,6 @@ CREATE TABLE SUGGESTION
 );					
 					
 CREATE SEQUENCE BOOK_SEQ;					
-=======
 -- MEMBER 테이블 생성
 CREATE TABLE MEMBER	
 (	
@@ -60,4 +59,4 @@ INSERT INTO STUDYROOM VALUES(2, 1, 'Y', VACANCY);
 INSERT INTO STUDYROOM VALUES(2, 2, 'Y', VACANCY);
 INSERT INTO STUDYROOM VALUES(2, 3, 'Y', VACANCY);
 INSERT INTO STUDYROOM VALUES(2, 4, 'Y', VACANCY);
->>>>>>> branch 'master' of https://github.com/SESmanagement/SESmanagement.git
+
