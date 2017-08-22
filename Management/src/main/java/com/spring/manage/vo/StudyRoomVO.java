@@ -1,10 +1,10 @@
 package com.spring.manage.vo;
 
 public class StudyRoomVO {
-	private int studyroom_num; // ½ºÅÍµğ·ë ¹øÈ£
-	private int sr_seat_num; // °¢ ½ºÅÍµğ·ë ³» ÁÂ¼® ¹øÈ£
-	private char rechargable; // ÃæÀü°¡´É¿©ºÎ (ÁÂ¼® ±ÙÃ³¿¡ ÄÜ¼¼Æ® À¯¹« ¿©ºÎ¸¦ Y¿Í NÀ¸·Î Ç¥½Ã)
-	private String seated_status; // ÇöÀç ÁÂ¼® ¹èÄ¡ ÇöÈ² (¿¹¾àÁß / ¿¹¾à°¡´É / ¿¹¾àºÒ°¡-°ü¸®ÀÚ Ã³¸®)
+	private int studyroom_num; // ìŠ¤í„°ë””ë£¸ ë²ˆí˜¸
+	private int sr_seat_num; // ê° ìŠ¤í„°ë””ë£¸ ë‚´ ì¢Œì„ ë²ˆí˜¸
+	private char rechargable; // ì¶©ì „ê°€ëŠ¥ì—¬ë¶€ (ì¢Œì„ ê·¼ì²˜ì— ì½˜ì„¸íŠ¸ ìœ ë¬´ ì—¬ë¶€ë¥¼ Yì™€ Nìœ¼ë¡œ í‘œì‹œ)
+	private String seated_status; // í˜„ì¬ ì¢Œì„ ë°°ì¹˜ í˜„í™© (ì˜ˆì•½ì¤‘ / ì˜ˆì•½ê°€ëŠ¥ / ì˜ˆì•½ë¶ˆê°€-ê´€ë¦¬ì ì²˜ë¦¬)
 	
 	public StudyRoomVO() {}
 

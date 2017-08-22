@@ -6,7 +6,7 @@ import com.spring.manage.vo.StudyRoomVO;
 
 public interface StudyRoomService {
 
-	// ¸¶¿ì½º ¿À¹ö½Ã ÇØ´ç ½ºÅÍµğ·ë(studyroom_num) ¿¹¾àÇöÈ² ÆË¾÷Ã¢ ¶ç¿ì±â
+	// topë©”ë‰´ ->ìŠ¤í„°ë””ë£¸ í˜„í™©ì¡°íšŒ(top-ìŠ¤í„°ë””ë£¸ ì˜ˆì•½-ë©”ë‰´ í¬í•¨)ë¡œ ì´ë™
 	public ArrayList<StudyRoomVO> showInside(int studyroom_num);
 
 }
