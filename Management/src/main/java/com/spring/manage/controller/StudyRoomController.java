@@ -22,12 +22,7 @@ public class StudyRoomController {
 	// top¸Ş´º ->½ºÅÍµğ·ë ÇöÈ²Á¶È¸(top-½ºÅÍµğ·ë ¿¹¾à-¸Ş´º Æ÷ÇÔ)·Î ÀÌµ¿
 	@RequestMapping(value = "rooms", method = RequestMethod.GET)
 	public String rooms() {
-<<<<<<< HEAD
 		return "studyroom/rooms";
-=======
-		System.out.println("ì—¬ê¸°ë¡œ ì˜µë‹ˆê¹Œ ì•ˆì˜µë‹ˆê¹Œ");
-		return "rooms";
->>>>>>> branch 'master' of https://github.com/SESmanagement/SESmanagement.git
 	}
 	
 	// ¸¶¿ì½º ¿À¹ö½Ã ÇØ´ç ½ºÅÍµğ·ë(studyroom_num) ¿¹¾àÇöÈ² ÅøÆÁ ¶ç¿ì±â

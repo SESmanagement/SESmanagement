@@ -29,10 +29,7 @@
 	<mvc:interceptors>
 		<interceptor>
 			<mvc:mapping path="/studyroom/**" />
-<<<<<<< HEAD
 			<mvc:mapping path="/member/**" />
-=======
->>>>>>> branch 'master' of https://github.com/SESmanagement/SESmanagement.git
 			<beans:ref bean="Interceptor" />
 		</interceptor>
 	</mvc:interceptors>
