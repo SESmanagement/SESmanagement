@@ -30,14 +30,6 @@ public class StudyRoomController {
 		srList = service.showInside(studyroom_num);
 		return srList;
 	}
-	
-	@RequestMapping(value = "showInside", method = RequestMethod.GET)
-	@ResponseBody
-	public ArrayList<StudyRoomVO> showInside(int studyroom_num, ArrayList<StudyRoomVO> srList) {
-		srList = service.showInside(studyroom_num);
-		return srList;
-	}
-	
 	@RequestMapping(value = "reserveRoomForm", method = RequestMethod.GET)
 	public String reserveRoomForm(int studyroom_num, ArrayList<StudyRoomVO> srList, Model model) {
 		srList = service.showInside(studyroom_num);
