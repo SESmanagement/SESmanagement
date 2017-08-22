@@ -19,13 +19,11 @@ public class StudyRoomController {
 	@Autowired
 	private StudyRoomService service;
 	
-	// top�޴� ->���͵�� ��Ȳ��ȸ(top-���͵�� ����-�޴� ����)�� �̵�
 	@RequestMapping(value = "rooms", method = RequestMethod.GET)
 	public String rooms() {
 		return "studyroom/rooms";
 	}
 	
-	// ���콺 ������ �ش� ���͵��(studyroom_num) ������Ȳ ���� ����
 	@RequestMapping(value = "showInside", method = RequestMethod.GET)
 	@ResponseBody
 	public ArrayList<StudyRoomVO> showInside(int studyroom_num, ArrayList<StudyRoomVO> srList) {
@@ -33,7 +31,13 @@ public class StudyRoomController {
 		return srList;
 	}
 	
-	// ���콺 Ŭ���� �ش� ���͵��(studyroom_num) ������ �������� �̵�
+	@RequestMapping(value = "showInside", method = RequestMethod.GET)
+	@ResponseBody
+	public ArrayList<StudyRoomVO> showInside(int studyroom_num, ArrayList<StudyRoomVO> srList) {
+		srList = service.showInside(studyroom_num);
+		return srList;
+	}
+	
 	@RequestMapping(value = "reserveRoomForm", method = RequestMethod.GET)
 	public String reserveRoomForm(int studyroom_num, ArrayList<StudyRoomVO> srList, Model model) {
 		srList = service.showInside(studyroom_num);
