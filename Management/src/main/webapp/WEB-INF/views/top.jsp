@@ -13,7 +13,6 @@
 <meta name="viewport" content="width=device-width">
 </head>
 <body>
-<<<<<<< HEAD
 	<div class="wrap">
 		<span class="decor"></span>
 		<nav>
@@ -63,60 +62,5 @@
 				</ul>
 		</nav>
 	</div>
-=======
-테스트: ${sessionScope.vo.name }
-<div class="wrap">
-<span class="decor"></span>
-<nav>
-  <ul class="primary">
-    <li>
-      <a href="/manage">HOME</a>
-    </li>
-    <li>
-    <!-- user -->
-      <a href="">도서예약</a>
-      <ul class="sub">
-        <li><a href="">책 목록</a></li>
-        <li><a href="">도서대출상태</a></li>
-        <li><a href="">대출신청</a></li>
-      </ul>
-    </li>
-    <li>
-      <a href="/manage/studyroom/rooms">스터디룸예약</a>
-      <ul class="sub">
-        <li><a href="/manage/studyroom/rooms">스터디룸 현황조회</a></li>
-        <li><a href="">내 예약현황</a></li>
-        <li><a href="">스터디룸 이용안내</a></li>
-      </ul>  
-    </li>
-    <li>
-      <a href="">소모임</a>
-      <ul class="sub">
-        <li><a href="">모집중인 소모임</a></li>
-        <li><a href="">종료된 소모임</a></li>
-      </ul>  
-    </li>
-    <li>
-      <a href="">마이페이지</a>
-      <ul class="sub">
-        <li><a href="">스케줄 확인</a></li>
-        <li><a href="">대출한 책 확인</a></li>
-        <li><a href="">스터디룸 예약 확인</a></li>
-        <li><a href="">소모임 확인</a></li>
-      </ul> 
-      
-      <!-- admin -->
-    <c:if test="${vo.student_num == 'admin'}">
-         <ul class="sub">
-        <li><a href="registBook"><input type = "button" id="registBook" value="도서등록"></a></li>
-		<li><a href="home"><input type = "button" id="goBack" value="메인으로"></a></li>
-      </ul> 
-	</c:if>
-      </ul>  
-    </li>
-  </ul>
-</nav>
-</div>
->>>>>>> refs/remotes/origin/master
 </body>
 </html>
