@@ -8,7 +8,7 @@
 <title>Insert title here</title>
 <script>
 	$(function(){
-		if(${vo.address == null}){
+		if("${vo.address}" == ""){
 			alert('회원정보 입력 후 이용해주세요.');
 		}
 	});

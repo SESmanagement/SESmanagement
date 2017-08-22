@@ -16,10 +16,10 @@ body{
 <%@ include file="top.jsp" %>
 <br>
 <c:if test="${sessionScope.vo.name == null}">
-<%@ include file="login.jsp" %>
+	<%@ include file="login.jsp" %>
 </c:if>
 <c:if test="${sessionScope.vo.name != null}">
-<%@ include file="logedin.jsp" %>
+	<%@ include file="logedin.jsp" %>
 </c:if>
 </body>
 </html>
