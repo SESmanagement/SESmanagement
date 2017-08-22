@@ -5,10 +5,18 @@
 <configuration>
 	<typeAliases>
 		<typeAlias type="com.spring.manage.vo.MemberVO" alias="MemberVO" />
+<<<<<<< HEAD
 		<typeAlias type="com.spring.manage.vo.BookVO" alias="BookVO" />
+=======
+		<typeAlias type="com.spring.manage.vo.StudyRoomVO" alias="StudyRoomVO" />
+>>>>>>> branch 'master' of https://github.com/SESmanagement/SESmanagement.git
 	</typeAliases>
 	<mappers>
 		<mapper resource="mapper/memberMapper.xml" />
+<<<<<<< HEAD
 		<mapper resource="mapper/BookMapper.xml" />
+=======
+		<mapper resource="mapper/studyRoomMapper.xml" />
+>>>>>>> branch 'master' of https://github.com/SESmanagement/SESmanagement.git
 	</mappers>
 </configuration>

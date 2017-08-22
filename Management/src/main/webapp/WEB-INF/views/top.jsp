@@ -50,6 +50,7 @@
         <li><a href="">대출한 책 확인</a></li>
         <li><a href="">스터디룸 예약 확인</a></li>
         <li><a href="">소모임 확인</a></li>
+<<<<<<< HEAD
       </ul> 
       
       <!-- admin -->
@@ -59,6 +60,9 @@
 		<li><a href="home"><input type = "button" id="goBack" value="메인으로"></a></li>
       </ul> 
 	</c:if>
+=======
+      </ul>  
+>>>>>>> branch 'master' of https://github.com/SESmanagement/SESmanagement.git
     </li>
   </ul>
 </nav>
