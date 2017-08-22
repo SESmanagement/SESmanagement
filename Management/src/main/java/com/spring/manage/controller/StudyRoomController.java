@@ -21,8 +21,8 @@ public class StudyRoomController {
 	
 	@RequestMapping(value = "rooms", method = RequestMethod.GET)
 	public String rooms() {
-		System.out.println("�ƾƾƾӾƾƾƾƾ�");
-		return "/manage/studyroom/rooms";
+		System.out.println("음");
+		return "studyroom/rooms";
 	}
 	
 	@RequestMapping(value = "showInside", method = RequestMethod.GET)

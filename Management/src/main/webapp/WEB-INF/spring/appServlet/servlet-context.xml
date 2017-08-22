@@ -26,12 +26,6 @@
 	
 	<beans:bean id="Interceptor" class="com.spring.manage.util.Interceptor"></beans:bean>
 	
-<!-- 	<mvc:interceptors> -->
-<!-- 		<mvc:interceptor> -->
-<!-- 			<mvc:mapping path="/studyroom/**" /> -->
-<!-- 			<beans:ref bean="Interceptor" /> -->
-<!-- 		</mvc:interceptor> -->
-<!-- 	</mvc:interceptors> -->
 	<mvc:interceptors>
 		<interceptor>
 			<mvc:mapping path="/studyroom/**" />

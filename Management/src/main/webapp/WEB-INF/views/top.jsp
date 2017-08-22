@@ -7,7 +7,7 @@
 <title>top</title>
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css">
-<link rel="stylesheet" href="resources/css/style.css">
+<link rel="stylesheet" href="/manage/resources/css/style.css">
  <meta name="viewport" content="width=device-width">
 </head>
 <body>
@@ -16,7 +16,7 @@
 <nav>
   <ul class="primary">
     <li>
-      <a href="">HOME</a>
+      <a href="/manage">HOME</a>
     </li>
     <li>
       <a href="">도서예약</a>
