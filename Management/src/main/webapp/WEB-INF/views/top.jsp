@@ -17,19 +17,13 @@
   <ul class="primary">
     <li>
       <a href="">HOME</a>
-      <ul class="sub">
-        <li><a href="">Bulldog</a></li>
-        <li><a href="">Mastiff</a></li>
-        <li><a href="">Labrador</a></li>
-        <li><a href="">Mutt</a></li>
-      </ul>
     </li>
     <li>
       <a href="">도서예약</a>
       <ul class="sub">
-        <li><a href="">Tabby</a></li>
-        <li><a href="">Black Cat</a></li>
-        <li><a href="">Wrinkly Cat</a></li>
+        <li><a href="">책 목록</a></li>
+        <li><a href="">도서대출상태</a></li>
+        <li><a href="">대출신청</a></li>
       </ul>
     </li>
     <li>

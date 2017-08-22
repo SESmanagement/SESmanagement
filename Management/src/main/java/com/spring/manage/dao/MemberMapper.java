@@ -1,5 +1,9 @@
 package com.spring.manage.dao;
 
-public class MemberMapper {
+import com.spring.manage.vo.MemberVO;
+
+public interface MemberMapper {
+
+	public MemberVO login(MemberVO vo);
 
 }
