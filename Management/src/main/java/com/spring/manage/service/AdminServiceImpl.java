@@ -5,10 +5,12 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.spring.manage.dao.AdminDAO;
 import com.spring.manage.vo.LendVO;
 
+@Service
 public class AdminServiceImpl implements AdminService{
 	@Autowired
 	private AdminDAO dao;

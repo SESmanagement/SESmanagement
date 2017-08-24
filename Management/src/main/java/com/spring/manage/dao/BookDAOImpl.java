@@ -7,10 +7,12 @@ import java.util.Map;
 import org.apache.ibatis.session.RowBounds;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
 import com.spring.manage.vo.BookVO;
 import com.spring.manage.vo.LendVO;
 
+@Repository
 public class BookDAOImpl implements BookDAO{
 
 	@Autowired
