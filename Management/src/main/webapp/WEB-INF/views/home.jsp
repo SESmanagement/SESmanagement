@@ -12,7 +12,6 @@ body{
 </style>
 
 <body>
-테스트: ${sessionScope.vo.name }
 <%@ include file="top.jsp" %>
 <br>
 <c:if test="${sessionScope.vo.name == null}">

@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.spring.manage.service.StudyRoomService;
+import com.spring.manage.vo.SR_ReservationVO;
 import com.spring.manage.vo.StudyRoomVO;
 
 @Controller
@@ -33,15 +34,23 @@ public class StudyRoomController {
 		return srList;
 	}
 	
-	// 해당 스터디룸의 예약폼 페이지로 이동
+	// 해당 스터디룸의 예약폼 페이지로 이동 (+좌석 정보, 조회시점 시각 조회)
 	@RequestMapping(value = "reserveRoomForm", method = RequestMethod.GET)
-	public String reserveRoomForm(int studyroom_num, ArrayList<StudyRoomVO> srList, Model model) {
+	public String reserveRoomForm(int studyroom_num, ArrayList<StudyRoomVO> srList, ArrayList<SR_ReservationVO> srResvList, Model model, String sysdate) {
 		srList = service.showInside(studyroom_num);
-		model.addAttribute(studyroom_num);
-		model.addAttribute(srList);
+		model.addAttribute("studyroom_num", studyroom_num);
+		model.addAttribute("srList", srList);
+		sysdate = service.getSysdate();
+		model.addAttribute("sysdate", sysdate);
 		return "studyroom/reserveRoomForm";
 	}
-	
-	
+	//만날 수 없어 말하고 싶은데 그런 슬픈 기분인걸 말하고 싶어 말하고 싶은데 속마음만 숨기는걸 내 사랑의 마지막 열쇠가 있다면 그건 바로 이 세상이 아름다운 이유 캐치유 캐치유 캐치미 캐치미 이제 숨바꼭질은 그만 우울한거 모두 파란하늘에 묻어버려
+	// 해당 스터디룸의 예약현황 
+	@RequestMapping(value = "srResvInfo", method = RequestMethod.POST)
+	@ResponseBody
+	public ArrayList<SR_ReservationVO> srResvInfo(int studyroom_num, ArrayList<SR_ReservationVO> srResvList, Model model) {
+		srResvList = service.srResvInfo(studyroom_num);
+		return srResvList;
+	}
 	
 }

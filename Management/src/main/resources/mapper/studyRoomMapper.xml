@@ -6,9 +6,20 @@
 <!-- 스터디룸 예약처리 처리 SQL -->
 <mapper namespace="com.spring.manage.dao.StudyRoomMapper">
 	
-	<!-- 마우스 오버시 해당 스터디룸(studyroom_num) 예약현황 툴팁 띄우기 -->
+	<!-- 마우스 오버시 해당 스터디룸(studyroom_num) 좌석현황 툴팁 띄우기 -->
 	<select id="showInside" parameterType="int" resultType="StudyRoomVO">
 		SELECT * FROM STUDYROOM WHERE STUDYROOM_NUM = #{studyroom_num}
+	</select>
+	
+	<!-- 해당 스터디룸 오늘자 예약현황 조회 -->
+	<select id="srResvInfo" parameterType="int" resultType="SR_ReservationVO">
+		SELECT * FROM SR_RESERVATION WHERE STUDYROOM_NUM = #{studyroom_num} 
+		AND TO_CHAR(START_TIME, 'YY/MM/DD') LIKE SYSDATE
+	</select>
+	
+		<!-- 예약현황 조회시점의 시각 조회 -->
+	<select id="getSysdate" resultType="String">
+		SELECT TO_CHAR(SYSDATE, 'HH24:MI') FROM DUAL
 	</select>
 	
 </mapper>

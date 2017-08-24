@@ -20,6 +20,7 @@ public class MemberController {
 	
 	@RequestMapping(value ="login", method= RequestMethod.POST)
 	public String login(HttpSession session, int student_num, String pwd, MemberVO vo){
+		System.out.println("로그인");
 		vo.setStudent_num(student_num);
 		vo.setPwd(pwd);
 		vo = service.login(vo);
