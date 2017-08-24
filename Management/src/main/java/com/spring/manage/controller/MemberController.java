@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.spring.manage.service.MemberService;
 import com.spring.manage.vo.MemberVO;
@@ -20,6 +21,7 @@ public class MemberController {
 	
 	@RequestMapping(value ="login", method= RequestMethod.POST)
 	public String login(HttpSession session, int student_num, String pwd, MemberVO vo){
+		System.out.println("로그인");
 		vo.setStudent_num(student_num);
 		vo.setPwd(pwd);
 		vo = service.login(vo);
@@ -38,6 +40,10 @@ public class MemberController {
 		return "join";	
 	}
 	
-	
+	@RequestMapping(value = "join", method = RequestMethod.POST)
+	public String join(MemberVO vo, MultipartFile photo) {
+		service.join(vo, photo);
+		return "join";	
+	}
 	
 }
