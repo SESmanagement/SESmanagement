@@ -1,23 +1,3 @@
-<<<<<<< HEAD
-
-=======
-<<<<<<< HEAD
-﻿**MEMBER 테이블 생성
-STUDENT_NUM NUMBER PRIMARY KEY,
-PWD VARCHAR(20) NOT NULL,
-MEMBER_NUM NUMBER NOT NULL,
-NAME VARCHAR2(20) NOT NULL,
-SEX VARCHAR2(5) NOT NULL,
-ZIP VARCHAR2(100),
-ADDRESS VARCHAR2(200),
-EMAIL VARCHAR2(100),
-PHOTO VARCHAR2(200) NOT NULL,
-BIRTHDATE TIMESTAMP NOT NULL,
-START_DATE TIMESTAMP,
-END_DATE TIMESTAMP
-=======
-<<<<<<< HEAD
->>>>>>> refs/remotes/origin/master
 CREATE TABLE SUGGESTION					
 (					
 	BOOK_NUM NUMBER PRIMARY KEY,				
@@ -157,17 +137,6 @@ insert into member values(33104, 900412, 33, '이길아', 'f', null, null, null,
 insert into member values(33105, 900413, 33, '함종수', 'm', null, null, null, 'photo','90-04-13', null, null);
 insert into member values(33106, 900414, 33, '지현수', 'm', null, null, null, 'photo','90-04-14', null, null);
 insert into member values(33107, 900415, 33, '김태준', 'f', null, null, null, 'photo','90-04-15', null, null);
-
-
-
-
-
-
-
-
-
-
-
 
 
 **StudyRoom DB관련
