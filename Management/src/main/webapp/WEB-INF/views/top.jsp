@@ -27,7 +27,7 @@
 						<li><a href="">대출신청</a></li>
 					</ul>
 				</li>
-				<li><a href="/manage/studyroom/rooms">스터디룸예약</a>
+				<li><a href="/manage/studyroom/rooms">스터디룸예약 입니다</a>
 					<ul class="sub">
 						<li><a href="/manage/studyroom/rooms">스터디룸 현황조회</a></li>
 						<li><a href="">내 예약현황</a></li>
