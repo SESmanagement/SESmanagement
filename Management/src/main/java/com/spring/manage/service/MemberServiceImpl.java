@@ -2,6 +2,7 @@ package com.spring.manage.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.spring.manage.dao.MemberDAO;
 import com.spring.manage.vo.MemberVO;
@@ -18,8 +19,9 @@ public class MemberServiceImpl implements MemberService {
 		return vo;
 	}
 
-	
-	
-	
-	
+	@Override
+	public void join(MemberVO vo, MultipartFile photo) {
+		
+	}
+
 }

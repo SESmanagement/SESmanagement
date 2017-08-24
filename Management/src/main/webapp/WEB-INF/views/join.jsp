@@ -60,7 +60,7 @@
 		</tr>
 		<tr>
 			<td>사진</td>
-			<td><input type="file"></td>
+			<td><input type="file" name="photo"></td>
 		</tr>
 		<tr>
 			<td><input type="submit" value="수정완료"></td>
