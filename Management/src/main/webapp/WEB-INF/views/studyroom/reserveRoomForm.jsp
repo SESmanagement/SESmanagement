@@ -22,15 +22,19 @@
 </head>
 <body>
 <script>
+	$(function () {
+		loadSRResvPage();
+	});
 
 	// 해당 스터디룸의 예약 현황 조회
-	$(function() {
+	function loadSRResvPage() {
 		$.ajax({
 			url: "/manage/studyroom/srResvInfo",
 			data: {"studyroom_num":"${studyroom_num}"},
 			type: "post",
 			success: function(result) {
-				$(".timeline").empty();
+				$(".timeline").empty(); // 초기화
+				$(".timeline").css("background-color", "lime"); // 초기화
 				
 		 		// 테이블에 좌석번호별 id속성 입력
 		 		$(".sr_seat_num").each(function(indexx, itemm) {
@@ -69,10 +73,8 @@
 									$("#"+id).siblings("#time"+i).val("non-selectable");
 								}
 							} 
-	 						
 						} // outer if
 					}) // result의 each
-					
 		 		})//.sr_seat_num의 each
 		 		
 				// 조회 시점 이후에는 선택불가 처리
@@ -84,7 +86,6 @@
  						$(".sr_seat_num").siblings("#time"+i).val("non-selectable");
  					} // for
  				} // if
- 				
  				// 19시 이후 #time1 선택불가 처리
  				if (sysdate.substring(0,2) == '19') {
  					$(".sr_seat_num").siblings("#time1").css("background-color", "grey");
@@ -111,10 +112,9 @@
  						$(".sr_seat_num").siblings("#time"+i).val("non-selectable");
  					} // for
  				} // if
-
 			} // success
 		}) // ajax
-	});
+	};
 
 	
 	// 좌석 및 예약 시간대 선택
@@ -129,7 +129,7 @@
 		// 선택 셀(value="selected")을 다시 클릭할 경우 -> 선택 해제
 		if ($(this).val() == "selected") {
 			alert("선택이 취소됩니다.");
-			var removeIndex = resvApplyArr.indexOf(${studyroom_num}+":"+$(this).siblings(".sr_seat_num").text()+":"+this.id); // 선택 셀의 인덱스값 확인
+			var removeIndex = resvApplyArr.indexOf("${studyroom_num}"+":"+$(this).siblings(".sr_seat_num").text()+":"+this.id); // 선택 셀의 인덱스값 확인
 			resvApplyArr.splice(removeIndex, 1); // 배열에서 선택 셀 삭제
 			$(this).css("background-color", "lime");
 			$(this).val("");
@@ -166,8 +166,25 @@
 			resvApplyArr.pop();
 		}
 		
-		
 // 		alert("배열크기: " + resvApplyArr.length)
+
+	});
+	
+	// 예약신청 버튼 클릭
+	$(document).on("click", "#reset", function() {
+		alert("reset")
+		loadSRResvPage();
+	});
+	
+	// 전체취소 버튼 클릭
+	$(document).on("click", "#resvApply", function() {
+		alert("resvApply")
+		if (resvApplyArr.length == 0) {
+			alert("선택된 예약내역이 없습니다. 다시 확인해 주세요.");
+			return;
+		} // if
+		
+		location.href="/manage/studyroom/resvApply?resvApplyArr="+resvApplyArr;
 		
 	});
 	
@@ -200,7 +217,8 @@
 			</tr>
 		</c:forEach>
 	</table>
-	
+	<button id="resvApply">예약 신청</button>
+	<button id="reset">전체 취소</button>
 	
 
 </body>

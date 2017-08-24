@@ -25,7 +25,6 @@
 	<context:component-scan base-package="com.spring.manage" />
 	
 	<beans:bean id="Interceptor" class="com.spring.manage.util.Interceptor"></beans:bean>
-<<<<<<< HEAD
 
 <!-- 	<mvc:interceptors> -->
 <!-- 		<interceptor> -->
@@ -35,13 +34,5 @@
 <!-- 		</interceptor> -->
 <!-- 	</mvc:interceptors> -->
 
-=======
-	<mvc:interceptors>
-		<interceptor>
-			<mvc:mapping path="/studyroom/**" />
-			<beans:ref bean="Interceptor" />
-		</interceptor>
-	</mvc:interceptors>
->>>>>>> branch 'master' of https://github.com/SESmanagement/SESmanagement.git
 	
 </beans:beans>

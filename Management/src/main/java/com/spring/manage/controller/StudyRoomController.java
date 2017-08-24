@@ -53,4 +53,10 @@ public class StudyRoomController {
 		return srResvList;
 	}
 	
+	@RequestMapping(value = "resvApply", method = RequestMethod.GET)
+	public String resvApply(String[] resvApplyArr) {
+		
+		return "studyroom/reserveRoomForm";
+	}
+	
 }
