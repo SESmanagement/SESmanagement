@@ -21,7 +21,7 @@ import com.spring.manage.vo.BookVO;
 @Controller
 @RequestMapping("/book")
 public class BookController {
-
+//캐치유 캐치유 캐치미 캐치미 이제 숨바꼭질은 그만~ 우울한건 모두 파란하늘에 묻어버려~ 
 	@Autowired
 	private BookService b_service; //bookservice
 	
