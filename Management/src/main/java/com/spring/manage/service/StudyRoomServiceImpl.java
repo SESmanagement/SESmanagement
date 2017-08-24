@@ -41,5 +41,15 @@ public class StudyRoomServiceImpl implements StudyRoomService {
 		String sysdate = dao.getSysdate();
 		return sysdate;
 	}
+
+	@Override
+	public void resvApply(String[] resvApplyArr) {
+		SR_ReservationVO resvVO = new SR_ReservationVO();
+		for (String resv : resvApplyArr) {
+			// 스터디룸 넘버 / 좌석 번호 / 시작시간
+			
+		}
+		
+	}
 	
 }

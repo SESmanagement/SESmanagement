@@ -16,4 +16,7 @@ public interface StudyRoomService {
 	// 예약현황 조회시점의 시각 조회
 	public String getSysdate();
 
+	// 스터디룸 예약 신청
+	public void resvApply(String[] resvApplyArr);
+
 }

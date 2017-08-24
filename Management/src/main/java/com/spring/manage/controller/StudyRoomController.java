@@ -53,10 +53,12 @@ public class StudyRoomController {
 		return srResvList;
 	}
 	
+	// 스터디룸 예약 신청
 	@RequestMapping(value = "resvApply", method = RequestMethod.GET)
 	public String resvApply(String[] resvApplyArr) {
-		
-		return "studyroom/reserveRoomForm";
+//		String id
+		service.resvApply(resvApplyArr);
+		return "studyroom/myReserveInfo";
 	}
 	
 }
