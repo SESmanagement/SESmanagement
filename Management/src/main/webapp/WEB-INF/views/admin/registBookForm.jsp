@@ -9,7 +9,7 @@
 <body>
 <table>
 	<tr>
-		<td>${MemberVO.student_num}로그인중</td>
+		<td>${vo.name}로그인중</td>
 		<td>도서 등록</td>
 		<td id="todayDate"></td>
 	</tr>

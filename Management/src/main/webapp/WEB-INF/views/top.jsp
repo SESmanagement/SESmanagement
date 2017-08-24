@@ -54,8 +54,7 @@
 					<!-- admin --> <c:if test="${vo.student_num == 00001}">
 				<li><a href="">관리자메뉴</a>
 						<ul class="sub">
-							<li><a href="registBook">도서등록</a></li>
-							<li><a href="home">메인으로</a></li>
+							<li><a href="/manage/admin/registBookForm">도서등록</a></li>
 						</ul>
 				</li>
 					</c:if>

@@ -8,17 +8,19 @@
 <title>MENU</title>
 </head>
 <body>
-<%-- 	<c:if test="${MemberVO.student_num != 'admin'}"> --%>
-<!-- 		<a href="bookList"><input type="button" id="getBookList" value="도서목록"></a> -->
-<!-- 		<a href="borrowList"><input type="button" id="getBorrowList" value="대출현황"></a> -->
-<%-- 	</c:if> --%>
-	<c:if test="${MemberVO.student_num == 'admin'}">
-<!-- 		<a href="applyList"><input type = "button" id="getApplyList" value="대출 신청 목록"></a> -->
-<!-- 		<a href="lendList"><input type = "button" id="getLendList" value="대출 목록"></a> -->
-<!-- 		<a href="delayList"><input type = "button" id="getDelayList" value="연체목록"></a> -->
-		<a href="registBook"><input type = "button" id="registBook" value="도서등록"></a>
-		
-		<a href="home"><input type = "button" id="goBack" value="메인으로"></a>
+<div id="menu">
+	<c:if test="${MemberVO.student_num != 'admin'}">
+		<a href="getBookList"><input type="button" id="getBookList" value="도서목록"></a>
+		<a href="getBorrowList"><input type="button" id="getBorrowList" value="대출 리스트"></a>
 	</c:if>
+	<c:if test="${MemberVO.student_num == 'admin'}">
+
+		<a href="registBook"><input type = "button" id="registBook" value="도서등록"></a>
+		<a href=""><input type="button" id="getApplyList" value="대출신청 목록"></a>
+		<a href=""><input type="button" id="getLendList" value="대출현황 리스트"></a>
+		<a href=""><input type="button" id="getDelayList" value="연체목록"></a>
+		<a href="home"><input type = "button" id="goBack" value="메인"></a>
+	</c:if>
+</div>
 </body>
 </html>
