@@ -12,7 +12,7 @@ public class MemberDAOImpl implements MemberDAO {
 	@Autowired
 	private SqlSession sqlSession;
 	
-	
+	//로그인
 	@Override
 	public MemberVO login(MemberVO vo) {
 		MemberMapper mapper = sqlSession.getMapper(MemberMapper.class);
@@ -20,4 +20,13 @@ public class MemberDAOImpl implements MemberDAO {
 		return vo;
 	}
 
+	//회원정보수정
+	@Override
+	public int join(MemberVO vo) {
+		MemberMapper mapper = sqlSession.getMapper(MemberMapper.class);
+		return mapper.join(vo);
+	}
+	
+	
+	
 }

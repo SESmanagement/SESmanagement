@@ -4,40 +4,49 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>BookList</title>
+<title>게시판</title>
+<link rel="stylesheet" type="text/css" href="/myboard/resources/css/default.css" />
 </head>
 <body>
-<script> 
- 	if("${result}"=="true") alert("처리 완료");
- 	else if("${result}"=="false") alert("처리 실패");
+<script>
+	if("${result}"=="true") alert("처리 완료");
+	else if("${result}"=="false") alert("처리 실패");
 	
- 	function pageProc(currentPage, searchCondition, searchKeyword) {
-		location.href="/manage/book/getBoardList?currentPage=" + currentPage + "&searchCondition=" + searchCondition + "&searchKeyword=" + searchKeyword;
- 	}
+	function pageProc(currentPage, searchCondition, searchKeyword) {
+		location.href="/manage/book/getBookList?currentPage=" + currentPage + "&searchCondition=" + searchCondition + "&searchKeyword=" + searchKeyword;
+	}
 </script>
-	<h1>[ BookList ]</h1>
+	<h1>[ 도서게시판 ]</h1>
 	<table>
 		<tr>
 			<td id="boardSearch" colspan="4">
 			<form action="/manage/book/getBookList" method="get">
 				<select name="searchCondition">
-					<option value="TITLE" selected="selected">제목</option>
-					<option value="AUTHOR">저자</option>
-					<option value="publisher">출판사</option>
+					<option value="TITLE" selected="selected">도서제목</option>
+					<option value="NAME">작성자</option>
+					<option value="CONTENT">내용</option>
 				</select>
 				<input type="text" name="searchKeyword">
 				<input type="submit" value="검색">
 			</form>
 			</td>
+			<c:if test="${sessionScope.vo.name == '관리자'}">
+			<td class="right"><a href="/manage/book/writeForm">도서등록</a></td>
+			</c:if>
+		</tr>
+		
+		<tr>
+		<td><a href="/manage">main</a></td>
 		</tr>
 		<tr>
 			<th>번호</th>
+			<th>작성자</th>
 			<th>제목</th>
 		</tr>
 		<c:forEach items="${getBookList}" var="vo">
 		<tr>
 			<td class="center">${vo.book_num}</td>
-			<td class="center">${vo.id}</td>
+			<td class="center">${vo.name}</td>
 			<td id="title"><a href="/manage/book/read?book_num=${vo.book_num}">${vo.title}</a></td>
 		</tr>
 		</c:forEach>

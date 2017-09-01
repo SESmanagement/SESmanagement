@@ -20,8 +20,12 @@ public class MemberServiceImpl implements MemberService {
 	}
 
 	@Override
-	public void join(MemberVO vo, MultipartFile photo) {
-		
+	public boolean join(MemberVO vo) {
+		if(dao.join(vo)==0){
+			return false;
+		}else{
+			return true;
+		}
 	}
 
 }

@@ -1,16 +1,14 @@
 package com.spring.manage.service;
 
-import java.util.HashMap;
-import java.util.List;
+import java.util.ArrayList;
 import java.util.Map;
 
-import org.apache.ibatis.session.RowBounds;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.spring.manage.dao.BookDAO;
+import com.spring.manage.util.PageNavigator;
 import com.spring.manage.vo.BookVO;
-import com.spring.manage.vo.LendVO;
 
 
 @Service
@@ -18,46 +16,43 @@ public class BookServiceImpl implements BookService{
 
 	@Autowired
 	private BookDAO dao;
-
+	private final int countPerPage = 10;
+	private final int pagePerGroup = 5;
+	
 	@Override
-	public BookVO selectOne(int num) {
-		return dao.selectOne(num);
+	public ArrayList<BookVO> getBookList(Map<String, String> map, PageNavigator navi) {
+		return dao.getBookList(map, navi.getStartRecord(), navi.getCountPerPage());
 	}
 
 	@Override
-	public int insert(BookVO vo) {
-		return dao.insert(vo);
+	public PageNavigator getNavi(int currentPage, Map<String, String> map) {
+		int totalRecordsCount = dao.getTotal(map);
+		PageNavigator navi = new PageNavigator(countPerPage, pagePerGroup, currentPage, totalRecordsCount);
+		return navi;
 	}
 
 	@Override
-	public int reserveBook(Map<String, Object> map) {
-		return dao.reserveBook(map);
+	public boolean write(BookVO vo) {
+		if (dao.write(vo) == 1) return true;
+		else return false;
 	}
 
 	@Override
-	public List<LendVO> borrowList(String usernum, RowBounds rb) {
-		return dao.borrowList(usernum, rb);
+	public BookVO read(int book_num) {
+		return dao.read(book_num);
 	}
 
 	@Override
-	public int getBookCount(String searchType, String searchValue) {
-		Map<String,String> map=new HashMap<>();
-		map.put("searchType", searchType);
-		map.put("searchValue", searchValue);
-		return dao.getBookCount(map);
+	public Object delete(int book_num) {
+		if(dao.delete(book_num) != 1) return false;
+		return true;
 	}
 
 	@Override
-	public int getBorrowCount(String usernum) {
-		return dao.getBorrowCount(usernum);
-	}
-
-	@Override
-	public List<BookVO> selectAll(String searchType, String searchValue, int startRecord, int countPerPage) {
-		RowBounds rb = new RowBounds(startRecord, countPerPage);
-		Map<String, String> search = new HashMap<>();
-		search.put("searchType", searchType);
-		search.put("searchValue", searchValue);
-		return dao.selectAll(search, rb);
+	public boolean update(BookVO vo) {
+			if(dao.update(vo) != 1) {
+				return false;
+			}
+			return true;
 	}
 }

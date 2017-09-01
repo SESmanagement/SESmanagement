@@ -14,12 +14,83 @@
 	<!-- 해당 스터디룸 오늘자 예약현황 조회 -->
 	<select id="srResvInfo" parameterType="int" resultType="SR_ReservationVO">
 		SELECT * FROM SR_RESERVATION WHERE STUDYROOM_NUM = #{studyroom_num} 
-		AND TO_CHAR(START_TIME, 'YY/MM/DD') LIKE SYSDATE
+			AND TO_CHAR(START_TIME, 'YY/MM/DD') LIKE SYSDATE
 	</select>
 	
-		<!-- 예약현황 조회시점의 시각 조회 -->
+	<!-- 예약현황 조회시점의 시각 조회 -->
 	<select id="getSysdate" resultType="String">
-		SELECT TO_CHAR(SYSDATE, 'HH24:MI') FROM DUAL
+		SELECT TO_CHAR(SYSDATE, 'YY-MM-DD HH24:MI:SS dy') FROM DUAL
+	</select>
+	
+	<!-- 스터디룸 예약 신청 -->
+	<insert id="resvApply" parameterType="SR_ReservationVO">
+		INSERT INTO SR_RESERVATION VALUES (
+			'SRR'||SRR_SEQ.NEXTVAL, #{studyroom_num}, #{sr_seat_num}, #{student_num},
+			TO_TIMESTAMP(TO_CHAR(SYSDATE, 'YY/MM/DD')||' '||#{start_time}, 'YY/MM/DD HH24:MI:SS'), 
+			TO_TIMESTAMP(TO_CHAR(SYSDATE, 'YY/MM/DD')||' '||#{end_time}, 'YY/MM/DD HH24:MI:SS')
+		)
+	</insert>
+	
+	<!-- 스터디룸 예약신청후 STUDYROOM 테이블의  SEATED_STATUS에 상태 변경하기 => 카운트 가감(-/+) -->
+	<update id="updateSeated_status">
+		UPDATE STUDYROOM A SET SEATED_STATUS = (
+			SELECT COUNT(STUDYROOM_NUM||' '||SR_SEAT_NUM) FROM SR_RESERVATION B
+			WHERE TO_CHAR(START_TIME, 'YYMMDD') = TO_CHAR(SYSDATE, 'YYMMDD')
+			AND A.STUDYROOM_NUM||' '||A.SR_SEAT_NUM = B.STUDYROOM_NUM||' '||B.SR_SEAT_NUM
+			GROUP BY B.STUDYROOM_NUM||' '||B.SR_SEAT_NUM)
+			WHERE A.STUDYROOM_NUM||' '||A.SR_SEAT_NUM IS NOT NULL
+	</update>
+	
+	<!-- 나의 오늘자 스터디룸 예약현황 예약현황 조회 -->
+	<select id="myResvInfo" parameterType="int" resultType="SR_ReservationVO">
+		SELECT * FROM SR_RESERVATION WHERE STUDENT_NUM = #{student_num} 
+			AND TO_CHAR(START_TIME, 'YY/MM/DD') LIKE SYSDATE
+	</select>
+	
+	<!-- 내 스터디룸 예약현황 페이지로 이동시 내 전체 예약리스트 조회-->
+	<select id="myResvInfoAll" parameterType="int" resultType="SR_ReservationVO">
+		SELECT * FROM SR_RESERVATION WHERE STUDENT_NUM = #{student_num} 
+			ORDER BY START_TIME DESC
+	</select>
+	
+	<!-- 스터디룸 예약번호로 조회한 예약 내역 (예약 취소 실패시 백업용)-->
+	<select id="getResvInfoBysr_resv_num" parameterType="string" resultType="SR_ReservationVO">
+		SELECT * FROM SR_RESERVATION WHERE SR_RESV_NUM = #{sr_resv_num} 
+	</select>
+	
+	<!-- 스터디룸 예약 재신청 (예약 취소 실패시 백업용) -->
+	<insert id="resvApplyAgain" parameterType="SR_ReservationVO">
+		INSERT INTO SR_RESERVATION VALUES (
+			#{sr_resv_num}, #{studyroom_num}, #{sr_seat_num}, #{student_num},
+			#{start_time}, #{end_time}
+		)
+	</insert>
+	
+	<!-- 스터디룸 예약 취소 -->
+	<delete id="cancelMySRR" parameterType="string">
+		DELETE SR_RESERVATION WHERE SR_RESV_NUM = #{sr_resv_num}
+	</delete>
+	
+	<!-- 시간대별 예약가능현황 조회-->
+	<select id="checkAvailableRoom" parameterType="int" resultType="int">
+		SELECT DISTINCT  A.STUDYROOM_NUM FROM STUDYROOM A, SR_RESERVATION B
+			WHERE A.STUDYROOM_NUM||' '||A.SR_SEAT_NUM||' '||TO_CHAR(B.START_TIME, 'YYMMDDHH24') NOT IN (
+			SELECT STUDYROOM_NUM||' '||SR_SEAT_NUM||' '||TO_CHAR(B.START_TIME, 'YYMMDDHH24') FROM SR_RESERVATION
+			WHERE TO_NUMBER(TO_CHAR(START_TIME, 'YYMMDDHH24')) &gt;= TO_NUMBER(TO_CHAR(SYSDATE, 'YYMMDDHH24'))
+			AND
+			<foreach item="checkListList" index="index" collection="list" separator="or">
+			TO_NUMBER(TO_CHAR(START_TIME, 'YYMMDDHH24')) = TO_NUMBER(TO_CHAR(SYSDATE, 'YYMMDD')||#{checkListList})
+		  </foreach>
+			)
+	</select>
+	
+	<!-- 현시점 예약가능현황 조회-->
+	<select id="nowAvailableRoom" resultType="int">
+		SELECT DISTINCT A.STUDYROOM_NUM FROM STUDYROOM A, SR_RESERVATION B
+			WHERE A.STUDYROOM_NUM||' '||A.SR_SEAT_NUM||' '||TO_CHAR(B.START_TIME, 'YYMMDDHH24') NOT IN (
+			SELECT STUDYROOM_NUM||' '||SR_SEAT_NUM FROM SR_RESERVATION
+			WHERE TO_NUMBER(TO_CHAR(START_TIME, 'YYMMDDHH24')) &gt;= TO_NUMBER(TO_CHAR(SYSDATE, 'YYMMDDHH24')))
+			WHERE A.STUDYROOM_NUM||' '||A.SR_SEAT_NUM IS NOT NULL
 	</select>
 	
 </mapper>

@@ -6,5 +6,36 @@
 <!-- 반배치  SQL -->
 <mapper namespace="com.spring.manage.dao.ArrangeMapper">
 
+	<!-- 강의실 리스트  온다 -->
+	<select id="getClassRoom" resultType="ClassRoomVO">
+		select * from classroom
+	</select>
 
+	<!-- 기수 리스트를 가지고 온다 -->
+	<select id="getPartyList" resultType="PartyVO">
+		select * from party order by party_num 
+	</select>	
+
+	<!-- 강의실 업데이트 -->
+	<update id="updateRoom" parameterType="ClassRoomVO">
+		update classroom set 
+			width = #{width},
+			height = #{height},
+			party_num = #{party_num}
+		where num = #{num}
+	</update>
+	
+	<!-- 강의실 좌석 전체 삭제 -->
+	<delete id="deleteSeat" parameterType="Room_StatusVO">
+		delete from room_status
+	</delete>
+	
+	<!-- 강의실 좌석 번호 설정 -->
+	<insert id="insertSeat" parameterType="Room_StatusVO">
+		insert into room_status(
+			#{classroom_num},
+			#{seat},
+			0
+		)
+	</insert>
 </mapper>

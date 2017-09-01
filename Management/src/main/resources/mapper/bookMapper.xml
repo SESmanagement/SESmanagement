@@ -6,6 +6,38 @@
 <!-- 도서등록  SQL -->
 <mapper namespace="com.spring.manage.dao.BookMapper">
 
+<insert id="write" parameterType="BookVO">
+	INSERT INTO books 
+	VALUES (book_seq.nextval, #{name}, #{title}, #{content})
+</insert>
 
+	<!-- 게시글 목록 가져오기 -->
+	<select id="getBookList" parameterType="map" resultType="BookVO">
+		SELECT * FROM BOOKS
+		<if test="searchCondition == 'TITLE'">
+		WHERE TITLE LIKE '%'||#{searchKeyword}||'%'
+		</if>
+		<if test="searchCondition == 'NAME'">
+		WHERE ID LIKE '%'||#{searchKeyword}||'%'
+		</if>
+		<if test="searchCondition == 'CONTENT'">
+		WHERE CONTENT LIKE '%'||#{searchKeyword}||'%'
+		</if>
+		ORDER BY BOOK_NUM DESC
+	</select>
 	
+		<!-- 게시글 읽기 -->
+	<select id="read" parameterType="int" resultType="BookVO">
+		SELECT * FROM BOOKS WHERE BOOK_NUM = #{book_num}
+	</select>
+	
+	<!-- 게시글 삭제 -->
+	<delete id="delete" parameterType="int">
+		DELETE BOOKS WHERE BOOK_NUM = #{book_num}
+	</delete>
+	
+		<!-- 게시글 수정 -->
+	<update id="update" parameterType="BookVO">
+		UPDATE BOOKS SET TITLE = #{title}, CONTENT = #{content} WHERE BOOK_NUM = #{book_num}
+	</update>
 </mapper>

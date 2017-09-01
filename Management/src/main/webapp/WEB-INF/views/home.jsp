@@ -11,6 +11,15 @@ body{
 }
 </style>
 
+<script>
+	$(function(){
+		if("${result}" == ""){
+			alert('회원정보수정 성공');
+		}
+	});
+
+</script>
+
 <body>
 <%@ include file="top.jsp" %>
 <br>

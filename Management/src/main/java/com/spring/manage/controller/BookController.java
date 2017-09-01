@@ -1,6 +1,6 @@
 package com.spring.manage.controller;
 
-import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -8,86 +8,82 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.spring.manage.service.AdminService;
 import com.spring.manage.service.BookService;
-import com.spring.manage.util.FileService;
 import com.spring.manage.util.PageNavigator;
 import com.spring.manage.vo.BookVO;
-
-
 
 @Controller
 @RequestMapping("/book")
 public class BookController {
-//캐치유 캐치유 캐치미 캐치미 이제 숨바꼭질은 그만~ 우울한건 모두 파란하늘에 묻어버려~ 
+
 	@Autowired
-	private BookService b_service; //bookservice
-	
-	@Autowired
-	private AdminService a_service; //adminservice
-	
-	final String uploadPath = "/booksImage";
-	
-	//책목록
-	@RequestMapping(value = "/getBookList", method = RequestMethod.GET)
-	public String getBookList(
-				@RequestParam(value="currentPage", defaultValue="1") int currentPage, 
-				@RequestParam(value="searchType", defaultValue="title") String searchType,
-				@RequestParam(value="searchValue", defaultValue="") String searchValue,
-				@RequestParam(value="showNum", defaultValue="3") int showNum,
-				Model model) {
-		String originalSearchValue=searchValue;
-		if(searchType.equals("status")){
-			if(searchValue.equals("y") || searchValue.equals("Y")) searchValue="Yes";
-			if(searchValue.equals("n") || searchValue.equals("N")) searchValue="Nope";
-		}
-		
-		int totalRecordCount = b_service.getBookCount(searchType, searchValue);
-		System.out.println("===========>"+totalRecordCount);
-		PageNavigator navi=new PageNavigator(showNum, currentPage, totalRecordCount, totalRecordCount);
-		List<BookVO> list = b_service.selectAll(searchType, searchValue, navi.getStartRecord(), navi.getCountPerPage());
-		for (BookVO b : list) {
-			if (b.getStatus() == null || b.getStatus().equals("returned") || b.getStatus().equals("rejected")
-					|| b.getStatus().equals("delay_returned")) {
-				b.setStatus("Y");
-			} else {
-				b.setStatus("N");
-			}
-		}
-		if(list.size()<1){
-			model.addAttribute("msg","해당 결과가 없습니다.");
-		}
-		System.out.println(list.size());
-		model.addAttribute("showNum", showNum);
-		model.addAttribute("searchType", searchType);
-		model.addAttribute("searchValue",originalSearchValue);
-		model.addAttribute("navi",navi);
-		model.addAttribute("booklist", list);
-		model.addAttribute("cnt", 1);
-		return "home";
-	}
+	private BookService service;
 
 	
 	// 책 등록 Form
-	@RequestMapping(value = "/registBookForm", method = RequestMethod.GET)
-	public String registBook() {
-		System.out.println("여긴들어온듯");
-		return "/admin/registBookForm";
+	@RequestMapping(value = "writeForm", method = RequestMethod.GET)
+	public String writeForm() {
+		return "/book/writeForm";
 	}
 	
-	//책 등록
-	@RequestMapping(value = "/registBook", method = RequestMethod.POST)
-	public String registBook(BookVO vo, MultipartFile upload) {
-		// 책 이미지 저장
-		if (upload.getOriginalFilename().length() > 0) {
-			String img_src = FileService.saveFile(uploadPath, upload, vo.getTitle() + "_" + vo.getAuthor());
-			vo.setImg_src(img_src);
+	// 게시글 등록
+	@RequestMapping(value = "write", method = RequestMethod.POST)
+	public String write(BookVO vo) {
+		System.out.println(vo.getBook_num());
+		System.out.println(vo.getName());
+		System.out.println(vo.getContent());
+		System.out.println(vo.getTitle());
+		service.write(vo);
+		return "redirect:/book/getBookList";
+	}
+	
+	//게시글보기
+	@RequestMapping(value = "getBookList", method = RequestMethod.GET)
+	public String getBookList(
+			@RequestParam(value="currentPage", defaultValue="1") int currentPage,
+			@RequestParam(value="searchKeyword", defaultValue="") String searchKeyword,
+			String searchCondition,
+			Map<String, String> map, Model model) {
+		
+		PageNavigator navi = service.getNavi(currentPage, map);
+		map.put("searchCondition", searchCondition);
+		map.put("searchKeyword", searchKeyword);
+		
+		model.addAttribute("getBookList", service.getBookList(map, navi));
+		model.addAttribute("navi", navi);
+		model.addAttribute("searchCondition", searchCondition);
+		model.addAttribute("searchKeyword", searchKeyword);
+		return "/book/getBookList";
+	}
+	
+	//게시글 읽기
+	@RequestMapping(value = "read")
+	public String read(int book_num, Model model) {
+		model.addAttribute("bookVO", service.read(book_num));
+		return "/book/bookRead";
+	}
+	
+	// 게시글 삭제
+		@RequestMapping(value = "delete", method = RequestMethod.GET)
+		public String delete(int book_num, RedirectAttributes rttr) {
+			rttr.addFlashAttribute("result", service.delete(book_num));
+			return "redirect:/book/getBookList";
 		}
-		b_service.insert(vo);
-		return "admin/lendList";
-	}
 	
-	
+	// 게시글 수정 양식 이동
+		@RequestMapping(value = "bookUpdateForm", method = RequestMethod.GET)
+		public String updateForm(int book_num, Model model) {
+			model.addAttribute("vo", service.read(book_num));
+			return "/book/bookUpdateForm";
+		}
+		
+	// 게시글 수정
+		@RequestMapping(value = "update", method = RequestMethod.POST)
+		public String update(BookVO vo, Model model) {
+			model.addAttribute("book_num", vo.getBook_num());
+			model.addAttribute("result", service.update(vo));
+			return "/book/bookRead";
+		}
 }

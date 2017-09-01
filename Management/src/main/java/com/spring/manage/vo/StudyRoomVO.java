@@ -4,7 +4,11 @@ public class StudyRoomVO {
 	private int studyroom_num; // 스터디룸 번호
 	private int sr_seat_num; // 각 스터디룸 내 좌석 번호
 	private char rechargable; // 충전가능여부 (좌석 근처에 콘세트 유무 여부를 Y와 N으로 표시)
-	private String seated_status; // 현재 좌석 배치 현황 (예약중 / 예약가능 / 예약불가-관리자 처리)
+	private String seated_status; // 4개의 시간대중 현재 예약된 시간대의 수
+	private int room_x; // 스터디룸의 위치 좌표
+	private int room_y; // 스터디룸의 위치 좌표
+	private int seat_x; // 좌석의 위치 좌표
+	private int seat_y; // 좌석의 위치 좌표
 	
 	public StudyRoomVO() {}
 
@@ -40,10 +44,43 @@ public class StudyRoomVO {
 		this.seated_status = seated_status;
 	}
 
+	public int getRoom_x() {
+		return room_x;
+	}
+
+	public void setRoom_x(int room_x) {
+		this.room_x = room_x;
+	}
+
+	public int getRoom_y() {
+		return room_y;
+	}
+
+	public void setRoom_y(int room_y) {
+		this.room_y = room_y;
+	}
+
+	public int getSeat_x() {
+		return seat_x;
+	}
+
+	public void setSeat_x(int seat_x) {
+		this.seat_x = seat_x;
+	}
+
+	public int getSeat_y() {
+		return seat_y;
+	}
+
+	public void setSeat_y(int seat_y) {
+		this.seat_y = seat_y;
+	}
+
 	@Override
 	public String toString() {
 		return "StudyRoomVO [studyroom_num=" + studyroom_num + ", sr_seat_num=" + sr_seat_num + ", rechargable="
-				+ rechargable + ", seated_status=" + seated_status + "]";
+				+ rechargable + ", seated_status=" + seated_status + ", room_x=" + room_x + ", room_y=" + room_y
+				+ ", seat_x=" + seat_x + ", seat_y=" + seat_y + "]";
 	}
-	
+
 }

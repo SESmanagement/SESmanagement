@@ -10,5 +10,13 @@
 		select * from member where student_num = #{student_num} and pwd=#{pwd}
 	</select>
 
-	
+	<update id="join" parameterType="MemberVO">
+		update member set
+		pwd = #{pwd},
+		zip = #{zip},
+		address = #{address},
+		email = #{email} 
+		where student_num = #{student_num}
+		
+	</update>
 </mapper>

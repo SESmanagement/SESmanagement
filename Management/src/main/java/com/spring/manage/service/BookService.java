@@ -1,19 +1,16 @@
 package com.spring.manage.service;
 
-import java.util.List;
+import java.util.ArrayList;
 import java.util.Map;
 
-import org.apache.ibatis.session.RowBounds;
-
+import com.spring.manage.util.PageNavigator;
 import com.spring.manage.vo.BookVO;
-import com.spring.manage.vo.LendVO;
 
 public interface BookService {
-	public BookVO selectOne(int num);
-	public int insert(BookVO vo);
-	public int reserveBook(Map<String, Object> map);
-	public List<LendVO> borrowList(String usernum, RowBounds rb);
-	public int getBorrowCount(String usernum);
-	public List<BookVO> selectAll(String searchType, String searchValue, int startRecord, int countPerPage);
-	int getBookCount(String searchType, String searchValue);
+	public ArrayList<BookVO> getBookList(Map<String, String> map, PageNavigator navi);
+	public PageNavigator getNavi(int currentPage, Map<String, String> map);
+	public boolean write(BookVO vo);
+	public BookVO read(int book_num);
+	public Object delete(int book_num);
+	public boolean update(BookVO vo);
 }
