@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 관리자  SQL -->
+<mapper namespace="com.spring.manage.dao.GroupMapper">
+	
+	<!-- 소모임 생성 -->
+	<insert id="seek" parameterType="GroupVO">
+		insert into group_total values
+		(group_seq.nextval, #{group_title}, #{start_date}, #{end_date}, #{penalty},  #{content}, #{headcount},  #{owner})
+	</insert>
+	
+	<!-- 소모임전체리스트 -->
+	<select id="list" resultType="GroupVO">
+		select t.*, m.name as owner_name from group_total t, member m
+		where t.owner = m.student_num order by group_num desc
+	</select>
+	
+	<!-- 소모임 상세창 -->
+	<select id="detail" parameterType="Integer" resultType="GroupVO">
+		select m.name as owner_name, gm.* 
+		from member m, group_member gm
+		where gm.group_num=#{group_num} and m.student_num=gm.student_num
+	</select>
+	
+	
+	<!-- 소모임 중복가입여부 확인 -->
+	<select id="join_mae" parameterType="GroupJoinVO" resultType="GroupJoinVO">
+		select * from group_member where student_num = #{student_num} and group_num = #{group_num}
+	</select>
+	
+	<!-- 소모임가입 -->
+	<insert id="join" parameterType="GroupJoinVO">
+		insert into group_member(group_num, student_num) values(#{group_num}, #{student_num})
+	</insert>
+	
+	
+</mapper>
