@@ -62,17 +62,15 @@ public class ArrangController {
 	
 	//강의실 업데이트
 	@RequestMapping(value="/updateRoom", method=RequestMethod.POST)
-	public String updateRoom(ClassRoomVO room, String[] seat){
+	public String updateRoom(ClassRoomVO room){
 		ArrayList<Room_StatusVO> statusList = new ArrayList<>();
 		/*String[] seat = (String[]) session.getAttribute("seat");
 		for(int i = 0 ; i < seat.length ; i++){
 			System.out.println(seat);
 		}*/
-		
-		System.out.println(room);
-		System.out.println(seat);
-		service.updateRoom(room, statusList);
+		//System.out.println(room);
+		service.updateRoom(room);
 		return "/arrange/arrangeForm";
-	}
+	} 
 
 }

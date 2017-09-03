@@ -26,16 +26,19 @@
 	</update>
 	
 	<!-- 강의실 좌석 전체 삭제 -->
-	<delete id="deleteSeat" parameterType="Room_StatusVO">
-		delete from room_status
+	<delete id="deleteSeat" parameterType="ClassRoomVO">
+		delete from room_status where classroom_num = #{num}
 	</delete>
 	
 	<!-- 강의실 좌석 번호 설정 -->
 	<insert id="insertSeat" parameterType="Room_StatusVO">
-		insert into room_status(
-			#{classroom_num},
-			#{seat},
-			0
-		)
-	</insert>
+ 		insert into room_status(classroom_num, seat) values(#{classRoom_num}, #{seat})
+ 		<!-- <foreach collection="list" item="item" separator=" ">
+ 		insert into room_status(classRoom_num, seat)
+ 		 values
+ 		(#{item.classRoom_num}, #{item.seat})
+ 		</foreach> -->
+ 	</insert>
+ 		
+
 </mapper>

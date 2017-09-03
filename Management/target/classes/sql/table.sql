@@ -138,6 +138,7 @@ insert into member values(33086, 900325, 33, '허준영', 'm', null, null, null,
 insert into member values(33087, 900326, 33, '김용범', 'm', null, null, null, 'photo','90-03-26', null, null);
 insert into member values(33088, 900327, 33, '김용일', 'm', null, null, null, 'photo','90-03-27', null, null);
 insert into member values(33089, 900328, 33, '김세영', 'm', null, null, null, 'photo','90-03-28', null, null);
+
 insert into member values(33090, 900329, 33, '김민석', 'm', null, null, null, 'photo','90-03-29', null, null);
 insert into member values(33091, 900330, 33, '박기춘', 'm', null, null, null, 'photo','90-03-30', null, null);
 insert into member values(33092, 900331, 33, '박래훈', 'm', null, null, null, 'photo','90-03-31', null, null);
@@ -200,6 +201,10 @@ CREATE TABLE SR_RESERVATION
 	END_TIME TIMESTAMP NOT NULL,
 	FOREIGN KEY (STUDYROOM_NUM, SR_SEAT_NUM) REFERENCES STUDYROOM
 );
+
+// 2017-09-01 SR_RESERVATION 테이블의 페이크 데이터 - 테이블 EMPTY 방지
+INSERT INTO SR_RESERVATION VALUES (
+'SRR000', 1, 1, 1, '70-01-01 00:00:00', '70-01-01 00:00:00');
 
 // SR_RESV_NUM의 시퀀스 생성 (예약일련번호 : "SRR"+SRR_SEQ.NEXTVAL)
 CREATE SEQUENCE SRR_SEQ;

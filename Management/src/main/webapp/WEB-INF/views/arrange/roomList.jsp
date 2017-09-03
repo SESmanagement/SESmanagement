@@ -129,17 +129,7 @@
 			$("#select_room_list").html(str);
 		});
 	
-/* 	$(document).on("click", '#insertSeat', function(){
-		
-		var str ="";
-		for(var i = 0 ; i < (check_width*check_height) ; i++){
-			str += "<input type = 'hidden' name = 'seat' value = '"+(seatNumber++)+"'>";	
-		}
-		$("#select_room_list").html(str);
-		seatNumber =0;
-		alert(str);
-	}); */
-	
+
 	$(document).on("click", "#updateRooms", function(){
 		var check_width = $('input[name=width]').val();
 		var check_height = $('input[name=height]').val();
@@ -175,13 +165,9 @@
 </script>
 </head>
 <body>
-	<form>
-	<div>
-	<table align="left">
-	</table>
-	<div id="classrooms"></div><div id = select_room align="right"></div>
-	</div>
-	</form>
+	<form><br><br>
+	<div class = "happy" id="classrooms" style="float: left"><div style="float: right;">hello&nbsp;&nbsp;&nbsp;&nbsp;</div></div><div class ="happy" id = select_room ></div>
+	</form><br><br><br><br>
 	<form action="/manage/arrange/updateRoom" id="select_room_list" method="post">
 	</form>
 	

@@ -9,6 +9,6 @@ import com.spring.manage.vo.Room_StatusVO;
 public interface ArrangeService {
 	public ArrayList<ClassRoomVO> getClassRoom();
 	public ArrayList<PartyVO> getPartyList();
-	public void updateRoom(ClassRoomVO room, ArrayList<Room_StatusVO> statusList);
-	public void insertSeat(ArrayList<Room_StatusVO> statusList);
+	public void updateRoom(ClassRoomVO room);
+
 }

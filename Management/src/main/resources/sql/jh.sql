@@ -177,7 +177,7 @@ insert into classroom values(12, '12강의실', 0,0,0);
 CREATE TABLE room_status
 (
 	classroom_num number REFERENCES classroom(num),
-	seat number primary key,
+	seat number,
 	serviceable number default 0	
 );
 
