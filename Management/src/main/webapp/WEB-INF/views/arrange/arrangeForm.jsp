@@ -5,6 +5,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>강의실</title>
+<<<<<<< HEAD
 	<script src="/manage/resources/js/jque2ry-3.2.1.js"></script>
 	<script src="/manage/resources/js/jquery.datetimepicker.full.min.js"></script>
 <script>
@@ -17,5 +18,20 @@
 	<br>
 	<hr>
 	<%@ include file="../arrange/roomList.jsp" %>
+=======
+	<script src="/manage/resources/js/jquery-3.2.1.js"></script>
+	<script src="/manage/resources/js/jquery.datetimepicker.full.min.js"></script>
+<script>
+
+</script>
+</head>
+<body>
+	<%-- <%@ include file="../top.jsp" %> --%>
+	<br>
+	<br>
+	<hr>
+	<%@ include file="../arrange/roomList.jsp" %>
+	
+>>>>>>> branch 'master' of https://github.com/SESmanagement/SESmanagement.git
 </body>
 </html>

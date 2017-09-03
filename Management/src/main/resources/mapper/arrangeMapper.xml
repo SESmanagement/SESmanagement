@@ -33,11 +33,6 @@
 	<!-- 강의실 좌석 번호 설정 -->
 	<insert id="insertSeat" parameterType="Room_StatusVO">
  		insert into room_status(classroom_num, seat) values(#{classRoom_num}, #{seat})
- 		<!-- <foreach collection="list" item="item" separator=" ">
- 		insert into room_status(classRoom_num, seat)
- 		 values
- 		(#{item.classRoom_num}, #{item.seat})
- 		</foreach> -->
  	</insert>
  		
 
