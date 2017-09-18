@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- Student관리  SQL -->
+<mapper namespace="com.spring.manage.dao.StudentMapper">
+
+	<!-- 학생 리스트  가져 온다 -->
+	<select id="getStudentList" parameterType="int" resultType="MemberVO">
+		select * from member where PARTY_NUM = #{party_num} order by STUDENT_NUM asc
+	</select>
+	
+	<select id="selectStudent" resultType="MemberVO" parameterType="int">
+		select * from member where student_num = #{student_num}
+	</select>
+	
+	<select id="selectHateStudent" resultType="MemberVo" parameterType="MemberVo">
+		select * from member where PARTY_NUM = #{party_num} and name = #{name} order by student_num asc
+	</select>
+	
+	<insert id="adviceInsert" parameterType="Member_NoteVO">
+		insert into member_note values(
+			NOTE_SEQ.nextval,
+			#{advice_date},
+			#{student_number},
+			#{special_note},
+			#{hate_student_num}
+		)
+	</insert>
+	
+	<update id="insertExamIt_1" parameterType="Exam_ScoreVO">
+	update exam_score set
+		it_1 = #{it_1}
+		where student_num = #{student_num} 
+	</update>
+
+	<update id="insertExamIt_2" parameterType="Exam_ScoreVO">
+		update exam_score set
+			it_2 = #{it_2}
+			where student_num = #{student_num} 
+	</update>
+	<update id="insertExamIt_3" parameterType="Exam_ScoreVO">
+		update exam_score set
+			it_3 = #{it_3}
+			where student_num = #{student_num} 
+	</update>
+	<update id="insertExamJap_1" parameterType="Exam_ScoreVO">
+		update exam_score set
+			jap_1 = #{jap_1}
+			where student_num = #{student_num} 
+	</update>
+	<update id="insertExamJap_2" parameterType="Exam_ScoreVO">
+		update exam_score set
+			jap_2 = #{jap_2}
+			where student_num = #{student_num}
+	</update>
+	<update id="insertExamJap_3" parameterType="Exam_ScoreVO">
+		update exam_score set
+			jap_3 = #{jap_3}
+			where student_num = #{student_num}
+	</update>
+	<update id="insertLive_Score" parameterType="Exam_ScoreVO">
+		update exam_score set
+			live_score = #{live_score}
+			where student_num = #{student_num} 
+	</update>
+	
+	<select id="getSelectExam_Score" parameterType="int" resultType="Exam_ScoreVO">
+		select * from exam_score where student_num = #{student_num}	
+	</select>
+	
+	<update id="setSelectExam_Score" parameterType="Exam_ScoreVO">
+		update exam_score set
+		<if test="it_1 != ''">it_1 = #{it_1}</if>
+		<if test="it_2 != ''">it_2 = #{it_2}</if>
+		<if test="it_3 != ''">it_3 = #{it_3}</if>
+		<if test="jap_1 != ''">jap_1 = #{jap_1}</if>
+		<if test="jap_2 != ''">jap_2 = #{jap_2}</if>
+		<if test="jap_3 != ''">jap_3 = #{jap_3}</if>
+		<if test="live_score != ''">live_score = #{live_score}</if>
+		where party_num = #{party_num} and student_num = #{student_num}
+	</update>
+	<!-- <insert id="insertExamIt_2" parameterType="Exam_ScoreVO">
+		insert into exam_score (student_num, it_2) values(
+			#{student_num}, #{it_2}
+		)
+	</insert> -->
+
+	<!-- <insert id="insertExamIt_3" parameterType="Exam_ScoreVO">
+		insert into exam_score (student_num, it_3) values(
+			#{student_num}, #{it_3}
+		)
+	</insert>
+	
+	<insert id="insertExamJap_1" parameterType="Exam_ScoreVO">
+		insert into exam_score (student_num, jap_1) values(
+			#{student_num}, #{jap_1}
+		)
+	</insert>
+	
+	<insert id="insertExamJap_2" parameterType="Exam_ScoreVO">
+		insert into exam_score (student_num, jap_2) values(
+			#{student_num}, #{jap_2}
+		)
+	</insert>
+	
+	<insert id="insertExamJap_3" parameterType="Exam_ScoreVO">
+		insert into exam_score (student_num, jap_3) values(
+			#{student_num}, #{jap_3}
+		)
+	</insert>	
+	
+	<insert id="insertExamLive_Score" parameterType="Exam_ScoreVO">
+		insert into exam_score (student_num, live_score) values(
+			#{student_num}, #{live_score}
+		)
+	</insert> -->
+</mapper>
+
+
+
