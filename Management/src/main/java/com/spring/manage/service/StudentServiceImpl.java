@@ -18,8 +18,8 @@ public class StudentServiceImpl implements StudentService{
 	private StudentDAO dao;
 
 	@Override
-	public ArrayList<MemberVO> getStudentList(int party_num) {
-		return dao.getStudentList(party_num);
+	public ArrayList<MemberVO> getStudentList(int member_num) {
+		return dao.getStudentList(member_num);
 	}
 
 	@Override
@@ -28,10 +28,10 @@ public class StudentServiceImpl implements StudentService{
 	}
 
 	@Override
-	public ArrayList<MemberVO> selectHateStudent(int party_num, String name) {
+	public ArrayList<MemberVO> selectHateStudent(int member_num, String name) {
 		MemberVO vo = new MemberVO();
-		System.out.println(party_num);
-		vo.setParty_num(party_num);
+		System.out.println(member_num);
+		vo.setMember_num(member_num);
 		vo.setName(name);
 		return dao.selectHateStudent(vo);
 	}

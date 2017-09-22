@@ -4,21 +4,13 @@
 <html>
 <head>
 	<title>Home</title>
+<script src="resources/js/jquery-3.2.1.min.js"></script>
 </head>
 <style>
 body{
 	background-color: white;
 }
 </style>
-
-<script>
-	$(function(){
-		if("${result}" == ""){
-			alert('회원정보수정 성공');
-		}
-	});
-
-</script>
 
 <body>
 <%@ include file="top.jsp" %>
@@ -29,7 +21,7 @@ body{
 <c:if test="${sessionScope.vo.name != null}">
 	<%@ include file="logedin.jsp" %>
 </c:if>
+<%@ include file="footer.jsp" %>
+
 </body>
 </html>
-
-
