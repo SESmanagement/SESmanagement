@@ -1,10 +1,85 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<!-- 관리자  SQL -->
-<mapper namespace="com.spring.manage.dao.AdminMapper">
+<!-- 도서등록  SQL -->
+<mapper namespace="com.spring.manage.dao.AdminDAO">
 
 
+<!-- 대출 신청 목록 -->
+<select id="getStatusList" parameterType="map" resultType="LendVO">
+	SELECT l.num, l.mem_num, l.booknum, to_char(l.startdate,'yyyy.mm.dd') startdate, to_char(l.enddate,'yyyy.mm.dd') enddate, 
+	to_char(l.returndate,'yyyy.mm.dd') returndate, b.title, m.name, l.status
+	FROM lend l, books b, member m
+	WHERE l.booknum=b.num
+	AND l.mem_num=m.num
+	AND l.status=#{status}
+	<choose>
+  			<when test="value=='reserved'">
+				ORDER BY startdate
+  			</when>
+  			<when test="value=='lent'">
+				ORDER BY enddate
+  			</when>
+  			<when test="value=='delayed'">
+				ORDER BY enddate
+  			</when>
+	</choose>
+	AND
+	<if test="searchType=='title'">
+		b.title LIKE '%'||#{searchValue}||'%'
+	</if>
+	<if test="searchType=='name'">
+		m.name LIKE '%'||#{searchValue}||'%'
+	</if>
+</select>
+
+<!-- 대출 승인 -->
+<update id="lendBook" parameterType="map">
+	UPDATE lend
+	SET status='lent', enddate = sysdate + #{daysOfLend}, startdate = sysdate
+	WHERE num = #{num}
+</update>
+
+<!-- 대출 반려 -->
+<update id="rejectBook">
+	UPDATE lend
+	SET status='rejected'
+	WHERE num = #{num}
+</update>
+
+<!-- 도서 반납 -->
+<update id="returnBook">
+	UPDATE lend
+	SET status='returned', returndate=sysdate
+	WHERE num = #{num}
+</update>
+
+<!-- 연체 확인 -->
+<update id="updateDelayed">
+	UPDATE lend
+	SET status = 'delayed'
+	WHERE sysdate > enddate+1
+	AND status != 'delay_returned'
+</update>
+
+<!-- 연체 도서 반납 -->
+<update id="returnDelayedBook">
+	UPDATE lend
+	SET status = 'delay_returned', returndate=sysdate
+	WHERE num=#{num}
+</update>
+
+
+	<!-- 게시글 삭제 -->
+	<delete id="delete" parameterType="int">
+		DELETE BOOKS WHERE NUM = #{num}
+	</delete>
+	
+	<!-- 게시글 수정 -->
+	<update id="update" parameterType="BookVO">
+		UPDATE BOOKS SET TITLE = #{title}, PUBLISHER = #{publisher}, AUTHOR = #{author}, CONTENT = #{content}, STATUS = #{status} WHERE NUM = #{num}
+	</update>	
+	
 </mapper>
