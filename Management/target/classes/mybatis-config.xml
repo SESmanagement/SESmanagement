@@ -8,6 +8,8 @@
 		<typeAlias type="com.spring.manage.vo.BookVO" alias="BookVO" />
 		<typeAlias type="com.spring.manage.vo.StudyRoomVO" alias="StudyRoomVO" />
 		<typeAlias type="com.spring.manage.vo.SR_ReservationVO" alias="SR_ReservationVO" />
+		<typeAlias type="com.spring.manage.vo.SR_FacilityVO" alias="SR_FacilityVO" />
+		<typeAlias type="com.spring.manage.vo.EventVO" alias="EventVO" />
 		<typeAlias type="com.spring.manage.vo.LendVO" alias="LendVO" />
 		<typeAlias alias="ClassRoomVO" type="com.spring.manage.vo.ClassRoomVO"/>
 		<typeAlias alias="PartyVO" type="com.spring.manage.vo.PartyVO"/>
@@ -19,6 +21,7 @@
 		<mapper resource="mapper/memberMapper.xml" />
 		<mapper resource="mapper/bookMapper.xml" />
 		<mapper resource="mapper/studyRoomMapper.xml" />
+		<mapper resource="mapper/eventMapper.xml" />
 		<mapper resource="mapper/arrangeMapper.xml" />
 		<mapper resource="mapper/adminMapper.xml" />
 		<mapper resource="mapper/groupMapper.xml" />

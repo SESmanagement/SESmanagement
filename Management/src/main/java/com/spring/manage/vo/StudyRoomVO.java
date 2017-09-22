@@ -9,9 +9,15 @@ public class StudyRoomVO {
 	private int room_y; // 스터디룸의 위치 좌표
 	private int seat_x; // 좌석의 위치 좌표
 	private int seat_y; // 좌석의 위치 좌표
+	private int activate; // 좌석의 활성화 여부
+	private int seven; // 19시 예약여부
+	private int eight; // 20시 예약여부
+	private int nine; // 21시 예약여부
+	private int ten; // 22시 예약여부
+	private int count_seat; // 해당 스터디룸의 보유 좌석수
 	
 	public StudyRoomVO() {}
-
+	
 	public int getStudyroom_num() {
 		return studyroom_num;
 	}
@@ -75,12 +81,61 @@ public class StudyRoomVO {
 	public void setSeat_y(int seat_y) {
 		this.seat_y = seat_y;
 	}
+	
+	public int getActivate() {
+		return activate;
+	}
+
+	public void setActivate(int activate) {
+		this.activate = activate;
+	}
+	
+	public int getSeven() {
+		return seven;
+	}
+
+	public void setSeven(int seven) {
+		this.seven = seven;
+	}
+
+	public int getEight() {
+		return eight;
+	}
+
+	public void setEight(int eight) {
+		this.eight = eight;
+	}
+
+	public int getNine() {
+		return nine;
+	}
+
+	public void setNine(int nine) {
+		this.nine = nine;
+	}
+
+	public int getTen() {
+		return ten;
+	}
+
+	public void setTen(int ten) {
+		this.ten = ten;
+	}
+	
+	public int getCount_seat() {
+		return count_seat;
+	}
+
+	public void setCount_seat(int count_seat) {
+		this.count_seat = count_seat;
+	}
 
 	@Override
 	public String toString() {
 		return "StudyRoomVO [studyroom_num=" + studyroom_num + ", sr_seat_num=" + sr_seat_num + ", rechargable="
 				+ rechargable + ", seated_status=" + seated_status + ", room_x=" + room_x + ", room_y=" + room_y
-				+ ", seat_x=" + seat_x + ", seat_y=" + seat_y + "]";
+				+ ", seat_x=" + seat_x + ", seat_y=" + seat_y + ", activate=" + activate + ", seven=" + seven
+				+ ", eight=" + eight + ", nine=" + nine + ", ten=" + ten + ", count_seat=" + count_seat + "]";
 	}
 
 }

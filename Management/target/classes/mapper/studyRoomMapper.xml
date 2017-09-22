@@ -6,15 +6,51 @@
 <!-- 스터디룸 예약처리 처리 SQL -->
 <mapper namespace="com.spring.manage.dao.StudyRoomMapper">
 	
-	<!-- 마우스 오버시 해당 스터디룸(studyroom_num) 좌석현황 툴팁 띄우기 -->
+	<!-- 해당 스터디룸의 전체 좌석 가지고 오기-->
 	<select id="showInside" parameterType="int" resultType="StudyRoomVO">
-		SELECT * FROM STUDYROOM WHERE STUDYROOM_NUM = #{studyroom_num}
+		SELECT STUDYROOM_NUM, SR_SEAT_NUM, 
+		(SELECT COUNT(TO_CHAR(START_TIME, 'YYMMDDHH24')) FROM SR_RESERVATION B
+		              WHERE TO_NUMBER(TO_CHAR(START_TIME, 'YYMMDDHH24')) = TO_NUMBER(TO_CHAR(SYSDATE, 'YYMMDD')||19)
+		              AND A.STUDYROOM_NUM = B.STUDYROOM_NUM AND A.SR_SEAT_NUM = B.SR_SEAT_NUM
+		          ) SEVEN,
+		          (SELECT COUNT(TO_CHAR(START_TIME, 'YYMMDDHH24')) FROM SR_RESERVATION B
+		            WHERE TO_NUMBER(TO_CHAR(START_TIME, 'YYMMDDHH24')) = TO_NUMBER(TO_CHAR(SYSDATE, 'YYMMDD')||20)
+		            AND A.STUDYROOM_NUM = B.STUDYROOM_NUM AND A.SR_SEAT_NUM = B.SR_SEAT_NUM
+		          ) EIGHT,
+		          (SELECT COUNT(TO_CHAR(START_TIME, 'YYMMDDHH24')) FROM SR_RESERVATION B
+		            WHERE TO_NUMBER(TO_CHAR(START_TIME, 'YYMMDDHH24')) = TO_NUMBER(TO_CHAR(SYSDATE, 'YYMMDD')||21)
+		            AND A.STUDYROOM_NUM = B.STUDYROOM_NUM AND A.SR_SEAT_NUM = B.SR_SEAT_NUM
+		          ) NINE,
+		          (SELECT COUNT(TO_CHAR(START_TIME, 'YYMMDDHH24')) FROM SR_RESERVATION B
+		            WHERE TO_NUMBER(TO_CHAR(START_TIME, 'YYMMDDHH24')) = TO_NUMBER(TO_CHAR(SYSDATE, 'YYMMDD')||22)
+		            AND A.STUDYROOM_NUM = B.STUDYROOM_NUM AND A.SR_SEAT_NUM = B.SR_SEAT_NUM
+		          ) TEN
+		, SEAT_X, SEAT_Y, ACTIVATE, COUNT(STUDYROOM_NUM) AS COUNT_SEAT
+		FROM STUDYROOM A WHERE STUDYROOM_NUM = #{studyroom_num}
+		GROUP BY A.STUDYROOM_NUM, A.SR_SEAT_NUM, SEAT_X, SEAT_Y, ACTIVATE
+		ORDER BY A.STUDYROOM_NUM, A.SR_SEAT_NUM
+	</select>
+	
+	<!-- 관리자 메뉴- 현재 DB에 저장되어 있는 스터디룸 정보 가져오기 -->
+	<select id="getStudyRoomLocation" parameterType="int" resultType="StudyRoomVO">
+		SELECT STUDYROOM_NUM, ROOM_X, ROOM_Y, SUM(ACTIVATE) AS ACTIVATE FROM STUDYROOM
+        GROUP BY STUDYROOM_NUM, ROOM_X, ROOM_Y
+        ORDER BY STUDYROOM_NUM
+	</select>
+	
+	<!-- 관리자 메뉴- 현재 DB-SR_Facility에 저장되어 있는 해당 스터디룸의 부대시설정보 가져오기 -->
+	<select id="getSRFacilityInfo" parameterType="int" resultType="SR_FacilityVO">
+		SELECT * FROM SR_FACILITY WHERE STUDYROOM_NUM = #{studyroom_num}
 	</select>
 	
 	<!-- 해당 스터디룸 오늘자 예약현황 조회 -->
 	<select id="srResvInfo" parameterType="int" resultType="SR_ReservationVO">
-		SELECT * FROM SR_RESERVATION WHERE STUDYROOM_NUM = #{studyroom_num} 
-			AND TO_CHAR(START_TIME, 'YY/MM/DD') LIKE SYSDATE
+		SELECT * FROM SR_RESERVATION WHERE
+		<if test="_parameter != 0">
+		STUDYROOM_NUM = #{studyroom_num} AND
+		</if>
+		TO_CHAR(START_TIME, 'YY/MM/DD') LIKE SYSDATE
+		ORDER BY STUDYROOM_NUM, SR_SEAT_NUM
 	</select>
 	
 	<!-- 예약현황 조회시점의 시각 조회 -->
@@ -24,12 +60,27 @@
 	
 	<!-- 스터디룸 예약 신청 -->
 	<insert id="resvApply" parameterType="SR_ReservationVO">
-		INSERT INTO SR_RESERVATION VALUES (
-			'SRR'||SRR_SEQ.NEXTVAL, #{studyroom_num}, #{sr_seat_num}, #{student_num},
-			TO_TIMESTAMP(TO_CHAR(SYSDATE, 'YY/MM/DD')||' '||#{start_time}, 'YY/MM/DD HH24:MI:SS'), 
-			TO_TIMESTAMP(TO_CHAR(SYSDATE, 'YY/MM/DD')||' '||#{end_time}, 'YY/MM/DD HH24:MI:SS')
-		)
+        INSERT INTO SR_RESERVATION VALUES (
+            'SRR'||SRR_SEQ.NEXTVAL, #{studyroom_num}, #{sr_seat_num}, #{student_num},
+            TO_TIMESTAMP(TO_CHAR(SYSDATE, 'YY/MM/DD')||' '||#{start_time}, 'YY/MM/DD HH24:MI:SS'), 
+            TO_TIMESTAMP(TO_CHAR(SYSDATE, 'YY/MM/DD')||' '||#{end_time}, 'YY/MM/DD HH24:MI:SS')
+        )
+        
+        <selectKey keyProperty="sr_resv_num" resultType="string" order="AFTER"> 
+            SELECT 'SRR'||SRR_SEQ.currval FROM dual 
+        </selectKey>
 	</insert>
+	
+	<!-- 캘린더 - 예약 완료건 EVENT 테이블에 insert -->
+    <insert id="addEvent" parameterType="SR_ReservationVO">
+        INSERT INTO EVENT VALUES (
+            #{student_num}, #{studyroom_num}||'-'||#{sr_seat_num}, 'EV'||EV_SEQ.NEXTVAL, '스터디룸', 0,
+            TO_TIMESTAMP(TO_CHAR(SYSDATE, 'YY/MM/DD')||' '||#{start_time}, 'YY/MM/DD HH24:MI:SS'), 
+            TO_TIMESTAMP(TO_CHAR(SYSDATE, 'YY/MM/DD')||' '||#{end_time}, 'YY/MM/DD HH24:MI:SS'), null, null, 0,
+            0, 0, 0, 0, 0,
+            0, #{sr_resv_num}, '#f5245f', null, null
+        )
+    </insert>
 	
 	<!-- 스터디룸 예약신청후 STUDYROOM 테이블의  SEATED_STATUS에 상태 변경하기 => 카운트 가감(-/+) -->
 	<update id="updateSeated_status">
@@ -45,11 +96,14 @@
 	<select id="myResvInfo" parameterType="int" resultType="SR_ReservationVO">
 		SELECT * FROM SR_RESERVATION WHERE STUDENT_NUM = #{student_num} 
 			AND TO_CHAR(START_TIME, 'YY/MM/DD') LIKE SYSDATE
+			ORDER BY START_TIME DESC
 	</select>
 	
 	<!-- 내 스터디룸 예약현황 페이지로 이동시 내 전체 예약리스트 조회-->
 	<select id="myResvInfoAll" parameterType="int" resultType="SR_ReservationVO">
-		SELECT * FROM SR_RESERVATION WHERE STUDENT_NUM = #{student_num} 
+		SELECT * FROM SR_RESERVATION 
+			WHERE STUDENT_NUM = #{student_num} 
+			AND TO_CHAR(START_TIME, 'YY/MM/DD') LIKE SYSDATE
 			ORDER BY START_TIME DESC
 	</select>
 	
@@ -71,26 +125,244 @@
 		DELETE SR_RESERVATION WHERE SR_RESV_NUM = #{sr_resv_num}
 	</delete>
 	
-	<!-- 시간대별 예약가능현황 조회-->
-	<select id="checkAvailableRoom" parameterType="int" resultType="int">
-		SELECT DISTINCT  A.STUDYROOM_NUM FROM STUDYROOM A, SR_RESERVATION B
-			WHERE A.STUDYROOM_NUM||' '||A.SR_SEAT_NUM||' '||TO_CHAR(B.START_TIME, 'YYMMDDHH24') NOT IN (
-			SELECT STUDYROOM_NUM||' '||SR_SEAT_NUM||' '||TO_CHAR(B.START_TIME, 'YYMMDDHH24') FROM SR_RESERVATION
-			WHERE TO_NUMBER(TO_CHAR(START_TIME, 'YYMMDDHH24')) &gt;= TO_NUMBER(TO_CHAR(SYSDATE, 'YYMMDDHH24'))
-			AND
-			<foreach item="checkListList" index="index" collection="list" separator="or">
-			TO_NUMBER(TO_CHAR(START_TIME, 'YYMMDDHH24')) = TO_NUMBER(TO_CHAR(SYSDATE, 'YYMMDD')||#{checkListList})
-		  </foreach>
-			)
+	   <!-- 캘린더 - 예약 취소건 EVENT 테이블에 delete -->
+    <delete id="deleteEvent" parameterType="string">
+        DELETE EVENT WHERE SOURCE_EVENT = #{sr_resv_num}
+    </delete>
+	
+	<!-- 시간대별 예약가능현황 조회  : 징검다리 조회 되는지 확인하기!!!!!!!!!!!!!!!!!!!!!-->
+	<select id="checkAvailableRoom" parameterType="int" resultType="StudyRoomVO">
+	   SELECT DISTINCT A.STUDYROOM_NUM,
+	    <foreach item="timeline" index="index" collection="list" separator=",">
+	    <if test='timeline == 19'>
+	       (SELECT COUNT(TO_CHAR(START_TIME, 'YYMMDDHH24')) FROM SR_RESERVATION B
+	       WHERE TO_NUMBER(TO_CHAR(START_TIME, 'YYMMDDHH24')) = TO_NUMBER(TO_CHAR(SYSDATE, 'YYMMDD')||19)
+              AND A.STUDYROOM_NUM = B.STUDYROOM_NUM
+          ) SEVEN
+	    </if>
+	    <if test='timeline == 20'>
+	       (SELECT COUNT(TO_CHAR(START_TIME, 'YYMMDDHH24')) FROM SR_RESERVATION B
+	       WHERE TO_NUMBER(TO_CHAR(START_TIME, 'YYMMDDHH24')) = TO_NUMBER(TO_CHAR(SYSDATE, 'YYMMDD')||20)
+            AND A.STUDYROOM_NUM = B.STUDYROOM_NUM
+          ) EIGHT
+	    </if>
+	    <if test='timeline == 21'>
+	       (SELECT COUNT(TO_CHAR(START_TIME, 'YYMMDDHH24')) FROM SR_RESERVATION B
+	       WHERE TO_NUMBER(TO_CHAR(START_TIME, 'YYMMDDHH24')) = TO_NUMBER(TO_CHAR(SYSDATE, 'YYMMDD')||21)
+            AND A.STUDYROOM_NUM = B.STUDYROOM_NUM
+          ) NINE
+	    </if>
+	    <if test='timeline == 22'>
+	       (SELECT COUNT(TO_CHAR(START_TIME, 'YYMMDDHH24')) FROM SR_RESERVATION B
+	       WHERE TO_NUMBER(TO_CHAR(START_TIME, 'YYMMDDHH24')) = TO_NUMBER(TO_CHAR(SYSDATE, 'YYMMDD')||22)
+            AND A.STUDYROOM_NUM = B.STUDYROOM_NUM
+          ) TEN
+	    </if>
+	    </foreach>
+	    , ROOM_X, ROOM_Y, SUM(ACTIVATE) ACTIVATE, COUNT(STUDYROOM_NUM) AS COUNT_SEAT FROM STUDYROOM A
+        GROUP BY A.STUDYROOM_NUM, A.ROOM_X, A.ROOM_Y
+	
 	</select>
 	
-	<!-- 현시점 예약가능현황 조회-->
-	<select id="nowAvailableRoom" resultType="int">
-		SELECT DISTINCT A.STUDYROOM_NUM FROM STUDYROOM A, SR_RESERVATION B
-			WHERE A.STUDYROOM_NUM||' '||A.SR_SEAT_NUM||' '||TO_CHAR(B.START_TIME, 'YYMMDDHH24') NOT IN (
-			SELECT STUDYROOM_NUM||' '||SR_SEAT_NUM FROM SR_RESERVATION
-			WHERE TO_NUMBER(TO_CHAR(START_TIME, 'YYMMDDHH24')) &gt;= TO_NUMBER(TO_CHAR(SYSDATE, 'YYMMDDHH24')))
-			WHERE A.STUDYROOM_NUM||' '||A.SR_SEAT_NUM IS NOT NULL
+	<!-- 현시점 예약가능현황 조회    13일 오전에 확인하기!!! checkavailableroom에도 적용가능 여부 보기!!!!!-->
+	<select id="nowAvailableRoom" parameterType="string" resultType="StudyRoomVO">
+		SELECT DISTINCT A.STUDYROOM_NUM,
+		  (SELECT COUNT(TO_CHAR(START_TIME, 'YYMMDDHH24')) FROM SR_RESERVATION B
+		      WHERE TO_NUMBER(TO_CHAR(START_TIME, 'YYMMDDHH24')) = TO_NUMBER(TO_CHAR(SYSDATE, 'YYMMDD')||19)
+		      AND A.STUDYROOM_NUM = B.STUDYROOM_NUM
+		  ) SEVEN,
+		  (SELECT COUNT(TO_CHAR(START_TIME, 'YYMMDDHH24')) FROM SR_RESERVATION B
+			WHERE TO_NUMBER(TO_CHAR(START_TIME, 'YYMMDDHH24')) = TO_NUMBER(TO_CHAR(SYSDATE, 'YYMMDD')||20)
+			AND A.STUDYROOM_NUM = B.STUDYROOM_NUM
+		  ) EIGHT,
+		  (SELECT COUNT(TO_CHAR(START_TIME, 'YYMMDDHH24')) FROM SR_RESERVATION B
+			WHERE TO_NUMBER(TO_CHAR(START_TIME, 'YYMMDDHH24')) = TO_NUMBER(TO_CHAR(SYSDATE, 'YYMMDD')||21)
+			AND A.STUDYROOM_NUM = B.STUDYROOM_NUM
+		  ) NINE,
+		  (SELECT COUNT(TO_CHAR(START_TIME, 'YYMMDDHH24')) FROM SR_RESERVATION B
+			WHERE TO_NUMBER(TO_CHAR(START_TIME, 'YYMMDDHH24')) = TO_NUMBER(TO_CHAR(SYSDATE, 'YYMMDD')||22)
+			AND A.STUDYROOM_NUM = B.STUDYROOM_NUM
+		  ) TEN,
+		ROOM_X, ROOM_Y, SUM(ACTIVATE) ACTIVATE, COUNT(STUDYROOM_NUM) AS COUNT_SEAT FROM STUDYROOM A
+		GROUP BY A.STUDYROOM_NUM, A.ROOM_X, A.ROOM_Y
 	</select>
 	
+	<!-- 관리자 메뉴- 스터디룸의 좌석 비활성화 처리하기 -->
+	<update id="inactivateSR_Seat" parameterType="StudyRoomVO">
+		UPDATE STUDYROOM SET ACTIVATE = 
+			CASE WHEN (
+				SELECT ACTIVATE FROM STUDYROOM WHERE STUDYROOM_NUM = #{studyroom_num} AND SR_SEAT_NUM = #{sr_seat_num}
+			) = 1 THEN 0
+			ELSE 1 END					
+		WHERE STUDYROOM_NUM = #{studyroom_num} AND SR_SEAT_NUM = #{sr_seat_num}
+	</update>
+	
+		<!-- 관리자 메뉴- 스터디룸의 부대시설 비활성화 처리하기 -->
+	<update id="inactivateFC_Facility" parameterType="SR_FacilityVO">
+		UPDATE SR_FACILITY SET ACTIVATE = 
+			CASE WHEN (
+				SELECT ACTIVATE FROM SR_FACILITY WHERE STUDYROOM_NUM = #{studyroom_num} AND SEAT_X = #{seat_x} AND SEAT_Y = #{seat_y}
+			) = 1 THEN 0
+			ELSE 1 END					
+		WHERE STUDYROOM_NUM = #{studyroom_num} AND SEAT_X = #{seat_x} AND SEAT_Y = #{seat_y}
+	</update>
+	
+	   <!-- 관리자 메뉴- 스터디룸의 좌석 등록하기 -->
+    <insert id="addSR_Seat" parameterType="StudyRoomVO">
+       INSERT INTO STUDYROOM VALUES (
+           #{studyroom_num}, #{sr_seat_num}, 'N', null, #{room_x}, #{room_y}, #{seat_x}, #{seat_y}, 1
+       )
+    </insert>
+    
+        <!-- 관리자 메뉴- 스터디룸의 부대시설 등록하기 -->
+    <insert id="addFC_Facility" parameterType="SR_FacilityVO">
+       INSERT INTO SR_FACILITY VALUES (
+           #{studyroom_num}, 0, #{facility_name}, #{seat_x}, #{seat_y}, 1
+       )
+    </insert>
+    
+        <!-- 스터디룸의 등록 좌석번호 중복 여부 확인 -->
+    <select id="checkSeat_num" parameterType="StudyRoomVO" resultType="StudyRoomVO">
+        SELECT STUDYROOM_NUM
+        <if test="sr_seat_num != ''">
+            , SR_SEAT_NUM
+        </if>
+        FROM STUDYROOM WHERE STUDYROOM_NUM = #{studyroom_num}
+        <if test="sr_seat_num != ''">
+            AND SR_SEAT_NUM = #{sr_seat_num}
+        </if>
+        
+    </select>
+    
+        <!-- 관리자 메뉴- 스터디룸의 좌석 삭제하기 -->
+    <delete id="dropSR_Seat" parameterType="StudyRoomVO">
+        DELETE STUDYROOM WHERE STUDYROOM_NUM = #{studyroom_num} AND SR_SEAT_NUM = #{sr_seat_num}
+    </delete>
+    
+        <!-- 관리자 메뉴- 스터디룸의 부대시설 삭제하기 -->
+    <delete id="dropFC_Facility" parameterType="SR_FacilityVO">
+        DELETE SR_FACILITY WHERE STUDYROOM_NUM = #{studyroom_num} AND SEAT_X = #{seat_x} AND SEAT_Y = #{seat_y}
+    </delete>
+    
+        <!-- 관리자 메뉴- 스터디룸 비활성화 처리하기 1.좌석-->
+    <update id="inactivateSR" parameterType="StudyRoomVO">
+        UPDATE STUDYROOM SET ACTIVATE = 
+		    CASE WHEN (SELECT SUM(ACTIVATE) AS ACTIATE FROM STUDYROOM WHERE STUDYROOM_NUM = #{studyroom_num}
+		    ) = 0 THEN 1
+		    ELSE 0 END
+		WHERE STUDYROOM_NUM = #{studyroom_num}
+    </update>
+    
+        <!-- 관리자 메뉴- 스터디룸 비활성화 처리하기 2.부대시설-->
+    <update id="inactivateFC" parameterType="SR_FacilityVO">
+        UPDATE SR_FACILITY SET ACTIVATE = 
+            CASE WHEN (SELECT SUM(ACTIVATE) AS ACTIATE FROM SR_FACILITY WHERE STUDYROOM_NUM = #{studyroom_num}
+            ) = 0 THEN 1
+            ELSE 0 END
+        WHERE STUDYROOM_NUM = #{studyroom_num}
+    </update>
+    
+           <!-- 관리자 메뉴- 스터디룸의 등록하기 , 좌석 1번 임의 등록-->
+    <insert id="addSR" parameterType="StudyRoomVO">
+       INSERT INTO STUDYROOM VALUES (
+           #{studyroom_num}, 1, 'N', null, #{room_x}, #{room_y}, 1, 1, 1
+       )
+    </insert>
+    
+            <!-- 관리자 메뉴- 스터디룸의 좌석 삭제하기 -->
+    <delete id="dropSR" parameterType="StudyRoomVO">
+        DELETE STUDYROOM WHERE STUDYROOM_NUM = #{studyroom_num}
+    </delete>
+    
+        <!-- 관리자 메뉴- 스터디룸의 부대시설 삭제하기 -->
+    <delete id="dropFC" parameterType="SR_FacilityVO">
+        DELETE SR_FACILITY WHERE STUDYROOM_NUM = #{studyroom_num}
+    </delete>
+    
+        <!-- 관리자 메뉴-예약 내역 조회하기 -->
+    <select id="getResvList" parameterType="java.util.Map" resultType="SR_ReservationVO">
+        SELECT SR_RESV_NUM, STUDYROOM_NUM, SR_SEAT_NUM, S.STUDENT_NUM, 
+            TO_CHAR(START_TIME, 'YYMMDD HH24MI') START_TIME, TO_CHAR(END_TIME, 'YYMMDD HH24MI') END_TIME, 
+		    (SELECT DISTINCT NAME FROM MEMBER M WHERE S.STUDENT_NUM = M.STUDENT_NUM) NAME,
+		    (SELECT DISTINCT MEMBER_NUM FROM MEMBER M WHERE S.STUDENT_NUM = M.STUDENT_NUM) MEMBER_NUM
+		FROM SR_RESERVATION S, MEMBER M
+		WHERE S.STUDENT_NUM = M.STUDENT_NUM
+		<if test="!studyroom_checkList.isEmpty ">
+        <foreach item="studyroom_num" index="index" collection="studyroom_checkList" open="and" separator="or S.STUDENT_NUM = M.STUDENT_NUM and">
+            S.STUDYROOM_NUM = #{studyroom_num}
+        </foreach>
+        </if>
+        <if test="!date_checkList.isEmpty">
+            AND S.START_TIME BETWEEN #{date_checkList[0]} 
+            <if test="date_checkList.size() == 2">
+            AND #{date_checkList[1]}
+            </if>
+            <if test="date_checkList.size() == 1">
+            AND #{date_checkList[0]}
+            </if>
+        </if>
+        <if test="!etc_checkListList.isEmpty">
+         <foreach item="etc_List" index="index" collection="etc_checkListList">
+	         <foreach item="etc_map" index="index" collection="etc_List" open="and" separator="or S.STUDENT_NUM = M.STUDENT_NUM and">
+		         <foreach item="keyword" index="option" collection="etc_List" >
+                    <if test="option != '' and option.equals('sr_seat_num')">
+                        SR_SEAT_NUM = #{keyword}
+                    </if>
+                    <if test="option != '' and option.equals('name')">
+                        NAME = #{keyword, jdbcType=VARCHAR}
+                    </if>
+                    <if test="option != '' and option.equals('student_num')">
+                        S.STUDENT_NUM = #{keyword}
+                    </if>
+                    <if test="option != '' and option.equals('member_num')">
+                        MEMBER_NUM = #{keyword}
+                    </if>
+	             </foreach>
+	        </foreach>
+        </foreach>
+        </if>
+       AND SR_RESV_NUM != 'SRR000'
+       ORDER BY START_TIME DESC
+    </select>
+    
+      <!-- 관리자 메뉴-예약 내역 조회 결과 전체 게시글 수 가져오기 -->
+    <select id="getTotal" parameterType="java.util.Map" resultType="int">
+        SELECT COUNT(*) FROM SR_RESERVATION S, MEMBER M WHERE S.STUDENT_NUM = M.STUDENT_NUM
+        <if test="!studyroom_checkList.isEmpty ">
+        <foreach item="studyroom_num" index="index" collection="studyroom_checkList" open="and" separator="or S.STUDENT_NUM = M.STUDENT_NUM and">
+            S.STUDYROOM_NUM = #{studyroom_num}
+        </foreach>
+        </if>
+        <if test="!date_checkList.isEmpty">
+            AND S.START_TIME BETWEEN #{date_checkList[0]} 
+            <if test="date_checkList.size() == 2">
+            AND #{date_checkList[1]}
+            </if>
+            <if test="date_checkList.size() == 1">
+            AND #{date_checkList[0]}
+            </if>
+        </if>
+        <if test="!etc_checkListList.isEmpty">
+         <foreach item="etc_List" index="index" collection="etc_checkListList">
+             <foreach item="etc_map" index="index" collection="etc_List" open="and" separator="or S.STUDENT_NUM = M.STUDENT_NUM and">
+                 <foreach item="keyword" index="option" collection="etc_List" >
+                    <if test="option != '' and option.equals('sr_seat_num')">
+                        SR_SEAT_NUM = #{keyword}
+                    </if>
+                    <if test="option != '' and option.equals('name')">
+                        NAME = #{keyword, jdbcType=VARCHAR}
+                    </if>
+                    <if test="option != '' and option.equals('student_num')">
+                        S.STUDENT_NUM = #{keyword}
+                    </if>
+                    <if test="option != '' and option.equals('member_num')">
+                        M.MEMBER_NUM = #{keyword}
+                    </if>
+                 </foreach>
+            </foreach>
+        </foreach>
+        </if>
+        AND SR_RESV_NUM != 'SRR000'
+    </select>
+    
 </mapper>
