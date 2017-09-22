@@ -3,30 +3,29 @@ package com.spring.manage.vo;
 public class LendVO {
 	
 	private int num;
-	private int student_num;
-	private int book_num;
+	private String mem_num;
+	private String booknum;
 	private String startdate;
 	private String enddate;
 	private String returndate;
 	private String title;
-	private String username;
+	private String name;
 	private String status;
-	
 	public LendVO() {
 		super();
+		// TODO Auto-generated constructor stub
 	}
-	
-	public LendVO(int num, int student_num, int book_num, String startdate, String enddate, String returndate,
-			String title, String username, String status) {
+	public LendVO(int num, String mem_num, String booknum, String startdate, String enddate, String returndate,
+			String title, String name, String status) {
 		super();
 		this.num = num;
-		this.student_num = student_num;
-		this.book_num = book_num;
+		this.mem_num = mem_num;
+		this.booknum = booknum;
 		this.startdate = startdate;
 		this.enddate = enddate;
 		this.returndate = returndate;
 		this.title = title;
-		this.username = username;
+		this.name = name;
 		this.status = status;
 	}
 	public int getNum() {
@@ -35,17 +34,17 @@ public class LendVO {
 	public void setNum(int num) {
 		this.num = num;
 	}
-	public int getStudent_num() {
-		return student_num;
+	public String getMem_num() {
+		return mem_num;
 	}
-	public void setStudent_num(int student_num) {
-		this.student_num = student_num;
+	public void setMem_num(String mem_num) {
+		this.mem_num = mem_num;
 	}
-	public int getBook_num() {
-		return book_num;
+	public String getBooknum() {
+		return booknum;
 	}
-	public void setBook_num(int book_num) {
-		this.book_num = book_num;
+	public void setBooknum(String booknum) {
+		this.booknum = booknum;
 	}
 	public String getStartdate() {
 		return startdate;
@@ -71,11 +70,11 @@ public class LendVO {
 	public void setTitle(String title) {
 		this.title = title;
 	}
-	public String getUsername() {
-		return username;
+	public String getName() {
+		return name;
 	}
-	public void setUsername(String username) {
-		this.username = username;
+	public void setName(String name) {
+		this.name = name;
 	}
 	public String getStatus() {
 		return status;
@@ -83,11 +82,12 @@ public class LendVO {
 	public void setStatus(String status) {
 		this.status = status;
 	}
-	
 	@Override
 	public String toString() {
-		return "LendVO [num=" + num + ", student_num=" + student_num + ", book_num=" + book_num + ", startdate="
-				+ startdate + ", enddate=" + enddate + ", returndate=" + returndate + ", title=" + title + ", username="
-				+ username + ", status=" + status + "]";
-	}	
+		return "LendVO [num=" + num + ", mem_num=" + mem_num + ", booknum=" + booknum + ", startdate=" + startdate
+				+ ", enddate=" + enddate + ", returndate=" + returndate + ", title=" + title + ", name=" + name
+				+ ", status=" + status + "]";
+	}
+	
+	
 }
