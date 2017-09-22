@@ -11,7 +11,7 @@ import com.spring.manage.vo.EventVO;
 import com.spring.manage.vo.SR_FacilityVO;
 import com.spring.manage.vo.StudyRoomVO;
 
-public interface StudyRoomMapper {
+public interface StudyRoomMapper { //
 
 	// top메뉴 ->스터디룸 현황조회(top-스터디룸 예약-메뉴 포함)로 이동
 	public ArrayList<StudyRoomVO> showInside(int studyroom_num);

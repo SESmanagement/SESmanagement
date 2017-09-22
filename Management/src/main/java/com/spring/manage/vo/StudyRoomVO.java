@@ -1,6 +1,6 @@
 package com.spring.manage.vo;
 
-public class StudyRoomVO {
+public class StudyRoomVO { //
 	private int studyroom_num; // 스터디룸 번호
 	private int sr_seat_num; // 각 스터디룸 내 좌석 번호
 	private char rechargable; // 충전가능여부 (좌석 근처에 콘세트 유무 여부를 Y와 N으로 표시)

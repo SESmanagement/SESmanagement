@@ -1171,7 +1171,7 @@ section {
 			<button id="addBottom" class="btn v-btn v-btn-default v-small-button">등록</button>
 			<button id="dropBottom" class="btn v-btn v-btn-default v-small-button">삭제</button>
 	<!-- 		<button id="ok" class="btn v-btn v-btn-default v-small-button" disabled="disabled">확인</button> -->
-<!-- 			</div> 수정 버튼 삭제로 이제 필요없음!!-->
+<!-- 			</div> 수정 버튼 삭제로 이제 필요없음!! // -->
 <!-- 			<div style="text-align: center"> 수정 버튼 삭제로 이제 필요없음!!-->
 			<form action="" method="post" id="fmBottom" style="display:inline-block">
 			<input type="button" id="okBottom" value="확인" class="btn v-btn v-btn-default v-small-button" disabled="disabled">

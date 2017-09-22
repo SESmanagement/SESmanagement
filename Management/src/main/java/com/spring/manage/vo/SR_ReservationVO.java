@@ -1,6 +1,6 @@
 package com.spring.manage.vo;
 
-public class SR_ReservationVO {
+public class SR_ReservationVO { //
 	private String sr_resv_num;	// 예약 일련번호
 	private int studyroom_num; 	// 스터디룸 번호
 	private int sr_seat_num; 	//  스터디룸 내 좌석 번호

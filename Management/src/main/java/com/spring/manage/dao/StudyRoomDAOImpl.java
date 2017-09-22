@@ -16,7 +16,7 @@ import com.spring.manage.vo.SR_FacilityVO;
 import com.spring.manage.vo.StudyRoomVO;
 
 @Repository
-public class StudyRoomDAOImpl implements StudyRoomDAO {
+public class StudyRoomDAOImpl implements StudyRoomDAO { //
 	
 	@Autowired
 	private SqlSession sqlSession;

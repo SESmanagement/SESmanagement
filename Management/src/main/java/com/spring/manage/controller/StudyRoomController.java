@@ -27,7 +27,7 @@ import com.spring.manage.vo.StudyRoomVO;
 
 @Controller
 @RequestMapping("/studyroom")
-public class StudyRoomController {
+public class StudyRoomController {//
 	
 	@Autowired
 	private StudyRoomService service;

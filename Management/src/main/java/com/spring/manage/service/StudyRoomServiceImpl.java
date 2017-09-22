@@ -16,7 +16,7 @@ import com.spring.manage.vo.SR_FacilityVO;
 import com.spring.manage.vo.StudyRoomVO;
 
 @Service
-public class StudyRoomServiceImpl implements StudyRoomService {
+public class StudyRoomServiceImpl implements StudyRoomService {//
 
 	@Autowired
 	private StudyRoomDAO dao;
