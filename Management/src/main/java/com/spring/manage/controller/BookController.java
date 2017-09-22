@@ -1,89 +1,201 @@
 package com.spring.manage.controller;
 
+import java.io.FileInputStream;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+
+import javax.servlet.ServletOutputStream;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
-import com.spring.manage.service.BookService;
+import com.spring.manage.dao.AdminDAOImpl;
+import com.spring.manage.dao.BookDAOImpl;
+import com.spring.manage.util.FileService;
 import com.spring.manage.util.PageNavigator;
 import com.spring.manage.vo.BookVO;
+import com.spring.manage.vo.LendVO;
+import com.spring.manage.vo.MemberVO;
 
 @Controller
-@RequestMapping("/book")
 public class BookController {
-
+		
 	@Autowired
-	private BookService service;
+	BookDAOImpl repo;
+	
+	@Autowired
+	AdminDAOImpl repoA;
+	
+	String uploadPath = "/img";
+	
+	//책 목록
+	@RequestMapping(value = "/bookList", method = RequestMethod.GET)
+	public String bookList(
+				@RequestParam(value="currentPage", defaultValue="1") int currentPage, 
+				@RequestParam(value="searchType", defaultValue="title") String searchType,
+				@RequestParam(value="searchValue", defaultValue="") String searchValue,
+				@RequestParam(value="showNum", defaultValue="3") int showNum,
+				Model model) {
+		String originalSearchValue=searchValue;
+		if(searchType.equals("status")){
+			if(searchValue.equals("y") || searchValue.equals("Y")) searchValue="Yes";
+			if(searchValue.equals("n") || searchValue.equals("N")) searchValue="Nope";
+		}
+		
+		int totalRecordCount = repo.getBookCount(searchType, searchValue);
+		System.out.println("===========>"+totalRecordCount);
+		PageNavigator navi=new PageNavigator(showNum, currentPage, totalRecordCount);
+		List<BookVO> list = repo.selectAll(searchType, searchValue, navi.getStartRecord(), navi.getCountPerPage());
+		for (BookVO b : list) {
+			if (b.getStatus() == null || b.getStatus().equals("returned") || b.getStatus().equals("rejected")
+					|| b.getStatus().equals("delay_returned")) {
+				b.setStatus("Y");
+			} else {
+				b.setStatus("N");
+			}
+		}
+		if(list.size()<1){
+			model.addAttribute("msg","해당 결과가 없습니다.");
+		}
+		System.out.println(list.size());
+		model.addAttribute("showNum", showNum);
+		model.addAttribute("searchType", searchType);
+		model.addAttribute("searchValue",originalSearchValue);
+		model.addAttribute("navi",navi);
+		model.addAttribute("booklist", list);
+		model.addAttribute("cnt", 1);
+		return "book/bookList";
+	}
 
-	
-	// 책 등록 Form
-	@RequestMapping(value = "writeForm", method = RequestMethod.GET)
-	public String writeForm() {
-		return "/book/writeForm";
+	//책 자세히 보기
+	@RequestMapping(value = "/bookDetail", method = RequestMethod.GET)
+	public String bookDetail(int num, 
+			@RequestParam(value="searchType", defaultValue="title") String searchType,
+			@RequestParam(value="searchValue", defaultValue="") String searchValue,
+			@RequestParam(value="showNum", defaultValue="3") int showNum,
+			Model model) {
+		BookVO b = repo.selectOne(num);
+		String originalSearchValue=searchValue;
+		if(searchType.equals("status")){
+			if(searchValue.equals("y") || searchValue.equals("Y")) searchValue="Yes";
+			if(searchValue.equals("n") || searchValue.equals("N")) searchValue="Nope";
+		}
+		if (b.getStatus() == null || b.getStatus().equals("returned") || b.getStatus().equals("rejected")
+				|| b.getStatus().equals("delay_returned")) {
+			b.setStatus("Y");
+		} else {
+			b.setStatus("N");
+		}
+		model.addAttribute("book", b);
+		model.addAttribute("showNum", showNum);
+		model.addAttribute("searchType", searchType);
+		model.addAttribute("searchValue",originalSearchValue);
+		return "book/bookDetail";
+	}
+
+	//대출 신청
+	@RequestMapping(value = "/borrowApply", method = RequestMethod.GET)
+	public @ResponseBody boolean borrowApply(int booknum, String mem_num) {
+		Map<String, Object> map = new HashMap<>();
+		map.put("booknum", booknum);
+		map.put("mem_num", mem_num);
+		int result = repo.reserveBook(map);
+		if (result > 0) {
+			return true;
+		}
+		return false;
 	}
 	
-	// 게시글 등록
-	@RequestMapping(value = "write", method = RequestMethod.POST)
-	public String write(BookVO vo) {
-		System.out.println(vo.getBook_num());
-		System.out.println(vo.getName());
-		System.out.println(vo.getContent());
-		System.out.println(vo.getTitle());
-		service.write(vo);
-		return "redirect:/book/getBookList";
-	}
-	
-	//게시글보기
-	@RequestMapping(value = "getBookList", method = RequestMethod.GET)
-	public String getBookList(
-			@RequestParam(value="currentPage", defaultValue="1") int currentPage,
-			@RequestParam(value="searchKeyword", defaultValue="") String searchKeyword,
-			String searchCondition,
-			Map<String, String> map, Model model) {
+	//대출이력으로 이동
+	@RequestMapping(value = "/borrowList", method = RequestMethod.GET)
+	public String borrowList(
+			HttpSession session, Model model,
+			@RequestParam(value="currentPage", defaultValue="1") int currentPage
+	) {
+		MemberVO member = (MemberVO)session.getAttribute("member");
+		String member_num = member.getNum();
 		
-		PageNavigator navi = service.getNavi(currentPage, map);
-		map.put("searchCondition", searchCondition);
-		map.put("searchKeyword", searchKeyword);
-		
-		model.addAttribute("getBookList", service.getBookList(map, navi));
+		int totalRecordCount = repo.getBorrowCount(member_num);
+		PageNavigator navi=new PageNavigator(10, currentPage, totalRecordCount);
+		repoA.updateDelayed();
+		List<LendVO> borrowlist=repo.borrowList(navi.getStartRecord(), navi.getCountPerPage(), member_num);
+		for(LendVO l  : borrowlist){
+			switch(l.getStatus()){
+				case "reserved" : 
+					l.setStatus("대출신청중");
+					break;
+				case "lent" : 
+					l.setStatus("대출중");
+					break;
+				case "returned" : 
+					l.setStatus("반납완료");
+					break;
+				case "rejected" : 
+					l.setStatus("대출거절");
+					break;
+				case "delayed" : 
+					l.setStatus("연체");
+					break;
+				case "delay_returned" :
+					l.setStatus("연체반납");
+					break;
+			}
+		}
+		model.addAttribute("borrowlist", borrowlist);
 		model.addAttribute("navi", navi);
-		model.addAttribute("searchCondition", searchCondition);
-		model.addAttribute("searchKeyword", searchKeyword);
-		return "/book/getBookList";
+		return "book/borrowList";
 	}
 	
-	//게시글 읽기
-	@RequestMapping(value = "read")
-	public String read(int book_num, Model model) {
-		model.addAttribute("bookVO", service.read(book_num));
-		return "/book/bookRead";
+	// 이미지 띄우기
+	@RequestMapping(value = "/downloadBook", method = RequestMethod.GET)
+	public void downloadBook(int num, HttpServletResponse response) {
+		String fullPath = uploadPath + "/" + repo.selectOne(num).getImageurl();
+
+		FileInputStream filein = null;
+		ServletOutputStream sout = null;
+
+		try {
+			filein = new FileInputStream(fullPath);
+			sout = response.getOutputStream();
+
+			FileCopyUtils.copy(filein, sout);
+			filein.close();
+			sout.close();
+		} catch (Exception e) {
+			e.getStackTrace();
+		}
 	}
 	
-	// 게시글 삭제
-		@RequestMapping(value = "delete", method = RequestMethod.GET)
-		public String delete(int book_num, RedirectAttributes rttr) {
-			rttr.addFlashAttribute("result", service.delete(book_num));
-			return "redirect:/book/getBookList";
-		}
+	//--------------
+
+
+	// 책 등록 창으로 가기
+	@RequestMapping(value = "/registBook", method = RequestMethod.GET)
+	public String registBook() {
+		return "admin/registBook";
+	}
 	
-	// 게시글 수정 양식 이동
-		@RequestMapping(value = "bookUpdateForm", method = RequestMethod.GET)
-		public String updateForm(int book_num, Model model) {
-			model.addAttribute("vo", service.read(book_num));
-			return "/book/bookUpdateForm";
+	// 책 등록하기
+	@RequestMapping(value = "/registBook", method = RequestMethod.POST)
+	public String registBook(BookVO book, MultipartFile upload) {
+		// 책 이미지 저장
+		if (upload.getOriginalFilename().length() > 0) {
+			String savedImage = FileService.saveFile(uploadPath, upload, book.getTitle() + "_" + book.getAuthor());
+			book.setImageurl(savedImage);
 		}
+		// DB에 저장
+		repo.insert(book);
+		return "book/bookList";
+	}
 		
-	// 게시글 수정
-		@RequestMapping(value = "update", method = RequestMethod.POST)
-		public String update(BookVO vo, Model model) {
-			model.addAttribute("book_num", vo.getBook_num());
-			model.addAttribute("result", service.update(vo));
-			return "/book/bookRead";
-		}
 }
