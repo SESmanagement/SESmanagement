@@ -18,6 +18,10 @@ public class PageNavigator {
 	/*
 	 * 생성자
 	 */
+	
+	public PageNavigator(){}
+	
+	
 	public PageNavigator(int countPerPage, int pagePerGroup, int currentPage, int totalRecordsCount) {
 		//페이지당 글 수, 그룹당 페이지 수, 현재 페이지, 전체 글 수를 전달받음
 		this.countPerPage = countPerPage;
