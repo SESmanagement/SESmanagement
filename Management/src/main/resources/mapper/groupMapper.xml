@@ -3,38 +3,184 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<!-- 관리자  SQL -->
+<!-- 관리자 SQL -->
 <mapper namespace="com.spring.manage.dao.GroupMapper">
-	
+
 	<!-- 소모임 생성 -->
 	<insert id="seek" parameterType="GroupVO">
-		insert into group_total values
-		(group_seq.nextval, #{group_title}, #{start_date}, #{end_date}, #{penalty},  #{content}, #{headcount},  #{owner})
+		insert into group_total(group_num, group_title, seek_start_date, seek_end_date,
+		start_date, end_date,content, headcount, content_detail, student_num)
+		values
+		(group_seq.nextval, #{group_title},#{seek_start_date}, #{seek_end_date}, #{start_date}, #{end_date},
+		#{content}, #{headcount}, #{content_detail}, #{student_num})
+		<selectKey keyProperty="group_num" resultType="int" order="AFTER">
+			SELECT group_seq.currval FROM dual
+		</selectKey>
 	</insert>
-	
-	<!-- 소모임전체리스트 -->
-	<select id="list" resultType="GroupVO">
-		select t.*, m.name as owner_name from group_total t, member m
-		where t.owner = m.student_num order by group_num desc
+
+
+	<!-- 소모임 전체 -->
+	<select id="list" parameterType="map" resultType="GroupVO">
+		select gt.*, m.name as owner_name from group_total gt, member m
+		WHERE m.student_num=gt.student_num
+		and round(gt.seek_end_date-sysdate)+1 >= 0
+		<if test="searchCondition == 'NAME'">
+			and m.name LIKE '%'||#{searchKeyword}||'%'
+		</if>
+		<if test="searchCondition == 'TITLE'">
+			and gt.GROUP_TITLE LIKE '%'||#{searchKeyword}||'%'
+		</if>
+		<if test="searchCondition == 'CONTENT'">
+			and gt.CONTENT LIKE '%'||#{searchKeyword}||'%'
+		</if>
+		order by group_num desc
+	</select>
+
+
+	<!-- 어느그룹에 누가 들어가 있는지 확인 -->
+	<select id="daredoko" resultType="GroupVO" parameterType="int">
+	 select distinct gm.student_num, gm.group_num,
+  	(select m.name from member m where gm.student_num = m.student_num) as owner_name
+  	from member m, group_member gm
+  	where gm.group_num =#{group_num}
 	</select>
 	
+<!-- 위 아래 어떻게 정리하면 할 수 있을 거 같은데 모르겟다ㅠㅠ -->
+
+		<!-- 팀원 이름 불러오기 -->
+	<select id="include" resultType="GroupJoinVO">
+	 select distinct gm.student_num, gm.group_num,
+  	(select m.name from member m where gm.student_num = m.student_num) as name
+  	from member m, group_member gm
+	</select>
+	
+
 	<!-- 소모임 상세창 -->
-	<select id="detail" parameterType="Integer" resultType="GroupVO">
-		select m.name as owner_name, gm.* 
-		from member m, group_member gm
-		where gm.group_num=#{group_num} and m.student_num=gm.student_num
+	<select id="detail" parameterType="GroupJoinVO" resultType="GroupVO">
+		select m.name as owner_name, gt.group_num, gt.group_title,
+		to_char(gt.seek_start_date,
+		'yyyy/mm/dd') as seek_start_date,
+		to_char(gt.seek_end_date, 'yyyy/mm/dd') as seek_end_date,
+		to_char(gt.start_date, 'yyyy/mm/dd') as start_date,
+		to_char(gt.end_date, 'yyyy/mm/dd') as end_date, gt.penalty_total,
+		gt.content, gt.content_detail,
+		gt.headcount, gt.student_num from member m, group_total gt
+		where gt.group_num = ${group_num} and gt.student_num = m.student_num
 	</select>
-	
-	
+
+
 	<!-- 소모임 중복가입여부 확인 -->
 	<select id="join_mae" parameterType="GroupJoinVO" resultType="GroupJoinVO">
-		select * from group_member where student_num = #{student_num} and group_num = #{group_num}
+		select distinct student_num from group_member where student_num = #{student_num} and
+		group_num = #{group_num}
 	</select>
-	
+
 	<!-- 소모임가입 -->
 	<insert id="join" parameterType="GroupJoinVO">
-		insert into group_member(group_num, student_num) values(#{group_num}, #{student_num})
+		insert into
+		group_member(group_num, student_num) values(#{group_num},
+		#{student_num})
+	</insert>
+
+	<!-- 가입된 인원 수 확인 -->
+	<select id="member_count" parameterType="int" resultType="int">
+		select count(distinct student_num) as count
+		from group_member where group_num=#{group_num}
+	</select>
+
+	<!-- 총 소모임 갯수 가져오기 -->
+	<select id="total_count" parameterType="map" resultType="int">
+		select count(*) as totalcount from group_total
+		<if test="searchCondition == 'NAME'">
+			WHERE STUDENT_NUM LIKE '%'||#{searchKeyword}||'%'
+		</if>
+		<if test="searchCondition == 'TITLE'">
+			WHERE GROUP_TITLE LIKE '%'||#{searchKeyword}||'%'
+		</if>
+		<if test="searchCondition == 'CONTENT'">
+			WHERE CONTENT LIKE '%'||#{searchKeyword}||'%'
+		</if>
+		ORDER BY group_num
+	</select>
+
+	<!-- 시작한날로부터, 끝나는 날까지, 퍼센테이지 가져오기 -->
+	<select id="mygroup" parameterType="GroupJoinVO" resultType="GroupVO">
+		
+		select distinct gt.group_num, gt.group_title,
+		to_char(gt.seek_start_date,
+		'yyyy/mm/dd') as seek_start_date,
+		to_char(gt.seek_end_date, 'yyyy/mm/dd') as seek_end_date,
+		to_char(gt.start_date, 'yyyy/mm/dd') as start_date,
+		to_char(gt.end_date, 'yyyy/mm/dd') as end_date, gt.penalty_total,
+		gt.content,gt.headcount, gt.student_num, 
+		floor(sysdate-gt.start_date) as dday,
+		round(gt.end_date-sysdate)+1 as end,
+		round(sysdate-gt.start_date)/round(gt.end_date-gt.start_date)*100 as percent
+		from group_total gt, group_member gm
+		where gt.student_num=#{student_num} and gt.group_num = gm.group_num
+	</select>
+
+	<!-- 나의 소모임(팀원으로, 소모임장인건 x) -->
+	<select id="team" parameterType="GroupJoinVO" resultType="GroupVO">
+		select distinct
+		gt.group_num, gt.group_title, to_char(gt.seek_start_date,
+		'yyyy/mm/dd') as seek_start_date, to_char(gt.seek_end_date,
+		'yyyy/mm/dd') as seek_end_date, to_char(gt.start_date, 'yyyy/mm/dd') as start_date,
+		to_char(gt.end_date, 'yyyy/mm/dd') as end_date,
+		gt.penalty_total, gt.content,
+		gt.headcount, gt.student_num,
+		floor(sysdate-gt.start_date) as dday,
+		round(gt.end_date-sysdate)+1 as end,
+		round(sysdate-gt.start_date)/round(gt.end_date-gt.start_date)*100 as percent
+		from group_total gt, group_member gm
+		where not gt.student_num=${student_num} and gm.student_num=${student_num}
+		and gt.group_num=gm.group_num
+	</select>
+
+
+	<!-- 그룹 내 개인 벌금 불러오기 -->
+	<select id="penalty" parameterType="GroupJoinVO" resultType="Integer">
+		select penalty_per from group_member
+		where student_num=#{student_num}
+		and group_num=#{group_num}
+		and penalty_date=#{penalty_date}
+	</select>
+
+	<!-- 그룹의 벌금 불러오기 -->
+	<select id="grouppen" resultType="GroupVO">
+		select group_num,
+		sum(penalty_per) as penalty from group_member group by group_num
+	</select>
+
+
+	<!-- 그룹 벌금 업데이트, 입력 -->
+	<insert id="insert_penalty" parameterType="GroupJoinVO">
+		insert into group_member
+		values(#{group_num}, #{student_num}, #{penalty_per}, #{penalty_date})
 	</insert>
 	
-	
+	<!-- 페널티 금액 수정 -->
+	<update id="modify_penalty" parameterType="GroupJoinVO">
+		update group_member set penalty_per = #{penalty_per}
+		where group_num=#{group_num} and penalty_date = #{penalty_date}
+		and student_num=#{student_num}
+	</update>
+
+
+	<!-- 벌금 쌓인 리스트 날짜와 벌금 -->
+	<select id="penalty_list" parameterType="GroupJoinVO" resultType="GroupJoinVO">
+		select m.name, gm.group_num, gm.student_num, gm.penalty_per, gm.penalty_date
+		from group_member gm, member m
+		where group_num=#{group_num}		
+		and m.student_num = gm.student_num
+		and gm.penalty_per is not null
+		order by penalty_date desc
+	</select>
+
+
+
+
+
+
+
 </mapper>
