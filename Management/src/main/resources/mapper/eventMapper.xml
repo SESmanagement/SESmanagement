@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 스터디룸 예약처리 처리 SQL -->
+<mapper namespace="com.spring.manage.dao.EventMapper">
+
+    <!-- 예약현황 조회시점의 시각 조회 -->
+    <select id="getSysdate" resultType="String">
+        SELECT TO_CHAR(SYSDATE, 'YY-MM-DD HH24:MI:SS dy') FROM DUAL
+    </select>
+
+    <!-- 캘린더-이벤트 가져오기 -->
+    <select id="getEvent" parameterType="int" resultType="EventVO">
+        SELECT STUDENT_NUM, MEMO, ID, TITLE, ALLDAY, START_TIME AS "START", END_TIME AS "END",
+            URL_STR AS "URL", CLASSNAME, EDITABLE, STARTEDITABLE, RESOURCEEDITABLE, RENDERING, 
+            OVERLAP, CONSTRAINT_EVENT AS "CONSTRAINT", SOURCE_EVENT AS "SOURCE", 
+            BACKGROUNDCOLOR, BORDERCOLOR, TEXTCOLOR 
+        FROM EVENT
+        WHERE STUDENT_NUM = #{student_num} OR CONSTRAINT_EVENT != 0
+        ORDER BY START_TIME
+    </select>
+    
+    <!-- 캘린더 - 이벤트 등록하기 -->
+    <insert id="addEvent" parameterType="EventVO">
+        INSERT INTO EVENT VALUES (
+            #{student_num}, #{memo}, 'EV'||EV_SEQ.NEXTVAL, #{title}, 
+            <if test="allDay == true"> 1,</if>
+            <if test="allDay != true"> 0,</if>
+            TO_TIMESTAMP(#{start}, 'YYYY-MM-DD HH24:MI:SS'), TO_TIMESTAMP(#{end}, 'YYYY-MM-DD HH24:MI:SS'), null, null, 1,
+            1, 1, 1, 0, 0,
+            #{constraint}, #{source}, #{backgroundColor}, null, null
+        )
+    </insert>
+    
+    <!-- 캘린더 - 수정하기!!!!! 예약 취소건 EVENT 테이블에 delete -->
+<!--     <delete id="deleteEvent" parameterType="string"> -->
+<!--         DELETE EVENT WHERE SOURCE_EVENT = #{sr_resv_num} -->
+<!--     </delete> -->
+    
+</mapper>
