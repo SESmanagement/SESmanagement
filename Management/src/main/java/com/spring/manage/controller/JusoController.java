@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 
 @Controller
-@RequestMapping("add")
+@RequestMapping("/add")
 public class JusoController {
 	
 	@RequestMapping(value="open", method = RequestMethod.GET)
@@ -25,8 +25,7 @@ public class JusoController {
 	}
 	
     @RequestMapping(value="getAddrApi.do", method = RequestMethod.GET)
-    public void getAddrApi(HttpServletRequest req, ModelMap model, HttpServletResponse response) throws Exception {
-		// 요청변수 설정
+    public void getAddrApi(HttpServletRequest req, ModelMap model, HttpServletResponse response) throws Exception {// 요청변수 설정
     	String currentPage = req.getParameter("currentPage");    //요청 변수 설정 (현재 페이지. currentPage : n > 0)
 		String countPerPage = req.getParameter("countPerPage");  //요청 변수 설정 (페이지당 출력 개수. countPerPage 범위 : 0 < n <= 100)
 		String resultType = req.getParameter("resultType");      //요청 변수 설정 (검색결과형식 설정, json)
@@ -54,10 +53,9 @@ public class JusoController {
     
     
 	@RequestMapping(value="address", method = RequestMethod.GET)
-	public String address(String addr, HttpSession session){
-		String juso[] = addr.split(",");
-		session.setAttribute("address", juso[0]);
-		session.setAttribute("zip", juso[1]);
+	public String address(String addr, String zip, HttpSession session){
+		session.setAttribute("address", addr);
+		session.setAttribute("zip", zip);
 		return "member/jusoSearch2";
 	}
     
