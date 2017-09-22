@@ -8,7 +8,7 @@
     <meta name="keywords" content="HTML5 Template" />
     <meta name="description" content="Nexus - Responsive HTML5 Template">
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <link rel="shortcut icon" type="image/png" href="/manage/resources/HTML/img/favicon.png" />
+    <link rel="shortcut icon" type="image/png" href="/manage/resources/HTML/img/sesschool.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <!-- Web Fonts  -->
@@ -44,35 +44,18 @@
         <div class="col-lg-6 col-md-7 col-sm-12 col-xs-12 pull-left general-font-area">
           <ul class="contact-top">
             <li><i class="fa fa-map-marker" aria-hidden="true"></i> 서울특별시 삼성동 코엑스 4층</li>
-            <li><i class="fa fa-phone" aria-hidden="true"></i> (010) 5490-0591</li>
-            <li><i class="fa fa-envelope" aria-hidden="true"></i> ehdrms514@gmail.com</li>
+            <li><i class="fa fa-phone" aria-hidden="true"></i> (02) 456-7890</li>
+            <li><i class="fa fa-envelope" aria-hidden="true"></i> kita@kita.net</li>
           </ul>
         </div>
-        <div class="col-lg-6 col-md-5 pull-right hidden-phone">
-          <!-- 로그인 여기다가 넣고싶음 -->
-          <ul class="social-links">
-	          <div class="row">
-	            <div class="col-sm-4">
-		            <div class="input-group input-group-icon">
-		             <span class="input-group-addon">
-		       			 <span class="icon"><i class="fa fa-user"></i>
-		       			 </span>
-		        	  </span>
-		              <input class="form-control" type="text" placeholder="Username">
-		            </div>
-	            </div>
-				<div class="col-sm-4">
-	         		<div class="input-group input-group-icon">
-		             <span class="input-group-addon">
-		              <span class="icon"><i class="fa fa-key"></i>
-		              </span>
-		             </span>
-		             <input class="form-control" type="password" placeholder="Password">
-					</div>
-	           </div>
-	          </div>
-          </ul>
-        </div>
+           <div class="row">
+	       	<c:if test="${sessionScope.vo.name == null}">
+				<%@ include file="login.jsp" %>
+			</c:if>
+			<c:if test="${sessionScope.vo.name != null}">
+				<%@ include file="logedin.jsp" %>
+			</c:if>
+      	   </div>
       </div>
     </div>
   </div>
@@ -80,7 +63,7 @@
     <div class="container"> 
       
       <!--Site Logo-->
-      <div class="logo"> <a href="/manage"> <img alt="Nexus" src="/manage/resources/HTML/img/logo.png" data-logo-height="35"> </a> </div>
+      <div class="logo"> <a href="/manage"> <img alt="Nexus" src="/manage/resources/HTML/img/sesschool.png" data-logo-height="35"> </a> </div>
       <!--End Site Logo-->
       
       <div class="navbar-collapse nav-main-collapse collapse"> 
@@ -101,57 +84,54 @@
         <!--Main Menu-->
         <nav class="nav-main mega-menu">
           <ul class="nav nav-pills nav-main" id="mainMenu">
-            <li class=""> <a class="dropdown-toggle" href="/manage/">Home</a></li>
+            <li class=""> <a class="dropdown-toggle" href="/manage">Home</a></li>
             <li class="dropdown"> <a class="dropdown-toggle" href="#">도서예약 <i class="fa fa-caret-down"></i></a>
               <ul class="dropdown-menu">
-                <li><a href="page-about-us.html">책목록</a></li>
-                <li><a href="page-about-us-2.html">도서대출상태</a></li>
-                <li><a href="page-about-me.html">대출신청</a></li>
+                <li><a href="/manage/book/getBookList">책목록</a></li>
+                <li><a href="">도서대출상태</a></li>
+                <li><a href="">대출신청</a></li>
               </ul>
             </li>
             <li class="dropdown"> <a class="dropdown-toggle" href="#">스터디룸예약 <i class="fa fa-caret-down"></i></a>
               <ul class="dropdown-menu">
-                <li><a href="/manage/studyroom/rooms">스터디룸 현황 조회</a></li>
-                <li><a href="/manage/studyroom/myResvInfoPage?student_num=${sessionScope.vo.student_num }"">내 예약현황</a></li>
-                <li><a href="page-about-me.html">스터디룸 이용 안내</a></li>
+                <li><a href="">스터디룸 현황 조회</a></li>
+                <li><a href="">내 예약현황</a></li>
+                <li><a href="">스터디룸 이용 안내</a></li>
               </ul>
             </li> 
-            <li class="dropdown"> <a class="dropdown-toggle" href="#">소모임 <i class="fa fa-caret-down"></i></a>
+            <li class="dropdown"> <a class="dropdown-toggle" href="/manage/group/list">소모임 <i class="fa fa-caret-down"></i></a>
               <ul class="dropdown-menu">
-                <li><a href="page-about-us.html">전체 소모임</a></li>
-                <li><a href="page-about-us-2.html">소모임 모집하기</a></li>
+                <li><a href="/manage/group/list">전체 소모임</a></li>
+                <li><a href="/manage/group/seek	">소모임 모집하기</a></li>
               </ul>
             </li> 
             <li class="dropdown"> <a class="dropdown-toggle" href="#">마이페이지 <i class="fa fa-caret-down"></i></a>
               <ul class="dropdown-menu">
-                <li><a href="/manage/myPage/mySchedule">스케줄 확인</a></li>
-                <li><a href="page-about-us-2.html">대출한 책 확인</a></li>
-	            <li><a href="page-about-us-2.html">스터디룸 에약 확인</a></li>	
-	            <li><a href="page-about-us-2.html">소모임 확인</a></li>
+                <li><a href="">스케줄 확인</a></li>
+                <li><a href="">대출한 책 확인</a></li>
+	            <li><a href="">스터디룸 에약 확인</a></li>	
+	            <li><a href="/manage/group/mygroup?student_num=${vo.student_num }">소모임 확인</a></li>
               </ul>
             </li> 
+            <c:if test="${vo.student_num == 00001}">
             <li class="dropdown"> <a class="dropdown-toggle" href="#">관리자 메뉴<i class="fa fa-caret-down"></i></a>
               <ul class="dropdown-menu">
-                <li><a href="page-about-us.html">도서 등록</a></li>
-                <li><a href="page-about-us-2.html">강의실</a></li>
-	            <li><a href="/manage/studyroom/adminPage">스터디룸 관리</a></li>	
-	            <li><a href="page-about-us-2.html">도서리스트</a></li>
+                <li><a href="/manage/book/writeForm">도서 등록</a></li>
+                <li><a href="">강의실</a></li>
+	            <li><a href="">스터디룸 관리</a></li>	
+	            <li><a href="/manage/book/getBookList">도서리스트</a></li>
               </ul>
-            </li> 
+            </li>
+            </c:if> 
           </ul>
         </nav>
         <!--End Main Menu--> 
       </div>
-      <button class="btn btn-responsive-nav btn-inverse" data-toggle="collapse" data-target=".nav-main-collapse"> <i class="fa fa-bars"></i> </button>
     </div>
     <span class="v-header-shadow"></span> </header>
 </div>
     <!--End Header-->
-
     <div id="container" class="slideshow">
-
-        
-
             <!--            <div class="v-call-to-action v-bg-stylish v-bg-stylish-v3">
                 <div class="v-call-to-action-wrap clearfix">
                     <div class="container">

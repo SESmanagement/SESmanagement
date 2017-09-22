@@ -54,8 +54,11 @@
 </head>
 <body>
 <%@ include file="top.jsp" %>
-<br>
-회원정보수정
+	<div class="v-heading-v2">
+	<br><br>
+	 <h3>회원정보수정</h3>
+	</div>
+
 <form name="infor" action="/manage/member/join" method="post" onsubmit="return confirmOk()">
 	<table>
 		<tr>
@@ -82,7 +85,7 @@
 		<tr>
 			<td>주소</td>
 			<td><input type="text" name="zip" id="zip" value="${zip}" readonly>
-			<input type="button" value="주소찾기" onclick="javascript:openSearch();"></td>
+			<button class="btn v-btn v-concrete v-small-button" type="button" onclick="javascript:openSearch();">주소찾기</button></td>
 		</tr>
 		<tr>
 			<td></td>
@@ -104,11 +107,11 @@
 <!-- 		</tr> -->
 		
 		<tr>
-			<td><input type="submit" value="수정완료"></td>
+			<td><button class="btn v-btn v-alizarin v-small-button" type="submit">수정완료</button></td>
 			<td></td>
 		</tr>
 	</table>
 </form>
-
+<%@ include file="footer.jsp" %>
 </body>
 </html>

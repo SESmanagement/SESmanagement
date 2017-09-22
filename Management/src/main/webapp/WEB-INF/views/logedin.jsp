@@ -8,17 +8,16 @@
 </head>
 <script>
 	function goJoin(){
-		location.href="member/join";
+		location.href="/manage/member/join";
 	}
 </script>
 
 
 <body>
 
-${sessionScope.vo.name } 님이 로그인 중입니다.
-<form action="member/logout" method="post">
-<input type="button" value="회원정보수정" onclick="javascript:goJoin();">
-<input type="submit" value="로그아웃">
+<form action="/manage/member/logout" method="post">
+${sessionScope.vo.name } 님이 로그인 중입니다. <input type="button" value="회원정보수정" class="btn v-btn v-btn-default v-small-button v-alizarin" onclick="javascript:goJoin();">
+<input type="submit" class="btn v-btn v-btn-default v-small-button v-alizarin" value="로그아웃">
 </form>
 
 </body>
