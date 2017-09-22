@@ -1,55 +1,52 @@
 package com.spring.manage.dao;
 
-import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.ibatis.session.RowBounds;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import com.spring.manage.vo.BookVO;
 import com.spring.manage.vo.LendVO;
 
 @Repository
-public class AdminDAOImpl implements AdminDAO{
+public class AdminDAOImpl {
+
 	@Autowired
-	private SqlSession sqlSession;
+	SqlSession sqlSession;
 	
-	@Override
-	public List<LendVO> getStatusList(Map<String, String> map) {
-		AdminMapper mapper = sqlSession.getMapper(AdminMapper.class);
-		return mapper.getStatusList(map);
+	public List<LendVO> getStatusList(String status, String searchType, String searchValue){
+		AdminDAO dao=sqlSession.getMapper(AdminDAO.class);
+		Map<String, String> map=new HashMap<>();
+		map.put("status", status);
+		map.put("searchType", searchType);
+		map.put("searchValue", searchValue);
+		return dao.getStatusList(map);
 	}
-
-	@Override
-	public int lendBook(Map<String, Integer> map) {
-		AdminMapper mapper = sqlSession.getMapper(AdminMapper.class);
-		return mapper.lendBook(map);
+	
+	public int lendBook(Map<String, Integer> map){
+		AdminDAO dao=sqlSession.getMapper(AdminDAO.class);
+		return dao.lendBook(map);
 	}
-
-	@Override
-	public int rejectBook(int num) {
-		AdminMapper mapper = sqlSession.getMapper(AdminMapper.class);
-		return mapper.rejectBook(num);
+	
+	public int rejectBook(int num){
+		AdminDAO dao=sqlSession.getMapper(AdminDAO.class);
+		return dao.rejectBook(num);
 	}
-
-	@Override
-	public int returnBook(int num) {
-		AdminMapper mapper = sqlSession.getMapper(AdminMapper.class);
-		return mapper.returnBook(num);
+	
+	public int returnBook(int num){
+		AdminDAO dao=sqlSession.getMapper(AdminDAO.class);
+		return dao.returnBook(num);
 	}
-
-	@Override
-	public int updateDelayed() {
-		AdminMapper mapper = sqlSession.getMapper(AdminMapper.class);
-		return mapper.updateDelayed();
+	
+	public int updateDelayed(){
+		AdminDAO dao=sqlSession.getMapper(AdminDAO.class);
+		return dao.updateDelayed();
 	}
-
-	@Override
-	public int returnDelayedBook(int num) {
-		AdminMapper mapper = sqlSession.getMapper(AdminMapper.class);
-		return mapper.returnDelayedBook(num);
+	
+	public int returnDelayedBook(int num){
+		AdminDAO dao=sqlSession.getMapper(AdminDAO.class);
+		return dao.returnDelayedBook(num);
 	}
 }

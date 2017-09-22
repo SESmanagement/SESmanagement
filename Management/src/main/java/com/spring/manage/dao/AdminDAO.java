@@ -5,8 +5,6 @@ import java.util.Map;
 
 import com.spring.manage.vo.LendVO;
 
-
-
 public interface AdminDAO {
 	public List<LendVO> getStatusList(Map<String,String> map);
 	public int lendBook(Map<String, Integer> map);

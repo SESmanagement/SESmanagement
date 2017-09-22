@@ -1,6 +1,7 @@
 package com.spring.manage.dao;
 
-import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.apache.ibatis.session.RowBounds;
@@ -9,47 +10,56 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.spring.manage.vo.BookVO;
+import com.spring.manage.vo.LendVO;
+
 
 @Repository
-public class BookDAOImpl implements BookDAO{
+public class BookDAOImpl{
 
+	
 	@Autowired
 	private SqlSession sqlSession;
-
-	//게시글 목록 가져오기
-	@Override
-	public ArrayList<BookVO> getBookList(Map<String, String> map, int startRecord, int countPerPage) {
-		BookMapper mapper = sqlSession.getMapper(BookMapper.class);
-		RowBounds rb = new RowBounds(startRecord, countPerPage);
-		return mapper.getBookList(map, rb);
+	
+	public int insert(BookVO book){
+		BookDAO dao=sqlSession.getMapper(BookDAO.class);
+		return dao.insert(book);
 	}
-
-	@Override
-	public int getTotal(Map<String, String> map) {
-		return 0;
+	
+	public BookVO selectOne(int num){
+		BookDAO dao=sqlSession.getMapper(BookDAO.class);
+		return dao.selectOne(num);
 	}
-
-	@Override
-	public int write(BookVO vo) {
-		BookMapper mapper = sqlSession.getMapper(BookMapper.class);
-		return mapper.write(vo);
+	
+	public List<BookVO> selectAll(String searchType, String searchValue, int startRecord, int countPerPage){
+		BookDAO dao=sqlSession.getMapper(BookDAO.class);
+		RowBounds rb=new RowBounds(startRecord, countPerPage);
+		Map<String, String> search=new HashMap<>();
+		search.put("searchType", searchType);
+		search.put("searchValue", searchValue);
+		return dao.selectAll(search, rb);
 	}
-
-	@Override
-	public BookVO read(int book_num) {
-		BookMapper mapper = sqlSession.getMapper(BookMapper.class);
-		return mapper.read(book_num);	
+	
+	public int reserveBook(Map<String, Object> map){
+		BookDAO dao=sqlSession.getMapper(BookDAO.class);
+		return dao.reserveBook(map);
 	}
-
-	@Override
-	public int delete(int book_num) {
-		BookMapper mapper = sqlSession.getMapper(BookMapper.class);
-		return mapper.delete(book_num);
+	
+	public List<LendVO> borrowList(int startRecord, int countPerPage, String mem_num){
+		BookDAO dao=sqlSession.getMapper(BookDAO.class);
+		RowBounds rb=new RowBounds(startRecord, countPerPage);
+		return dao.borrowList(mem_num, rb);
 	}
-
-	@Override
-	public int update(BookVO vo) {
-		BookMapper mapper = sqlSession.getMapper(BookMapper.class);
-		return mapper.update(vo);
+	
+	public int getBookCount(String searchType, String searchValue){
+		BookDAO dao=sqlSession.getMapper(BookDAO.class);
+		Map<String,String> map=new HashMap<>();
+		map.put("searchType", searchType);
+		map.put("searchValue", searchValue);
+		return dao.getBookCount(map);
+	}
+	
+	public int getBorrowCount(String mem_num){
+		BookDAO dao=sqlSession.getMapper(BookDAO.class);
+		return dao.getBorrowCount(mem_num);
 	}
 }

@@ -1,16 +1,21 @@
 package com.spring.manage.dao;
 
-import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
+import org.apache.ibatis.session.RowBounds;
+
 import com.spring.manage.vo.BookVO;
+import com.spring.manage.vo.LendVO;
+
 
 
 public interface BookDAO {
-	public ArrayList<BookVO> getBookList(Map<String, String> map, int startRecord, int countPerPage);
-	public int getTotal(Map<String, String> map);
-	public int write(BookVO vo);
-	public BookVO read(int book_num);
-	public int delete(int book_num);	
-	public int update(BookVO vo);
+	public List<BookVO> selectAll(Map<String, String> search, RowBounds rb);
+	public BookVO selectOne(int num);
+	public int insert(BookVO book);
+	public int reserveBook(Map<String, Object> map);
+	public List<LendVO> borrowList(String mem_num, RowBounds rb);
+	public int getBookCount(Map<String, String> map);
+	public int getBorrowCount(String mem_num);
 }
