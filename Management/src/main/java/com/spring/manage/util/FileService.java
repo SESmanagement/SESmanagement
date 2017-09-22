@@ -2,11 +2,20 @@ package com.spring.manage.util;
 
 import java.io.File;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.UUID;
 
 import org.springframework.web.multipart.MultipartFile;
 
 public class FileService {
 
+	/**
+	 * HDD에 파일 복사
+	 * @param uploadPath
+	 * @param upload
+	 * @return
+	 */
 	public static String saveFile(String uploadPath, MultipartFile upload, String userid) {
 
 		// 파일이 전송되었으므로 복사 작업
@@ -45,6 +54,12 @@ public class FileService {
 		return savedFileName;
 	}
 	
+	
+	/**
+	 * HDD에 저장된 파일을 삭제함
+	 * @param fullPath
+	 * @return
+	 */
 	public static boolean deleteFile(String fullPath){
 		
 		File delFile = new File(fullPath);
