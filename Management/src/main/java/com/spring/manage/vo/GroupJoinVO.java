@@ -5,15 +5,69 @@ public class GroupJoinVO {
 	private int group_num;
 	private int student_num;
 	private int penalty_per;
+	private String penalty_date;
+	private String name;
 	
 	public GroupJoinVO() {	}
 	
+	
 
-	public GroupJoinVO(int group_num, int student_num, int penalty_per) {
+
+
+
+	@Override
+	public String toString() {
+		return "GroupJoinVO [group_num=" + group_num + ", student_num=" + student_num + ", penalty_per=" + penalty_per
+				+ ", penalty_date=" + penalty_date + ", name=" + name + "]";
+	}
+
+
+
+
+
+
+	public GroupJoinVO(int group_num, int student_num, int penalty_per, String penalty_date, String name) {
 		this.group_num = group_num;
 		this.student_num = student_num;
 		this.penalty_per = penalty_per;
+		this.penalty_date = penalty_date;
+		this.name = name;
 	}
+
+
+
+
+
+
+	public String getPenalty_date() {
+		return penalty_date;
+	}
+
+
+
+
+
+
+	public void setPenalty_date(String penalty_date) {
+		this.penalty_date = penalty_date;
+	}
+
+
+
+
+
+
+	public String getName() {
+		return name;
+	}
+
+
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+
 
 	public int getGroup_num() {
 		return group_num;
