@@ -7,91 +7,389 @@
 <!DOCTYPE html>
 <html>
 <head>
+
 <meta charset="UTF-8">
-<title>스터디룸 예약현황</title>
+	<title>스터디룸 예약현황</title>
+    <meta name="keywords" content="HTML5 Template" />
+    <meta name="description" content="Nexus - Responsive HTML5 Template">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <link rel="shortcut icon" type="image/png" href="img/favicon.png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Web Fonts  -->
+<link href="https://fonts.googleapis.com/css?family=Cabin:400,500,600,700|Montserrat:300,400,500,600,700,800,900|Open+Sans:300,400,400i,600,600i,700,800|Raleway:300,400,400i,500,600,700|Roboto:300,400,400i,500,700,900" rel="stylesheet">
+
+    <!-- Libs CSS -->
+    <link href="/manage/resources/HTML/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="/manage/resources/HTML/css/style.css" rel="stylesheet" />
+    <link href="/manage/resources/HTML/css/font-awesome.min.css" rel="stylesheet" />
+    <link href="/manage/resources/HTML/css/streamline-icon.css" rel="stylesheet" />
+    <link href="/manage/resources/HTML/css/v-nav-menu.css" rel="stylesheet" />
+    <link href="/manage/resources/HTML/css/v-portfolio.css" rel="stylesheet" />
+    <link href="/manage/resources/HTML/css/v-blog.css" rel="stylesheet" />
+    <link href="/manage/resources/HTML/css/v-animation.css" rel="stylesheet" />
+    <link href="/manage/resources/HTML/css/v-bg-stylish.css" rel="stylesheet" />
+    <link href="/manage/resources/HTML/css/v-shortcodes.css" rel="stylesheet" />
+    <link href="/manage/resources/HTML/css/theme-responsive.css" rel="stylesheet" />
+    <link href="/manage/resources/HTML/plugins/owl-carousel/owl.theme.css" rel="stylesheet" />
+    <link href="/manage/resources/HTML/plugins/owl-carousel/owl.carousel.css" rel="stylesheet" />
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/manage/resources/css/custom.css">
+    
+	<!-- 별도 적용분 - 이후 삭제 처리 -->
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css" />
-	<link rel="stylesheet" href="/manage/resources/css/style.css" />
+	<link rel="stylesheet" href="/manage/resources/HTML/css/style_tooltip.css" />
 	<script src="/manage/resources/js/jquery-3.2.1.js"></script>
-	
+
+
 <style type="text/css">
- 	[class="sr"] { 
- 		position:relative; 
- 		border:1px; 
- 		border-style:solid; 
- 		padding:10px; 
- 		width:100px; 
- 		height:50px; 
+
+	 #leftside > button {
+	    font-size: 10px;
+	    text-align: center;
+	    padding-right: 0px;
+	    padding-left: 0px;
+	    width: 60px;
+	    height: 35px;
+	 }
+	 
+	    #rightside > button {
+        font-size: 10px;
+        text-align: center;
+        padding-right: 1px;
+        padding-left: 1px;
+        margin-top: 1px;
+        margin-bottom: 1px;
+        width: 35px;
+        height: 35px;
+     }
+ 	
+ 	.leftside {
  		display: inline-block;
  	}
  	
- 	div.mouseView { 
- 		padding:10px; 
- 		width:300px; 
- 		position:absolute; 
- 		border:2px solid #ccc; 
- 		font-size:12px; 
- 		background-color:#fafafa; 
- 	}
+ 	  .rightside {
+        display: inline-block;
+    }
  	
- 	[class=section] {
- 		display: inline;
- 		border: 1px solid #ff0000;
- 		padding: 10px;
- 		width: auto;
- 		height: 3000px;
- 	}
- 	
+	input[type=checkbox] {  
+	    display: none;  
+	}
+	
+	input[type=checkbox] + label{
+	    display: inline-block;  
+	    cursor: pointer;  
+	    position: relative;  
+	    padding-left: 25px;  
+	    margin-right: 15px;  
+	    font-size: 13px;
+	}
+	
+	input[type=checkbox] + label:before {     
+	    content: "";  
+	    display: inline-block;  
+	  
+	    width: 20px;  
+	    height: 20px;  
+	  
+	    margin-right: 10px;  
+	    position: absolute;  
+	    left: 0;  
+	    bottom: 1px;  
+	    background-color: #ccc;  
+	    border-radius: 2px; 
+	    box-shadow: inset 0px 1px 1px 0px rgba(0, 0, 0, .3), 0px 1px 0px 0px rgba(255, 255, 255, .8);  
+	}
+	input[type=checkbox]:checked + label:before { 
+	    content: "\2713";  /* 체크모양 */
+	    text-shadow: 1px 1px 1px rgba(0, 0, 0, .2);  
+	    font-size: 18px; 
+	    font-weight:800; 
+	    color: #fff;  
+	    background:#f5245f;
+	    text-align: center;  
+	    line-height: 18px;  
+	}
+
+    .v-btn {
+        background-color: #FFF;
+    }
+	
 </style>
 </head>
 <body>
 <script>
-	// 초기화
+
+	// 현재 시각
+	var now = "${sysdate}" // yy-mm-dd hh24:mi:ss dy
+	var now_mm = now.substring(9, 14); // 현재 시간 + 분
+	var now_time = now.substring(9, 11); // 현재 시간
+	
+	// 센터  배치도 바탕 만들기
+    function allocateCenter() {
+        var addButton = "";
+        for (var i = 5; i >= 1; i--) {
+            for (var j = 1; j <= 7; j++) {
+                addButton += "<button class='btn v-btn' style='background-color: white' id='"+j+"__"+i+"'></button>"; // 
+            } // for j
+            addButton += "<br>";
+        } // for i
+        $("#leftside").append(addButton);
+    }; 
+        
+    // 현재 DB에 저장되어 있는 스터디룸 배치하기 (room_x , room_y)
+    function getStudyRoomLocation(){
+        $.ajax({
+            url: "/manage/studyroom/getStudyRoomLocation",
+            type: "get",
+            success: function(result) {
+                $(result).each(function (index, item) {
+                    $("#"+item.room_x+"__"+item.room_y+"").text("스터디룸"+item.studyroom_num);
+                    $("#"+item.room_x+"__"+item.room_y+"").attr("style", "");
+                }) // each
+            } // success
+        }) // ajax
+        
+    };
+    
+    // 스터디룸  배치도 바탕 만들기
+    function allocateStudyRoom() {
+        var addRow = "";
+        for (var i = 7; i >= 1; i--) {
+            for (var j = 1; j <= 10; j++) {
+                addRow += "<button id='"+j+"_"+i+"'></button>";
+            } // for j
+            addRow += "<br>";
+        } // for i
+        $("#rightside").append(addRow);
+    }; 
+    
+    // 페이지 로딩시
+    $(function(){
+        allocateCenter(); // 센터 배치도 바탕
+        getStudyRoomLocation(); // 스터디룸 배치도
+    });
+    
+    // 초기화
+    // 예약 시작시간이 지나면 조회 불가 처리
+    $(function (){
+        // 버튼 초기화
+        $("#leftside > button").removeClass();
+        $("#leftside > button").addClass("btn v-btn");
+        
+        // 체크박스 초기화  
+        if (now_time > '00' && now_time < '19') {
+            $(".checkbox").each(function (index, item) {
+                $(item).removeAttr("disabled") // 선택 가능한 상태에서만 전체 해제 가능
+            }) // each
+        } // if
+        
+        // 접속 시점 예약가능한 스터디룸 표시
+             $.ajax({
+                    url: "/manage/studyroom/nowAvailableRoom",
+                    type: "get",
+                    data: {"now_time":now_time},
+                    success: function(result){
+                        $(result).each(function(index, item) {
+                            if (item.activate == 0) { // 비활성화 표시
+                                $("#"+item.room_x+"__"+item.room_y).addClass("btn v-btn v-midnight-blue");
+                            } else if (now_mm > '00:00' && now_mm < '18:59') { // 19시 이전
+                                if (item.seven < item.count_seat || item.eight < item.count_seat || 
+                                        item.nine < item.count_seat || item.ten < item.count_seat) {
+                                    $("#"+item.room_x+"__"+item.room_y).addClass("v-emerald");
+                                } else $("#"+item.room_x+"__"+item.room_y).css("background-color", "grey");
+                            } else if (now_time == '19') { // 19시
+                                if (item.eight < item.count_seat || item.nine < item.count_seat || item.ten < item.count_seat) {
+                                    $("#"+item.room_x+"__"+item.room_y).addClass("v-emerald");
+                                } else $("#"+item.room_x+"__"+item.room_y).css("background-color", "grey");
+                            } else if (now_time == '20') { // 20시
+                                if (item.nine < item.count_seat || item.ten < item.count_seat) {
+                                    $("#"+item.room_x+"__"+item.room_y).addClass("v-emerald");
+                                } else $("#"+item.room_x+"__"+item.room_y).css("background-color", "grey");
+                            } else if (now_time == '21') { // 21시
+                                if (item.ten < item.count_seat) {
+                                    $("#"+item.room_x+"__"+item.room_y).addClass("v-emerald");
+                                } else $("#"+item.room_x+"__"+item.room_y).css("background-color", "grey");
+                            } else if (now_mm >= '22:00') {
+                            	$("#"+item.room_x+"__"+item.room_y).css("background-color", "grey");
+                            }
+                        }) // each
+                    } // success
+                }) // ajax
+                
+                
+//         if (now_mm < '08:30' || now_mm > '22:00') alert("예약 가능시간이 아닙니다."); // 없애기-스터디룸이 떴다 안떴다 함
+        
+        // 현재 시간보다 작은 예약시간대 체크 박스 선택 불가 처리
+        $(".checkbox").each(function (index, item) {
+            if (now_time >= $(item).val()) { // 부등호 >= 로 바꾸기!!!!!!!!
+                $(item).attr("disabled", true);
+            } // if
+        }) // each
+    }); // 초기화
+    
+    // 스터디룸에 마우스 오버시
+    $(document).on("mouseover", "#leftside > button", function(){ 
+//         showInside($(this).text().substring(4,6))
+        var studyroom_num = $(this).text().substring(4,6);
+        
+        $("#rightside").empty();
+        // 스터디룸 배치도 바탕
+        var addRow = "";
+        for (var i = 7; i >= 1; i--) {
+            for (var j = 1; j <= 10; j++) {
+                addRow += "<button class='btn v-btn' id='"+j+"_"+i+"'></button>";
+            } // for j
+            addRow += "<br>";
+        } // for i
+        $("#rightside").append(addRow); 
+
+        if ($(this).css("background-color") == "rgb(255, 255, 255)") {
+	    	document.getElementById("right_studyroom_num").innerHTML = "";
+		} else document.getElementById("right_studyroom_num").innerHTML = "스터디룸 " + studyroom_num; 
+        
+        
+//      해당 스터디룸 배치
+        $.ajax({ 
+            url: "/manage/studyroom/getStudyRoomInfo",
+            type: "post",
+            data : {"studyroom_num":studyroom_num},
+            success: function(result) {
+                $(result).each(function (index, item) {
+                    $("#rightside").children("#"+item.seat_x+"_"+item.seat_y+"").text(item.sr_seat_num);
+                    $("#rightside").children("#"+item.seat_x+"_"+item.seat_y+"").attr("margin", "0px");
+                    if (item.activate == 0) {
+                        $("#rightside").children("#"+item.seat_x+"_"+item.seat_y+"").addClass("btn v-btn v-midnight-blue");
+                        
+                    } else if (now_mm < '18:59') { // 19시 이전
+                        if (item.seven == item.count_seat && item.eight == item.count_seat && 
+                                item.nine == item.count_seat && item.ten == item.count_seat) {
+                            $("#rightside").children("#"+item.seat_x+"_"+item.seat_y+"").addClass("btn v-btn");
+                            $("#rightside").children("#"+item.seat_x+"_"+item.seat_y+"").css("background-color", "grey"); // 풀예약으로 예약 불가
+                        } else $("#rightside").children("#"+item.seat_x+"_"+item.seat_y+"").addClass("v-emerald");
+                    } else if (now_time == '19') { // 19시
+                        if (item.eight == item.count_seat && item.nine == item.count_seat && item.ten == item.count_seat) {
+                            $("#rightside").children("#"+item.seat_x+"_"+item.seat_y+"").addClass("btn v-btn");
+                            $("#rightside").children("#"+item.seat_x+"_"+item.seat_y+"").css("background-color", "grey"); // 풀예약으로 예약 불가
+                        } else $("#rightside").children("#"+item.seat_x+"_"+item.seat_y+"").addClass("v-emerald");
+                    } else if (now_time == '20') { // 20시
+                        if (item.nine == item.count_seat && item.ten == item.count_seat) {
+                            $("#rightside").children("#"+item.seat_x+"_"+item.seat_y+"").addClass("btn v-btn");
+                            $("#rightside").children("#"+item.seat_x+"_"+item.seat_y+"").css("background-color", "grey"); // 풀예약으로 예약 불가
+                        } else $("#rightside").children("#"+item.seat_x+"_"+item.seat_y+"").addClass("v-emerald");
+                    } else if (now_time == '21') { // 21시
+                        if (item.ten == item.count_seat) {
+                            $("#rightside").children("#"+item.seat_x+"_"+item.seat_y+"").addClass("btn v-btn");
+                            $("#rightside").children("#"+item.seat_x+"_"+item.seat_y+"").css("background-color", "grey"); // 풀예약으로 예약 불가
+                        } else $("#rightside").children("#"+item.seat_x+"_"+item.seat_y+"").addClass("v-emerald");
+                    } else if (now_time >= '22' || now_mm < '08:30') {
+                    	$("#rightside").children("#"+item.seat_x+"_"+item.seat_y+"").addClass("btn v-btn");
+                    	$("#rightside").children("#"+item.seat_x+"_"+item.seat_y).css("background-color", "grey");
+                    }
+
+                }) // each
+            } // success
+        }) // ajax
+        
+        // 부대시설 표시 (칠판, 출입구 및 콘센트 등)
+        $.ajax({
+            url: "/manage/studyroom/getSRFacilityInfo",
+            type: "post",
+            data : {"studyroom_num":studyroom_num},
+            success: function(result) {
+                $(result).each(function (index, item) {//*
+                    $("#rightside").children("#"+item.seat_x+"_"+item.seat_y).text(item.facility_name);
+                    if (item.activate == 0) {
+                        $("#rightside").children("#"+item.seat_x+"_"+item.seat_y+"").addClass("btn v-btn v-midnight-blue");
+                    } else  $("#rightside").children("#"+item.seat_x+"_"+item.seat_y+"").addClass("btn v-btn v-peter-river");
+                }) // each
+            } // success
+        }) // ajax
+        
+    }); // mouseover
+    
 	// 해당 스터디룸(studyroom_num)에 마우스 오버시 툴팁 띄우기
 	function showInside(studyroom_num){
-		$.ajax({
-			url: "/manage/studyroom/showInside",
-			type: "get",
-			data: {"studyroom_num": studyroom_num},
-			success: function(result) { 
-				$(".srList").empty();
-				var addRow = "<tr><td>스터디룸번호</td><td>좌석번호</td><td>충전가능여부</td><td>예약완료수</td></tr>";
- 				$(result).each(function(index, item) {
-					addRow += "<tr><td>"+item.studyroom_num+"</td>";
-					addRow += "<td>"+item.sr_seat_num+"</td>";
-					addRow += "<td>"+item.rechargable+"</td>";
-					if (item.seated_status == null) {
-						addRow += "<td>0/4</td></tr>";
-					} else if (item.seated_status == 4) {
-						addRow += "<td>예약불가</td></tr>";
-					} else addRow += "<td>"+item.seated_status+"/4"+"</td></tr>";
-				}) // each
-				$(".srList").append(addRow);
-			} // success
-		}); // ajax
-		
-		$("span.tooltip").css({
-		    opacity:"0.9",
-		    position:"absolute",
-		    display:"none"
-		}); 
-		$(".sr").mouseover(function(){
-		    $("span.tooltip").fadeIn();
-		}).mouseout(function(){
-		    $("span.tooltip").fadeOut();
-		}).mousemove(function(e){
-		    $("span.tooltip").css({
-			"top":e.pageY+10+"px",
-			"left":e.pageX+10+"px"
-		    });
-		});
-	};
+		$("#rightside").empty();
+		// 스터디룸 배치도 바탕
+        var addRow = "";
+        for (var i = 7; i >= 1; i--) {
+            for (var j = 1; j <= 10; j++) {
+                addRow += "<button class='btn v-btn' id='"+j+"_"+i+"'></button>";
+            } // for j
+            addRow += "<br>";
+        } // for i
+        $("#rightside").append(addRow); 
+        
+        // 스터디룸 번호, 처리 버튼 이름 표시 해제 
+        if ($(this).css("background-color") == "rgb(255, 255, 255)") {
+            document.getElementById("right_studyroom_num").innerHTML = "";
+        } else document.getElementById("right_studyroom_num").innerHTML = "스터디룸 " + studyroom_num; 
+        
+// 		해당 스터디룸 배치
+		$.ajax({ 
+            url: "/manage/studyroom/getStudyRoomInfo",
+            type: "post",
+            data : {"studyroom_num":studyroom_num},
+            success: function(result) {
+                $(result).each(function (index, item) {
+                    $("#rightside").children("#"+item.seat_x+"_"+item.seat_y+"").text(item.sr_seat_num);
+                    $("#rightside").children("#"+item.seat_x+"_"+item.seat_y+"").attr("margin", "0px");
+                    if (item.activate == 0) {
+                        $("#rightside").children("#"+item.seat_x+"_"+item.seat_y+"").addClass("btn v-btn v-midnight-blue");
+                    } 
+//                     else if (item.seated_status == 4) {
+//                     	$("#rightside").children("#"+item.seat_x+"_"+item.seat_y+"").addClass("btn v-btn");
+//                     	$("#rightside").children("#"+item.seat_x+"_"+item.seat_y+"").css("background-color", "grey"); // 풀예약으로 예약 불가
+//                     } else $("#rightside").children("#"+item.seat_x+"_"+item.seat_y+"").addClass("btn v-btn v-emerald");
+                    
+                    else if (item.activate == 0) {
+                        $("#"+item.room_x+"__"+item.room_y).addClass("btn v-btn v-midnight-blue");
+                    } else if (item.seated_status == 4) {
+                        $("#rightside").children("#"+item.seat_x+"_"+item.seat_y+"").addClass("btn v-btn");
+                        $("#rightside").children("#"+item.seat_x+"_"+item.seat_y+"").css("background-color", "grey"); // 풀예약으로 예약 불가
+                    } else $("#rightside").children("#"+item.seat_x+"_"+item.seat_y+"").addClass("btn v-btn v-emerald");
+                    
+                }) // each
+            } // success
+        }) // ajax
+        
+
+        // 부대시설 표시 (칠판, 출입구 및 콘센트 등)
+        $.ajax({
+            url: "/manage/studyroom/getSRFacilityInfo",
+            type: "post",
+            data : {"studyroom_num":studyroom_num},
+            success: function(result) {
+                $(result).each(function (index, item) {//*
+                    $("#rightside").children("#"+item.seat_x+"_"+item.seat_y).text(item.facility_name);
+                    if (item.activate == 0) {
+                        $("#rightside").children("#"+item.seat_x+"_"+item.seat_y+"").addClass("btn v-btn v-midnight-blue");
+                    } else  $("#rightside").children("#"+item.seat_x+"_"+item.seat_y+"").addClass("btn v-btn v-peter-river");
+                }) // each
+            } // success
+        }) // ajax
+	}; // showInside
 	
 	// 해당 스터디룸(studyroom_num)에 마우스 클릭시 예약 페이지로 이동
-	$(document).on("click", ".sr", function() {
-		var studyroom = $(this).text();
-		var studyroom_num = studyroom.substring(4, studyroom.length);
-		
-		location.href="/manage/studyroom/reserveRoomForm?studyroom_num="+studyroom_num;
+	$(function() {
+		$("#leftside > button").click(function() {
+			
+			if (this.getAttribute("class") == "btn v-btn v-midnight-blue") {
+				alert("현재 사용이 불가한 스터디룸입니다. 다른 스터디룸을 이용하세요");
+				return;
+			} 
+			else if ($(this).css("background-color") == "rgb(255, 255, 255)") { // 버튼색이 흰 색인 경우
+				return;
+			}
+// 			else if (this.getAttribute("class") == "btn v-btn") { // btn v-btn no
+// 				alert("예약 가능시간이 아니거나 현재 예약이 불가한 스터디룸입니다.\n다시 확인해 주세요");
+//                 return;
+//             }
+			var studyroom_num = $(this).text().substring(4,6);
+			location.href="/manage/studyroom/reserveRoomForm?studyroom_num="+studyroom_num;
+		});
 	});
 	
 	// 체크박스 선택시 (시간대별 예약가능여부 조회, 복수 선택 가능)
@@ -115,7 +413,6 @@
 	// 체크박스 개별 선택시, 선택된 시간대 예약가능여부 조회하기
 	$(document).on("click", "#submit", function() {
 		var checkList = []; // 선택된 체크박스의 예약 시작 시간를 담을 배열
-		
 		$(".checkbox").each(function (index, item) {
 			if ($(item).is(":checked")) { // 체크된 내역
 				checkList.push($(item).val());
@@ -128,105 +425,212 @@
 			return;
 		} // if 
 		
+		// 22 ~ 8시 30분에는 조회 불가 처리
+		if (now_mm >= "22:00" || now_time < "08:30") {
+			alert("예약 이용시간이 아닙니다. 다시 확인해 주세요");
+			$(".checkbox").each(function (index, item){
+				$(item).prop("checked", false); // 체크박스 초기화
+			}) // each
+			$("#checkAll").prop("checked", false); // 체크박스 전체 선택 초기화
+			return;
+		}
+		
 		// 체크박스로 선택된 시간대 배열로 넘기기 (컨트롤러에서는 리스트로 받는다.)
 		$.ajax({
-			url: "/manage/studyroom/checkAvailableRoom",
+			url: "/manage/studyroom/checkAvailableRoom", 
 			type: "post",
 			data: {"checkList":checkList},
 			success: function(result) {
+// 				checkList.sort(); // 선택 시간대 오름차순 정렬
 				// 초기화
-				$(".sr").css("background-color", ""); 
+				$("#leftside > button").removeClass();
+                $("#leftside > button").addClass("btn v-btn");
+                
 				$(result).each(function(index, item) {
-					$("#"+item+"").css("background-color", "lime");
+					for (var i = 0; i < checkList.length; i++) {
+						if (item.activate == 0) {
+							$("#"+item.room_x+"__"+item.room_y).addClass("btn v-btn v-midnight-blue");
+                         } else {
+								if (checkList.indexOf("19") != -1) { // 배열에 없으면 -1 반환
+									if ($("#"+item.room_x+"__"+item.room_y).attr("class") != "btn v-btn no") {
+										if (item.seven < item.count_seat) {
+				                            $("#"+item.room_x+"__"+item.room_y).addClass("v-emerald");
+				                        } else {
+				                        	$("#"+item.room_x+"__"+item.room_y).removeClass(); // 19시에 예약 불가
+				                        	$("#"+item.room_x+"__"+item.room_y).addClass("btn v-btn no"); // 19시에 예약 불가
+				                        	$("#"+item.room_x+"__"+item.room_y).css("background-color", "grey");
+				                        }
+									} // class check
+								} // if-19
+                                if (checkList.indexOf("20") != -1) { // 배열에 없으면 -1 반환
+                                    if ($("#"+item.room_x+"__"+item.room_y).attr("class") != "btn v-btn no") {
+                                        if (item.eight < item.count_seat) {
+                                            $("#"+item.room_x+"__"+item.room_y).addClass("v-emerald");
+                                        } else {
+                                            $("#"+item.room_x+"__"+item.room_y).removeClass(); // 20시에 예약 불가
+                                            $("#"+item.room_x+"__"+item.room_y).addClass("btn v-btn no"); // 20시에 예약 불가
+                                            $("#"+item.room_x+"__"+item.room_y).css("background-color", "grey");
+                                        }
+                                    } // class check
+                                } // if-20
+                                if (checkList.indexOf("21") != -1) { // 배열에 없으면 -1 반환
+                                    if ($("#"+item.room_x+"__"+item.room_y).attr("class") != "btn v-btn no") {
+                                        if (item.nine < item.count_seat) {
+                                            $("#"+item.room_x+"__"+item.room_y).addClass("v-emerald");
+                                        } else {
+                                            $("#"+item.room_x+"__"+item.room_y).removeClass(); // 21시에 예약 불가
+                                            $("#"+item.room_x+"__"+item.room_y).addClass("btn v-btn no"); // 21시에 예약 불가
+                                            $("#"+item.room_x+"__"+item.room_y).css("background-color", "grey");
+                                        }
+                                    } // class check
+                                } // if-21
+                                if (checkList.indexOf("22") != -1) { // 배열에 없으면 -1 반환
+                                    if ($("#"+item.room_x+"__"+item.room_y).attr("class") != "btn v-btn no") {
+                                        if (item.ten < item.count_seat) {
+                                            $("#"+item.room_x+"__"+item.room_y).addClass("v-emerald");
+                                        } else {
+                                            $("#"+item.room_x+"__"+item.room_y).removeClass(); // 22시에 예약 불가
+                                            $("#"+item.room_x+"__"+item.room_y).addClass("btn v-btn no"); // 22시에 예약 불가
+                                            $("#"+item.room_x+"__"+item.room_y).css("background-color", "grey");
+                                        }
+                                    } // class check
+                                } // if-22
+					    } // else
+					} // for
 				}) // each
+			alert("조회 결과")
 			} // success
 		}) // ajax
 	});
 	
-	// 초기화
-	// 예약 시작시간이 지나면 조회 불가 처리
-	$(function (){
-		
-		// 초기화  
-		if (now_time > '00' && now_time < '19') {
-			$(".checkbox").each(function (index, item) {
-				$(item).removeAttr("disabled") // 선택 가능한 상태에서만 전체 해제 가능
-			}) // each
-		} // if
-		
-		// 초기화
-		$(".sr").css("background-color", ""); 
-		
-		var now = "${sysdate}"; // yy-mm-dd hh24:mi:ss dy
-		var now_mm = now.substring(9, 14); // 현재 시각
-		var now_time = now.substring(9, 11); // 현재 시각
-		
-		// 접속 시점 예약가능한 스터디룸 표시 (색 벼)
-		if (now_mm > '08:30' && now_mm < '22:00') { 
-			$.ajax({
-				url: "/manage/studyroom/nowAvailableRoom",
-				type: "get",
-				success: function(result){
-					$(result).each(function(index, item) {
-						$("#"+item+"").css("background-color", "lime");
-					}) // each
-				} // success
-			}) // ajax
-		} // if
-		
-		// 현재 시간보다 작은 예약시간대 체크 박스 선택 불가 처리
-		$(".checkbox").each(function (index, item) {
-			if (now_time >= $(item).val()) { // 부등호 >= 로 바꾸기!!!!!!!!
-				$(item).attr("disabled", true);
-			} // if
-		}) // each
-		
-	});
-	
 	// 현시점 조회버튼 누르기
 	 $(document).on("click", "#now_submit", function(){
-		 $.ajax({
-				url: "/manage/studyroom/nowAvailableRoom",
-				type: "get",
-				success: function(result){
-					$(result).each(function(index, item) {
-						$("#"+item+"").css("background-color", "lime");
-					}) // each
-				} // success
-			}) // ajax
+		 alert("현시점 조회버튼 누르기")
+		// 22시 이후에는 예약 가능 시간 경과로 조회X
+		if (now_mm >= "22:00" || now_time < "08:30") {
+			alert("예약 이용시간이 아닙니다. 다시 확인해 주세요");
+			return;
+		}
+         $.ajax({
+             url: "/manage/studyroom/nowAvailableRoom",
+             type: "get",
+             data: {"now_time":now_time},
+             success: function(result){
+                 $("#leftside > button").removeClass();
+                 $("#leftside > button").addClass("btn v-btn");
+                 $(result).each(function(index, item) {
+                     if (item.activate == 0) {
+                         $("#"+item.room_x+"__"+item.room_y).addClass("btn v-btn v-midnight-blue");
+                     } else if (now_mm < '18:59') { // 19시 이전
+                         if (item.seven < item.count_seat || item.eight < item.count_seat || 
+                                 item.nine < item.count_seat || item.ten < item.count_seat) {
+                             $("#"+item.room_x+"__"+item.room_y).addClass("v-emerald");
+                         } $("#"+item.room_x+"__"+item.room_y).css("background-color", "grey");
+                     } else if (now_time == '19') { // 19시
+                         if (item.eight < item.count_seat || item.nine < item.count_seat || item.ten < item.count_seat) {
+                             $("#"+item.room_x+"__"+item.room_y).addClass("v-emerald");
+                         } else $("#"+item.room_x+"__"+item.room_y).css("background-color", "grey");
+                     } else if (now_time == '20') { // 20시
+                         if (item.nine < item.count_seat || item.ten < item.count_seat) {
+                             $("#"+item.room_x+"__"+item.room_y).addClass("v-emerald");
+                         } else $("#"+item.room_x+"__"+item.room_y).css("background-color", "grey");
+                     } else if (now_time == '21') { // 21시
+                         if (item.ten < item.count_seat) {
+                             $("#"+item.room_x+"__"+item.room_y).addClass("v-emerald");
+                         } else $("#"+item.room_x+"__"+item.room_y).css("background-color", "grey");
+                     }
+                 }) // each
+             } // success
+         }) // ajax
+         
 			$(".checkbox").each(function (index, item){
 				$(item).prop("checked", false); // 체크박스 초기화
 			}) // each
+			$("#checkAll").prop("checked", false); // 체크박스 전체 선택 초기화
 	 });
 	
 </script>
 <%@ include file="../top.jsp" %>
-<br>
-<h1>현재 시각 : ${sysdate } </h1>
+        <div class="v-page-heading v-bg-stylish v-bg-stylish-v1">
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="heading-text">
+                            <h1>스터디룸 예약 현황</h1>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-시간대별 예약가능 현황  <table>
-		<tr>
-		<td><input type="checkbox" id="checkAll" value="99">전체</td>
-		<td><input type="checkbox" class="checkbox" value="19">7-8시</td>
-		<td><input type="checkbox" class="checkbox" value="20">8-9시</td>
-		<td><input type="checkbox" class="checkbox" value="21">9-10시</td>
-		<td><input type="checkbox" class="checkbox" value="22">10-11시</td>
-		<td><input type="button" value="조회" id="submit"></td>
-		<td><input type="button" value="현시점 조회" id="now_submit"></td>
-		</tr>
-</table>
-<br>
-<div id="roomSection">
+            <div class="container">
+            <h5 style="text-align:right">현재 시각 : ${sysdate }</h5>
+                <!--Article-->
+                    <article class="col-sm-9">
+                        <div class="post-info clearfix">
+<%--                     <c:set var="now" value="${sysdate }"/> --%>
+<%--                     <c:if test="${fn:substring(now, 18, 19) == '토'||fn:substring(now, 18, 19) == '일'}"> --%>
+<!--                         <h3>금일은 스터디룸 예약 이용시간이 아닙니다.</h3> -->
+<%--                     </c:if> --%>
+<%--                     <c:if test="${fn:substring(now, 9, 13) < '08:30' && fn:substring(now, 9, 11) >= '22'}"> --%>
+<!--                         <h3>스터디룸 예약 이용시간이 아닙니다.</h3> -->
+<%--                     </c:if> --%>
+                        <span class="vcard author">
+                             <h4>시간대별 예약가능 현황</h4> 
+                            <table>
+                                    <tr>
+                                    <td><input type="checkbox" id="checkAll" value="99" /><label for="checkAll">전체</label></td>
+                                    <td><input type="checkbox" id="checkbox1" class="checkbox" value="19" /><label for="checkbox1">7-8시</label></td>
+                                    <td><input type="checkbox" id="checkbox2" class="checkbox" value="20" /><label for="checkbox2">8-9시</label></td>
+                                    <td><input type="checkbox" id="checkbox3" class="checkbox" value="21" /><label for="checkbox3">9-10시</label></td>
+                                    <td><input type="checkbox" id="checkbox4" class="checkbox" value="22" /><label for="checkbox4">10-11시</label></td>
+                                    <td><input type="button" value="조회" id="submit" class="btn v-btn v-btn-default v-small-button"></td>
+                                    <td>
+<!--                                        <input type="button" value="현시점 조회" id="now_submit" class="btn v-btn v-btn-default v-small-button"> -->
+                                        <input type="button" value="현시점 조회" id="now_submit" class="btn v-btn v-second-dark" 
+                                          style="border-color:#f5245f; font-size:12px; color:#f5245f!important;">
+                                    </td>
+                                    </tr>
+                            </table>
+                            </span>
+                        </div>
+                    </article>
+                </div>
+        
+        
+                 <!--Article-->
+            <section class="article-body-wrap">
+                <div class="container">
+                    <span class="tooltip"><table class="srList"><br></table></span>
+<!--                    <article class="col-sm-9"> -->
+                        <div id="leftside" style="display: inline-block"></div> 
+                        
+                        
+                    <h3  class="v-heading v-text-heading" style="display: inline-block"><span id="right_studyroom_num"></span></h3>
+                        <div id="rightside" style="display: inline-block">
+                        </div>
+                </div>
+            </section>
+        
 
+<!--// BACK TO TOP //-->
+    <div id="back-to-top" class="animate-top"><i class="fa fa-angle-up"></i></div>
 
-<div class="sr" id="5" onmouseover="showInside(5)">스터디룸5</div> 		 <div class="sr" id="10" onmouseover="showInside(10)">스터디룸10</div><br>
-<div class="sr" id="4" onmouseover="showInside(4)">스터디룸4</div>  	     <div class="sr" id="9" onmouseover="showInside(9)">스터디룸9</div><br>
-<div class="sr" id="3" onmouseover="showInside(3)">스터디룸3</div> 		 <div class="sr" id="8" onmouseover="showInside(8)">스터디룸8</div><br>
-<div class="sr" id="2" onmouseover="showInside(2)">스터디룸2</div> 		 <div class="sr" id="7" onmouseover="showInside(7)">스터디룸7</div><br>
-<div class="sr" id="1" onmouseover="showInside(1)">스터디룸1</div>  		 <div class="sr" id="6" onmouseover="showInside(6)">스터디룸6</div><br>
-</div>
+ <%@ include file="../footer.jsp" %>
 
-<span class="tooltip"><table class="srList"><br><strong>
-
+    <!-- Libs -->
+    <script src="/manage/resources/HTML/js/jquery-3.1.1.min.js"></script> 
+    <script src="/manage/resources/HTML/js/bootstrap.min.js"></script>
+    <script src="/manage/resources/HTML/js/jquery.flexslider-min.js"></script>
+    <script src="/manage/resources/HTML/js/jquery.easing.js"></script>
+    <script src="/manage/resources/HTML/js/jquery.fitvids.js"></script>
+    <script src="/manage/resources/HTML/js/jquery.carouFredSel.min.js"></script>
+    <script src="/manage/resources/HTML/js/jquery.validate.js"></script>
+    <script src="/manage/resources/HTML/js/theme-plugins.js"></script>
+    <script src="/manage/resources/HTML/js/jquery.isotope.min.js"></script>
+    <script src="/manage/resources/HTML/js/imagesloaded.js"></script>
+    <script src="/manage/resources/HTML/js/view.min.js?auto"></script>
+    <script src="/manage/resources/HTML/js/theme-core.js"></script>
+ <!--  -->
 </body>
 </html>
