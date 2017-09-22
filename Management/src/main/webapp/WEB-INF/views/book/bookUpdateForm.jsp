@@ -22,19 +22,19 @@
 	<table>
 		<tr>
 			<th>번호</th>
-			<td>${vo.book_num}</td>
+			<td>${book.num}</td>
 		</tr>
-		<tr>
-			<th>작성자</th>
-			<td>${vo.name}</td>
-		</tr>
+<!-- 		<tr> -->
+<!-- 			<th>작성자</th> -->
+<%-- 			<td>${MemberVO.name}</td> --%>
+<!-- 		</tr> -->
 		<tr>
 			<th>제목</th>
-			<td><input type="text" name="title" id="title" value="${vo.title}" required="required"></td>
+			<td><input type="text" name="title" id="title" value="${book.title}" required="required"></td>
 		</tr>
 		<tr>
 			<th>내용</th>
-			<td><textarea name="content" required="required">${vo.content}</textarea></td>
+			<td><textarea name="content" required="required">${book.content}</textarea></td>
 		</tr>
 		<tr>
 			<td class="right" colspan="2">
@@ -43,7 +43,7 @@
 			</td>
 		</tr>
 	</table>
-	<input type="hidden" name="book_num" value="${vo.book_num}">
+	<input type="hidden" name="num" value="${book.num}">
 </form>
 </body>
 </html>
