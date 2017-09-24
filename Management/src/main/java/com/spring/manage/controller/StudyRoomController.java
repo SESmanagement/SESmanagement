@@ -159,6 +159,7 @@ public class StudyRoomController {//
 	// top메뉴 ->스터디룸 현황조회(top-스터디룸 예약-메뉴 포함)로 이동
 	@RequestMapping(value = "rooms", method = RequestMethod.GET)
 	public String rooms(Model model, ArrayList<SR_ReservationVO> allSrList) {
+		System.out.println("컨트롤러 rooms");
 		model.addAttribute("sysdate", service.getSysdate());
 		return "studyroom/rooms";
 	}
@@ -209,6 +210,7 @@ public class StudyRoomController {//
 	@RequestMapping(value = "myResvInfo")
 	@ResponseBody
 	public ArrayList<SR_ReservationVO> myResvInfo(int student_num, ArrayList<SR_ReservationVO> myResvList, Model model) {
+		System.out.println("컨트롤러 myResvInfo1");
 		myResvList = service.myResvInfo(student_num);
 		return myResvList;
 	}
@@ -217,6 +219,7 @@ public class StudyRoomController {//
 	@RequestMapping(value = "myResvInfoPage")
 	public String myResvInfoPage(int student_num, ArrayList<SR_ReservationVO> myResvList, Model model, String sysdate,
 								String cancelResult) {
+		System.out.println("컨트롤러 myResvInfo2");
 		myResvList = service.myResvInfoAll(student_num);
 		sysdate = service.getSysdate();
 		model.addAttribute("myResvList", myResvList);

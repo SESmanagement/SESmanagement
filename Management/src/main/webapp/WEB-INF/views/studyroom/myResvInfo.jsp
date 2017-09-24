@@ -135,6 +135,7 @@
 		} else { // 취소할 예약 번호들이 담긴 checkList를 컨트롤로 넘김
 			$("#fm").attr("action", "/manage/studyroom/cancelMySRR?checkList="+checkList+"&student_num=${sessionScope.vo.student_num }");			
 			$("#submit").attr("type", "submit");
+// 			$("#fm").submit();
 			
 		} // else
 	});
@@ -158,7 +159,7 @@
 </div>
 
 <div class="container">
-	<form action="" method="post" id="fm">
+	<form method="post" id="fm">
 	<table border="1">
 		<tr>
 			<th><input type="checkbox" id="checkAll"><label for="checkAll">전체 선택</label></th>
@@ -200,7 +201,7 @@
 					<input type="button" value="취소 신청" id="submit" class="btn v-btn v-btn-default v-small-button">
 					<input type="reset" value="전체 선택취소" class="btn v-btn v-btn-default v-small-button">
 					<a href="/manage/studyroom/rooms">
-					<button class="btn v-btn v-second-dark" style="border-color:#f5245f; font-size:12px; color:#f5245f!important;">현황페이지로</button>
+					<button type="button" class="btn v-btn v-second-dark" style="border-color:#f5245f; font-size:12px; color:#f5245f!important;">현황페이지로</button>
                     </a>
 				</td>	
 			</tr>

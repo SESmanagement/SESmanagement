@@ -78,7 +78,7 @@
             TO_TIMESTAMP(TO_CHAR(SYSDATE, 'YY/MM/DD')||' '||#{start_time}, 'YY/MM/DD HH24:MI:SS'), 
             TO_TIMESTAMP(TO_CHAR(SYSDATE, 'YY/MM/DD')||' '||#{end_time}, 'YY/MM/DD HH24:MI:SS'), null, null, 0,
             0, 0, 0, 0, 0,
-            0, #{sr_resv_num}, '#f5245f', null, null
+            0, null, '#f5245f', null, null, #{sr_resv_num}
         )
     </insert>
 	
