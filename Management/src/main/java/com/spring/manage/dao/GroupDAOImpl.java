@@ -8,7 +8,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import com.spring.manage.util.PageNavigator;
+import com.spring.manage.util.PageNavigator2;
 import com.spring.manage.vo.GroupJoinVO;
 import com.spring.manage.vo.GroupVO;
 
@@ -46,7 +46,7 @@ public class GroupDAOImpl implements GroupDAO {
 	
 	
 	@Override
-	public GroupVO paging(PageNavigator navi){
+	public GroupVO paging(PageNavigator2 navi){
 		GroupMapper mapper = sqlSession.getMapper(GroupMapper.class);
 		return mapper.paging(navi);
 	}

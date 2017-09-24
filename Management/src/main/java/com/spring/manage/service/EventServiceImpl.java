@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.spring.manage.dao.EventDAO;
-import com.spring.manage.util.PageNavigator;
+import com.spring.manage.util.PageNavigator2;
 import com.spring.manage.vo.EventVO;
 import com.spring.manage.vo.SR_FacilityVO;
 import com.spring.manage.vo.SR_ReservationVO;

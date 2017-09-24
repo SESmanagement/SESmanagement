@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.spring.manage.dao.GroupDAOImpl;
 import com.spring.manage.util.PageNavigator;
+import com.spring.manage.util.PageNavigator2;
 import com.spring.manage.vo.GroupJoinVO;
 import com.spring.manage.vo.GroupVO;
 

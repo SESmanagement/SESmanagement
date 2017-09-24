@@ -16,6 +16,7 @@
 		<typeAlias alias="Room_StatusVO" type="com.spring.manage.vo.Room_StatusVO"/>
 		<typeAlias type="com.spring.manage.vo.GroupVO" alias="GroupVO" />
 		<typeAlias type="com.spring.manage.vo.GroupJoinVO" alias="GroupJoinVO"/>
+		<typeAlias type="com.spring.manage.util.PageNavigator" alias="navi"/>
 	</typeAliases>
 	<mappers>
 		<mapper resource="mapper/memberMapper.xml" />

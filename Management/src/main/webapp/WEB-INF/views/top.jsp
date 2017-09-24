@@ -117,6 +117,9 @@
             <li class="dropdown"> <a class="dropdown-toggle" href="#">관리자 메뉴<i class="fa fa-caret-down"></i></a>
               <ul class="dropdown-menu">
                 <li><a href="/manage/book/writeForm">도서 등록</a></li>
+           		<li><a href="applyList">대출승인리스트</a></li>
+                <li><a href="lendList">대출목록</a></li>
+                <li><a href="delayList">연체목록</a></li>
                 <li><a href="">강의실</a></li>
 	            <li><a href="">스터디룸 관리</a></li>	
 	            <li><a href="/manage/book/getBookList">도서리스트</a></li>

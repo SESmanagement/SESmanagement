@@ -19,7 +19,7 @@ import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.spring.manage.service.StudyRoomService;
-import com.spring.manage.util.PageNavigator;
+import com.spring.manage.util.PageNavigator2;
 import com.spring.manage.vo.MemberVO;
 import com.spring.manage.vo.SR_ReservationVO;
 import com.spring.manage.vo.SR_FacilityVO;
@@ -120,7 +120,7 @@ public class StudyRoomController {//
 	// 관리자 메뉴-예약 내역 조회하기
 	@RequestMapping(value = "getResvList") // , method = RequestMethod.POST
 	public String getResvList(Model model, HashMap<String, Object> returnMap,
-			ArrayList<SR_ReservationVO> resvList, PageNavigator navi,
+			ArrayList<SR_ReservationVO> resvList, PageNavigator2 navi,
 			@RequestParam(value="studyroom_checkList", defaultValue="") ArrayList<String> studyroom_checkList,
 			@RequestParam(value="date_checkList", defaultValue="") ArrayList<String> date_checkList,
 			@RequestParam(value="etc_checkList", defaultValue="") ArrayList<String> etc_checkList,
@@ -137,9 +137,9 @@ public class StudyRoomController {//
 		// 예약건 검색내역
 		returnMap = service.getResvList(studyroom_checkList, date_checkList, etc_checkList, currentPage);
 		resvList = (ArrayList<SR_ReservationVO>) returnMap.get("resvList");
-		navi = (PageNavigator) returnMap.get("navi");
+		navi = (PageNavigator2) returnMap.get("navi");
 		System.out.println("TotalPageCount: " + navi.getTotalPageCount());
-		System.out.println("TotalRecordsCount: " + navi.getTotalRecordsCount());
+//		System.out.println("TotalRecordsCount: " + navi.getTotalRecordsCount());
 		System.out.println("====CountPerPage: " + navi.getCountPerPage());
 		System.out.println("====StartRecord: " + navi.getStartRecord());
 		System.out.println("CurrentPage: " + navi.getCurrentPage());

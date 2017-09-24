@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import com.spring.manage.vo.SR_ReservationVO;
-import com.spring.manage.util.PageNavigator;
+import com.spring.manage.util.PageNavigator2;
 import com.spring.manage.vo.EventVO;
 import com.spring.manage.vo.SR_FacilityVO;
 import com.spring.manage.vo.StudyRoomVO;

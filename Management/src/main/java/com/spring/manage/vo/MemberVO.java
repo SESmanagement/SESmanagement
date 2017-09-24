@@ -4,6 +4,7 @@ import java.util.Date;
 
 public class MemberVO {
 	
+	private String num;		//윤성현이 붙인 이유를 알 수 없는 num
 	private int student_num;	//학번
 	private String pwd;			//비밀번호
 	private int member_num;		//기수번호
@@ -21,9 +22,20 @@ public class MemberVO {
 	public MemberVO() {}
 	
 
+	public String getNum() {
+		return num;
+	}
+
+
+	public void setNum(String num) {
+		this.num = num;
+	}
+
+
 	//명시적생성자
-	public MemberVO(int student_num, String pwd, int member_num, String name, String sex, String zip, String address,
+	public MemberVO(String num, int student_num, String pwd, int member_num, String name, String sex, String zip, String address,
 			String email, String photo, Date birthdate, Date start_date, Date end_date) {
+		this.num = num;
 		this.student_num = student_num;
 		this.pwd = pwd;
 		this.member_num = member_num;

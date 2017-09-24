@@ -3,7 +3,7 @@ package com.spring.manage.dao;
 import java.util.ArrayList;
 import java.util.Map;
 
-import com.spring.manage.util.PageNavigator;
+import com.spring.manage.util.PageNavigator2;
 import com.spring.manage.vo.GroupJoinVO;
 import com.spring.manage.vo.GroupVO;
 import com.spring.manage.vo.MyGroupVO;
@@ -14,7 +14,7 @@ public interface GroupDAO {
 	public ArrayList<GroupVO> list(Map<String, String> map, int startRecord, int countPerPage);
 	public int join(GroupJoinVO vo);
 	public int total_count(Map<String, String> map);
-	public GroupVO paging(PageNavigator navi);
+	public GroupVO paging(PageNavigator2 navi);
 	public int member_count(int group_num);
 	public ArrayList<GroupVO> mygroup(GroupJoinVO vo);
 	public ArrayList<GroupVO> team(GroupJoinVO vo);

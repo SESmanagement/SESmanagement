@@ -5,7 +5,7 @@ import java.util.Map;
 
 import org.apache.ibatis.session.RowBounds;
 
-import com.spring.manage.util.PageNavigator;
+import com.spring.manage.util.PageNavigator2;
 import com.spring.manage.vo.GroupJoinVO;
 import com.spring.manage.vo.GroupVO;
 
@@ -17,7 +17,7 @@ public interface GroupMapper {
 	public GroupJoinVO join_mae(GroupJoinVO joinVO);
 	public int join(GroupJoinVO joinVo);
 	public int total_count(Map<String, String> map);
-	public GroupVO paging(PageNavigator navi);
+	public GroupVO paging(PageNavigator2 navi);
 	public int member_count(int group_num);
 	public ArrayList<GroupVO> mygroup(GroupJoinVO vo);
 	public ArrayList<GroupVO> team(GroupJoinVO vo);
