@@ -134,7 +134,7 @@
     <span class="v-header-shadow"></span> </header>
 </div>
     <!--End Header-->
-    <div id="container" class="slideshow">
+    <div id="container" class="slideshow" >
             <!--            <div class="v-call-to-action v-bg-stylish v-bg-stylish-v3">
                 <div class="v-call-to-action-wrap clearfix">
                     <div class="container">
