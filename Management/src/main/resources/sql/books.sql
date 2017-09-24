@@ -2,10 +2,13 @@
 CREATE SEQUENCE BOOK_SEQ;
 
 -- boos table 생성
-CREATE TABLE BOOKS
-(					
-	BOOK_NUM NUMBER PRIMARY KEY,								
-	NAME VARCHAR2(20) NOT NULL,			
-	TITLE VARCHAR2(50) NOT NULL,				
-	CONTENT VARCHAR2(2000) NOT NULL												
-);	
+
+CREATE TABLE books
+(
+	num number PRIMARY KEY,
+	title varchar2(100) not ull,
+	publisher varchar2(100) not null,
+	author varchar2(100) not null,
+	content varchar2(100) not null,
+	imageurl varchar2(100) not null
+);		
