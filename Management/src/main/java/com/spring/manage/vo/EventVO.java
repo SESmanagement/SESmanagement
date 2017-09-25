@@ -19,10 +19,11 @@ public class EventVO {
 	private String rendering;				// 시간대에 'background' 표시
 	private boolean overlap;				// 시간대 중복 가능 여부
 	private int constraint;				// 지정된 이벤트 시간 ex) 정규 수업시간 등, 	id = 'businessHours', DB:CONSTRAINT_EVENT
-	private String source;					// 이벤트 참조, 예약번호 등 입력, DB:SOURCE_EVENT
+	private String source;					// ??
 	private String backgroundColor;			// 이벤트의 css background-color
 	private String borderColor;				// 이벤트의 css border-color
 	private String textColor;				// 이벤트의 css text-color
+	private String reference;				// 이벤트 참조, 예약번호 등 입력, DB:SOURCE_EVENT
 	
 	public EventVO() {	}
 
@@ -186,6 +187,14 @@ public class EventVO {
 		this.textColor = textColor;
 	}
 
+	public String getReference() {
+		return reference;
+	}
+
+	public void setReference(String reference) {
+		this.reference = reference;
+	}
+
 	@Override
 	public String toString() {
 		return "EventVO [student_num=" + student_num + ", memo=" + memo + ", id=" + id + ", title=" + title
@@ -193,7 +202,8 @@ public class EventVO {
 				+ className + ", editable=" + editable + ", startEditable=" + startEditable + ", durationEditable="
 				+ durationEditable + ", resourceEditable=" + resourceEditable + ", rendering=" + rendering
 				+ ", overlap=" + overlap + ", constraint=" + constraint + ", source=" + source + ", backgroundColor="
-				+ backgroundColor + ", borderColor=" + borderColor + ", textColor=" + textColor + "]";
+				+ backgroundColor + ", borderColor=" + borderColor + ", textColor=" + textColor + ", reference="
+				+ reference + "]";
 	}
-	
+
 }
