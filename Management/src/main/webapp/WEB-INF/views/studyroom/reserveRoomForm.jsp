@@ -447,7 +447,7 @@
     <script src="/manage/resources/HTML/js/imagesloaded.js"></script>
     <script src="/manage/resources/HTML/js/view.min.js?auto"></script>
     <script src="/manage/resources/HTML/js/theme-core.js"></script>	
-	<!--  -->
+	
 </body>
 
 </html>
