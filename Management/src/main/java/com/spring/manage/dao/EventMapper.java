@@ -22,4 +22,13 @@ public interface EventMapper { //
 	// 이벤트 등록하기
 	public int addEvent(EventVO vo);
 
+	// 이벤트 수정하기
+	public int modifyEvent(EventVO vo);
+
+	// 이벤트 삭제하기
+	public int deleteEvent(EventVO vo);
+
+	// 이벤트 일정 드래그로 수정하기
+	public int modifyEventDrag(EventVO vo);
+
 }
