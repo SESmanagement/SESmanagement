@@ -40,4 +40,22 @@ public class EventDAOImpl implements EventDAO { //
 		return mapper.addEvent(vo);
 	}
 
+	@Override
+	public int modifyEvent(EventVO vo) {
+		mapper = sqlSession.getMapper(EventMapper.class);
+		return mapper.modifyEvent(vo);
+	}
+
+	@Override
+	public int deleteEvent(EventVO vo) {
+		mapper = sqlSession.getMapper(EventMapper.class);
+		return mapper.deleteEvent(vo);
+	}
+
+	@Override
+	public int modifyEventDrag(EventVO vo) {
+		mapper = sqlSession.getMapper(EventMapper.class);
+		return mapper.modifyEventDrag(vo);
+	}
+
 }
