@@ -143,7 +143,7 @@
     $(document).ready(function() {
         var today = "20"+'${sysdate}'.substring(0,8);
 
-        $('#calendar').fullCalendar({
+        var calendar = $('#calendar').fullCalendar({
             header: {
                 left: 'prev,next today',
                 center: 'title',
@@ -158,6 +158,32 @@
             
             editable: true,
             eventLimit: true, // allow "more" link when too many events
+            
+//             eventSources: [
+// //             events: 
+//             {
+//             	url: '/manage/myPage/getEvent',
+//             	type: 'post',
+//             	data: {"student_num": '${student_num}'},
+//                 success: function(result) {
+//             		var eventArray = [];
+//             		$(result).each(function(index, item) {
+//             			eventArray.push({
+//             				   title: item.title,
+//             				   start: item.start,
+//             				   end: item.end,
+//             				   allDay: item.allDay,
+//             				   id: item.id,
+//             				   student_num: item.student_num,
+//             				   className: item.className,
+//             			});
+//             		}) // each
+            		
+//             		calendar.fullCalendar('renderEvent', eventArray, true)
+//             	} // success
+//             } // events   ,
+//             ],
+            
             eventSources: [
                 // your event source
                 {
@@ -165,30 +191,99 @@
                     type: 'POST',
                     data: {"student_num": '${student_num}'},
                     success: function(result) {
-//                       $(result).each(function(index, item) {
+//                        $(result).each(function(index, item) { //
+//                      	  // 이벤트가 중복으로 생긴다 (타입: 개인 일정)
+// //                      	  if (item.title) {
+// //                      		  alert("생성 아이디: " + item.id)
+//                                calendar.fullCalendar('renderEvent',
+//                                    {
+// //                                        title: $(this).attr('title'),
+// //                                        start: $(this).attr('start'),
+// //                                        end: $(this).attr('end'),
+// //                                        allDay: $(this).attr('allDay'),
+// //                                        id: $(this).attr('id'),
+// //                                        student_num: $(this).attr('student_num'),
+                                       
+//                                        title: item.title,
+//                                        start: item.start,
+//                                        end: item.end,
+//                                        allDay: item.allDay,
+//                                        id: item.id,
+//                                        student_num: item.student_num,
+//                                    },
+//                                    true // make the event "stick"
+//                                );
 
-//                       }); // each
-                    },
+// //                            } // if
+//                            calendar.fullCalendar('unselect');
+//                        }); // each
+                    }, // success
                     error: function() {
                         alert('there was an error while fetching events!');
-                    },
-                }
+                    }
+                
+                } // eventSources
+                
                 // any other sources...
             ],
             
-            // 안되니까 나중에 보기!!!!!!!!!!
-            eventDrop: function(event, dayDelta, minuteDeltarevertFunc) {
-                $('.draggable').data('event', { title: item.title }); // ???
-                alert(event.title + " was dropped on " + event.start.format());
-
-                if (!confirm("Are you sure about this change?")) {
-                    revertFunc();
-                }
+//             viewRender: function(view, element) { 
+//                 $("#calendar").fullCalendar( 'refresh' ) 
+//             },
+            
+            // drop 처리
+            droppable: true,
+            eventDrop: function(event, delta, revertFunc, jsEvent, ui, view) {
+                $('.draggable').data('event', { title: event.id }); // event.title
+                
+                if (confirm("Are you sure about this change?")) {
+                	alert("yes")
+                    // 날짜 포맷  변경
+                    var start_date = moment(event.start).format('YYYY/MM/DD HH:mm:SS');
+                    var end_date = moment(event.end).format('YYYY/MM/DD HH:mm:SS');
+                    
+                	$.ajax({
+                        url: "/manage/myPage/modifyEventDrag",
+                        type: "post",
+                        data: {"start":start_date, "end":end_date, "id":event.id, "student_num":event.student_num},
+                        success: function(result) {
+                        	if (result == "true") alert("수정이 완료되었습니다.");
+                        	else alert("수정에 실패했습니다.");
+                            location.href = "/manage/myPage/mySchedule";
+                        } // success
+                    }); // ajax
+                } else  revertFunc();
             }, // eventDrop
+            
+            // Resize 처리
+            eventResize: function(event, delta, revertFunc) {
+                alert(event.title + " end is now " + event.end.format());
 
-            eventOverlap: function(stillEvent, movingEvent) {
-                return stillEvent.allDay && movingEvent.allDay;
-            },
+                if (confirm("is this okay?")) {
+                	// 날짜 포맷  변경
+                    var start_date = moment(event.start).format('YYYY/MM/DD HH:mm:SS');
+                    var end_date = moment(event.end).format('YYYY/MM/DD HH:mm:SS');
+                    
+                    $.ajax({
+                        url: "/manage/myPage/modifyEventDrag",
+                        type: "post",
+                        data: {"end":end_date, "id":event.id, "student_num":event.student_num},
+                        success: function(result) {
+                            if (result == "true") alert("수정이 완료되었습니다.");
+                            else alert("수정에 실패했습니다.");
+                            location.href = "/manage/myPage/mySchedule";
+                        } // success
+                    }); // ajax
+                    
+                } else revertFunc();
+
+            }, // eventResize
+            
+            
+            // 일정 중복 허용 ??????
+//             eventOverlap: function(stillEvent, movingEvent) {
+//                 return stillEvent.allDay && movingEvent.allDay;
+//             },
             
             
             timeFormat: 'H(:mm)', // uppercase H for 24-hour clock
@@ -198,8 +293,7 @@
                 selectable: true,
                 selectHelper: true,
                 select: function(start, end) {
-                    
-                    addEvent(); // 일정 등록 창(modal) 띄우기 - css 나중에 하기!!!!
+                	var modal = addEvent(); // 일정 등록 창(modal) 띄우기 - css 나중에 하기!!!!
                     
                     // 날짜 포맷  변경
                     var start_date = moment(start).format('YYYY/MM/DD HH:mm:SS');
@@ -267,99 +361,82 @@
                             else constraint = 0;
                             
                             // 공식 이벤트 구분
-                            if ($("#option").val() == null) {
-                                alert("공식이벤트 구분을 선택해 주세요");
-                                $(".checkbox").prop("checked", false);
-                                constraintList.empty();
-                                reference = "";
-                                backgroundColor = "";
-                                return;
-                            } 
-                            else if ($("#option").val() != null && $("#option").val() == 'announcement') {
-                                reference = "내부/공지사항";
-                                backgroundColor = "#5cb85c"; // 내부/공지사항
-                            }
-                            else if ($("#option").val() != null && $("#option").val() == 'session') {
-                                reference = "외부/설명회";
-                                backgroundColor = "#cdf441"; // 외부/설명회
-                            }
-                            else if ($("#option").val() != null && $("#option").val() == 'exam') {
-                                reference = "평가/시험";
-                                backgroundColor = "#fdffbc";    // 평가/시험
-                            } else {
-                                reference = "";
-                                backgroundColor = "";
-                            }
-                        }// if
+                            if (constraint != 0) {
+	                            if (constraintList.length != 0 && $("#option option:selected").val() == '') {
+	                                alert("공식이벤트 구분을 선택해 주세요");
+	                                $(".checkbox").prop("checked", false);
+	                                constraintList.empty();
+	                                reference = "";
+	                                backgroundColor = "";
+	                                return;
+	                            } 
+	                            else if ($("#option option:selected").val() != null && $("#option option:selected").val() == 'announcement') {
+	                                reference = "내부/공지사항";
+	                                backgroundColor = "#5cb85c"; // 내부/공지사항
+	                            }
+	                            else if ($("#option option:selected").val() != null && $("#option option:selected").val() == 'session') {
+	                                reference = "외부/설명회";
+	                                backgroundColor = "#cdf441"; // 외부/설명회
+	                            }
+	                            else if ($("#option option:selected").val() != null && $("#option option:selected").val() == 'exam') {
+	                                reference = "평가/시험";
+	                                backgroundColor = "#fdffbc";    // 평가/시험
+	                            } 
+	//                             else {
+	//                                 reference = "";
+	//                                 backgroundColor = "";
+	//                             }
+                            }  
+                            // if-#option
+                        } // if-관리자
+                        
+                        // 개인 일정에 경우, 값이 없는 아래 3개에 디폴트값 넣어주기
+                        if (constraint == '') constraint = 0;
+                        if (backgroundColor == '') backgroundColor = null;
+                        if (reference == '') reference = null;
                         
                         if (title && start_dt && end_dt) { // title값은 필수임!!!!!!!! 
-                            var form = document.createElement("form");
-                            form.setAttribute("method", "post");
-                            form.setAttribute("action", "/manage/myPage/addEvent");
-                            
-                                var hidden1 = document.createElement("input");
-                                hidden1.setAttribute("type", "hidden");
-                                hidden1.setAttribute("name", "title");
-                                hidden1.setAttribute("value", title);
-                                form.appendChild(hidden1);
-                                
-                                var hidden2 = document.createElement("input");
-                                hidden2.setAttribute("type", "hidden");
-                                hidden2.setAttribute("name", "start");
-                                hidden2.setAttribute("value", start_dt);
-                                form.appendChild(hidden2);
-                                
-                                var hidden3 = document.createElement("input");
-                                hidden3.setAttribute("type", "hidden");
-                                hidden3.setAttribute("name", "end");
-                                hidden3.setAttribute("value", end_dt);
-                                form.appendChild(hidden3);
-                                
-                                var hidden4 = document.createElement("input");
-                                hidden4.setAttribute("type", "hidden");
-                                hidden4.setAttribute("name", "memo");
-                                hidden4.setAttribute("value", memo);
-                                form.appendChild(hidden4);
-                                
-                                var hidden6 = document.createElement("input");
-                                hidden6.setAttribute("type", "hidden");
-                                hidden6.setAttribute("name", "student_num");
-                                hidden6.setAttribute("value", student_num);
-                                form.appendChild(hidden6);
-                                
-                             // 관리자일 경우에만
-                                if (student_num == 1) {
-                                    var hidden5 = document.createElement("input");
-                                    hidden5.setAttribute("type", "hidden");
-                                    hidden5.setAttribute("name", "constraint");
-                                    hidden5.setAttribute("value", constraint);
-                                    form.appendChild(hidden5);
-                                    
-                                    
-                                    var hidden7 = document.createElement("input");
-                                    hidden7.setAttribute("type", "hidden");
-                                    hidden7.setAttribute("name", "backgroundColor");
-                                    hidden7.setAttribute("value", backgroundColor);
-                                    form.appendChild(hidden7);
-                                    
-                                    var hidden8 = document.createElement("input");
-                                    hidden8.setAttribute("type", "hidden");
-                                    hidden8.setAttribute("name", "reference");
-                                    hidden8.setAttribute("value", reference);
-                                    form.appendChild(hidden8);
+                        	$.ajax({
+                        		url: "/manage/myPage/addEvent",
+                        		type: "post",
+                        		data: {
+	                        			"title":title, "start":start_dt, "end":end_dt, "memo":memo, "student_num":student_num,
+	                        			"constraint":constraint, "backgroundColor":backgroundColor,
+	                        			"reference":reference
+	                        			},
+                        		success: function(result) {
+                        			location.href = "/manage/myPage/mySchedule";
+                        		}, // success
+                        		error: function() {
+                                    alert('등록실패??? 왜????');
                                 }
-                                
-                            document.body.appendChild(form);
-                            form.submit();
+                        	}); // ajax
+                        
+                        	modal.style.display = "none";
                         } else {
                               alert("제목과 일정을 입력해 주세요.")
+                              calendar.fullCalendar('unselect');
                         }
                     }); // #addBtn-click
-                    
                 }, // select
                 
                 eventClick:function(event) {
 //                         clickEvent(event);
+                    // 해당 이벤트의 id
+                    var id = event.id;
+                    alert("id: " + id)
+                    
+                    // 스터디룸의 경우 수정/삭제버튼 숨기기
+                     if ($("#eventTitle").val().includes("스터디룸")) {
+                    	 $("#writerArea").css("display", "none");
+                        };
+                    
+                    // 본인 작성 이벤트일 경우에는 수정/삭제버튼 확인 가능
+                    $("#writerArea").css("visibility", "");
+                    if ("${vo.student_num}" == event.student_num) {
+                        $("#writerArea").css("visibility", "visibility");
+                    } else $("#writerArea").css("visibility", "hidden");
+                    
                     // Get the modal
                     var modal = document.getElementById('clickModal');
                     
@@ -372,11 +449,14 @@
                         var memo = event.memo;
                         var start_date = moment(event.start).format('YYYY/MM/DD HH:mm:SS');
                         var end_date = moment(event.end).format('YYYY/MM/DD HH:mm:SS');
+                        var id = event.id;
                         
                         $("#eventTitle").val(title);
                         $("#eventMemo").val(memo);
                         $("#eventStart").val(start_date);
                         $("#eventEnd").val(end_date);
+                        $("#eventId").val(id); // hidden
+                        
                         if (event.constraint != 0) {
                             if (event.constraint == 99) {
                                 $("#eventFormal").val("전체-"+event.reference);
@@ -385,8 +465,20 @@
                             }
                         } else $("#eventFormal").val("개인")
                         
-                        $("#writerAreaFirst").show();
-                        $("#writerAreaSecond").hide();
+                        // 수정 불가 처리
+                        $("#eventTitle").attr("readOnly", true);
+                        $("#eventMemo").attr("readOnly", true);
+                        $("#eventStart").attr("readOnly", true);
+                        $("#eventEnd").attr("readOnly", true);
+                        
+                        // 이벤트 클릭시 수정/삭제 버튼 -> 확인/취소 버튼으로 변경
+                        $("#okBtn").attr("id", "modifyBtn");
+                        $("#modifyBtn").val("수정");
+                        $("#cancelBtn").attr("id", "deleteBtn");
+                        $("#deleteBtn").val("삭제");
+                        
+                        // 이벤트 클릭시 수정->공식이벤트 구분부분 숨김
+                        $("#adminArea").empty();
                         
                         modal.style.display = "block";
                     })
@@ -404,9 +496,10 @@
                     } // window.onclick
                     
                     $("#modifyBtn").on("click", function(event) {
-                        alert("수정버튼 클릭");
+                    	$("#deleteBtn").off("click"); // 삭제버튼 이벤트 삭제
+                    	
                         if ($("#eventTitle").val().includes("스터디룸")) {
-                        	alert("수정이 불가합니다. 스터디룸 예약 페이지에서 확인하세요");
+                            alert("수정이 불가합니다. 스터디룸 예약 페이지에서 확인하세요");
                             modal.style.display = "none";
                             return;
                         };
@@ -440,89 +533,240 @@
 //                             startDate: new Date($("#eventStart").datetimepicker('update')) // 시작 날짜보다 앞선 날짜는 선택하지 못하게 한다. - 안먹힘..ㅠㅠ
                         });
                         
+                        // 공식 이벤트인 경우
                         if ($("#eventFormal").val() != '개인') {
-                            if ("${vo.student_num}" == 1) {
+                            if ("${vo.student_num}" == 1) { // 관리자만 수정 가능
                                 $("#adminArea").empty();
                                 var addRow = "";
                                 addRow += "<td>공식이벤트 여부</td>";
-                                addRow += "<td><input type='checkbox' class='checkbox' id='first' value='33'><label for='first'>33기</label>";
-                                addRow += "<input type='checkbox' class='checkbox' id='second' value='34'><label for='second'>34기</label></td>";
-                                addRow += "<td><select id='option'>";
+                                addRow += "<td><input type='checkbox' class='checkboxEvent' id='modifyFirst' value='33'><label for='modifyFirst'>33기</label>";
+                                addRow += "<input type='checkbox' class='checkboxEvent' id='modifySecond' value='34'><label for='modifySecond'>34기</label></td>";
+                                addRow += "<td><select id='option_modify'>";
                                 addRow += "<option value=''>---선택---</option>";
                                 addRow += "<option value='announcement'>내부/공지사항</option>";
                                 addRow += "<option value='session'>외부/설명회</option>";
                                 addRow += "<option value='exam'>평가/시험</option>";
                                 addRow += "</select></td>";
                                 $("#adminArea").append(addRow);
-                            } // if
+                                
+                                // 기존 기수 체크내역 표시하기
+                                if ($("#eventFormal").val().substring(0, 2) == "33") {
+                                    $("#modifyFirst").prop("checked", true);
+                                } else if ($("#eventFormal").val().substring(0, 2) == "34") {
+                                    $("#modifySecond").prop("checked", true);
+                                } if ($("#eventFormal").val().substring(0, 2) == "전체") {
+                                    $("#modifyFirst").prop("checked", true);
+                                    $("#modifySecond").prop("checked", true);
+                                }
+                                
+                                // 기존 레퍼런스 체크내역 표시하기
+                                if ($("#eventFormal").val().split("-")[1] == "내부/공지사항") {
+                                	$("#option_modify").val("announcement");
+                                } else if ($("#eventFormal").val().split("-")[1] == "외부/설명회") {
+                                    $("#option_modify").val("session");
+                                } else if ($("#eventFormal").val().split("-")[1] == "평가/시험") {
+                                    $("#option_modify").val("exam");
+                                }
+                                
+                            } else { 
+                                alert("수정 권한이 없습니다.");
+                                modal.style.display = "none";
+                                return;
+                            }
                         } // #eventFormal-if
                         
-                        // 수정 뒤에  여기 수정해서 db로 보내자!!!!!!!!!
-//                         if (title && start_dt && end_dt) { // title값은 필수임!!!!!!!! 
-//                             var form = document.createElement("form");
-//                             form.setAttribute("method", "post");
-//                             form.setAttribute("action", "/manage/myPage/addEvent");
+                        // 수정 > 확인 버튼 누르기
+                            var clickedAdd = false;
+                        $("#okBtn").click(function(event) {
+                            alert("확인버튼 클릭");
+                            clickedAdd = true;
                             
-//                                 var hidden1 = document.createElement("input");
-//                                 hidden1.setAttribute("type", "hidden");
-//                                 hidden1.setAttribute("name", "title");
-//                                 hidden1.setAttribute("value", title);
-//                                 form.appendChild(hidden1);
+                            
+                         // db로 보낼 이벤트 수정 내역
+                            var title = $("#eventTitle").val();
+                            var memo = $("#eventMemo").val();
+                            var start_dt = $("#eventStart").val();
+                            var end_dt = $("#eventEnd").val();
+                            var student_num = "${vo.student_num}";
+                            var id = $("#eventId").val(); // hidden
+                            var constraint = "";
+                            var backgroundColor = "";
+                            var reference = "";
+                            
+                            // 관리자일 경우에만
+                            if (student_num == 1) {
+                            	alert("관리자")
+                            	
+                            	   // 새로 체크된 내역이 안 뽑힘 ㅠㅠ 이건 나중에 시간 되면 다시 보기!!
+	                                var constraintList_modify = [];
+                            	 $(".checkboxEvent").change("click", function() {
+	                                $(".checkboxEvent").each(function (index, item) {
+	                                    if ($(item).is(":checked")) { // 체크된 내역
+	                                    	alert("체크체크: " + $(item).val())
+	                                    	constraintList_modify.push($(item).val());
+	                                    } // if
+	                                }) // each
+                            	 })
+
+	                                
+                                    if (constraintList_modify.length == 0 ) alert("선택된 체크박스 없음")
+	                                for (var i = 0; i < constraintList_modify.length; i++) {
+										alert("기수: " + constraintList_modify[i]);
+									}
+	                                
+	                                // 두 개의 기수가 모두 체크되어 있을 경우, constraint = 99 (all)
+	                                if (constraintList_modify.length == 2) constraint = 99;
+	                                else if (constraintList_modify.length == 1) constraint = constraintList_modify[0];
+	                                else constraint = 0;
+	                                
                                 
-//                                 var hidden2 = document.createElement("input");
-//                                 hidden2.setAttribute("type", "hidden");
-//                                 hidden2.setAttribute("name", "start");
-//                                 hidden2.setAttribute("value", start_dt);
-//                                 form.appendChild(hidden2);
+	                                // 공식 이벤트 구분
+	                                if (constraint != 0) {
+		                                alert("옵션: "+ $("#option_modify option:selected").val());
+		                                if ($("#option_modify option:selected").val() == '') {
+		                                    alert("공식이벤트 구분을 선택해 주세요");
+		                                    $(".checkboxEvent").prop("checked", false);
+		                                    constraintList_modify.empty();
+		                                    reference = "";
+		                                    backgroundColor = "";
+		                                    return;
+		                                } 
+		                                else if ($("#option_modify option:selected").val() != null && $("#option_modify option:selected").val() == 'announcement') {
+		                                    reference = "내부/공지사항";
+		                                    backgroundColor = "#5cb85c"; // 내부/공지사항
+		                                }
+		                                else if ($("#option_modify option:selected").val() != null && $("#option_modify option:selected").val() == 'session') {
+		                                    reference = "외부/설명회";
+		                                    backgroundColor = "#cdf441"; // 외부/설명회
+		                                }
+		                                else if ($("#option_modify option:selected").val() != null && $("#option_modify option:selected").val() == 'exam') {
+		                                    reference = "평가/시험";
+		                                    backgroundColor = "#fdffbc";    // 평가/시험
+		                                } 
+	//                                 else {
+	//                                     reference = "";
+	//                                     backgroundColor = "";
+	//                                 }
+	                               } // constraint != 0
+                            }// if-관리자
+                            
+                            // 개인 일정에 경우, 값이 없는 아래 3개에 디폴트값 넣어주기
+                            if (constraint == '') constraint = 0;
+                            if (backgroundColor == '') backgroundColor = null;
+                            if (reference == '') reference = null;
+                            
+                            if (title && start_dt && end_dt) { // title값은 필수임!!!!!!!! 
+                            	$.ajax({
+                                    url: "/manage/myPage/modifyEvent",
+                                    type: "post",
+                                    data: {
+                                        "title":title, "start":start_dt, "end":end_dt, "memo":memo, "student_num":student_num,
+                                        "constraint":constraint, "backgroundColor":backgroundColor,
+                                        "reference":reference, "id":id
+                                        },
+                                    success: function(result) {
+                                        location.href = "/manage/myPage/mySchedule";
+                                    } // success
+                                }); // ajax
+                            	
+//                                 var form = document.createElement("form");
+//                                 form.setAttribute("method", "post");
+//                                 form.setAttribute("action", "/manage/myPage/modifyEvent");
                                 
-//                                 var hidden3 = document.createElement("input");
-//                                 hidden3.setAttribute("type", "hidden");
-//                                 hidden3.setAttribute("name", "end");
-//                                 hidden3.setAttribute("value", end_dt);
-//                                 form.appendChild(hidden3);
-                                
-//                                 var hidden4 = document.createElement("input");
-//                                 hidden4.setAttribute("type", "hidden");
-//                                 hidden4.setAttribute("name", "memo");
-//                                 hidden4.setAttribute("value", memo);
-//                                 form.appendChild(hidden4);
-                                
-//                                 var hidden6 = document.createElement("input");
-//                                 hidden6.setAttribute("type", "hidden");
-//                                 hidden6.setAttribute("name", "student_num");
-//                                 hidden6.setAttribute("value", student_num);
-//                                 form.appendChild(hidden6);
-                                
-//                              // 관리자일 경우에만
-//                                 if (student_num == 1) {
-//                                     var hidden5 = document.createElement("input");
-//                                     hidden5.setAttribute("type", "hidden");
-//                                     hidden5.setAttribute("name", "constraint");
-//                                     hidden5.setAttribute("value", constraint);
-//                                     form.appendChild(hidden5);
+//                                     var hidden1 = document.createElement("input");
+//                                     hidden1.setAttribute("type", "hidden");
+//                                     hidden1.setAttribute("name", "title");
+//                                     hidden1.setAttribute("value", title);
+//                                     form.appendChild(hidden1);
                                     
+//                                     var hidden2 = document.createElement("input");
+//                                     hidden2.setAttribute("type", "hidden");
+//                                     hidden2.setAttribute("name", "start");
+//                                     hidden2.setAttribute("value", start_dt);
+//                                     form.appendChild(hidden2);
                                     
-//                                     var hidden7 = document.createElement("input");
-//                                     hidden7.setAttribute("type", "hidden");
-//                                     hidden7.setAttribute("name", "backgroundColor");
-//                                     hidden7.setAttribute("value", backgroundColor);
-//                                     form.appendChild(hidden7);
+//                                     var hidden3 = document.createElement("input");
+//                                     hidden3.setAttribute("type", "hidden");
+//                                     hidden3.setAttribute("name", "end");
+//                                     hidden3.setAttribute("value", end_dt);
+//                                     form.appendChild(hidden3);
                                     
-//                                     var hidden8 = document.createElement("input");
-//                                     hidden8.setAttribute("type", "hidden");
-//                                     hidden8.setAttribute("name", "reference");
-//                                     hidden8.setAttribute("value", reference);
-//                                     form.appendChild(hidden8);
-//                                 }
-                                
-//                             document.body.appendChild(form);
-//                             form.submit();
-//                         } else {
-//                               alert("제목과 일정을 입력해 주세요.")
-//                         }
+//                                     var hidden4 = document.createElement("input");
+//                                     hidden4.setAttribute("type", "hidden");
+//                                     hidden4.setAttribute("name", "memo");
+//                                     hidden4.setAttribute("value", memo);
+//                                     form.appendChild(hidden4);
+                                    
+//                                     var hidden6 = document.createElement("input");
+//                                     hidden6.setAttribute("type", "hidden");
+//                                     hidden6.setAttribute("name", "student_num");
+//                                     hidden6.setAttribute("value", student_num);
+//                                     form.appendChild(hidden6);
+                                    
+//                                     var hidden9 = document.createElement("input");
+//                                     hidden9.setAttribute("type", "hidden");
+//                                     hidden9.setAttribute("name", "id");
+//                                     hidden9.setAttribute("value", id);
+//                                     form.appendChild(hidden9);
+                                    
+//                                  // 관리자일 경우에만
+//                                     if (student_num == 1) {
+//                                         var hidden5 = document.createElement("input");
+//                                         hidden5.setAttribute("type", "hidden");
+//                                         hidden5.setAttribute("name", "constraint");
+//                                         hidden5.setAttribute("value", constraint);
+//                                         form.appendChild(hidden5);
+                                        
+                                        
+//                                         var hidden7 = document.createElement("input");
+//                                         hidden7.setAttribute("type", "hidden");
+//                                         hidden7.setAttribute("name", "backgroundColor");
+//                                         hidden7.setAttribute("value", backgroundColor);
+//                                         form.appendChild(hidden7);
+                                        
+//                                         var hidden8 = document.createElement("input");
+//                                         hidden8.setAttribute("type", "hidden");
+//                                         hidden8.setAttribute("name", "reference");
+//                                         hidden8.setAttribute("value", reference);
+//                                         form.appendChild(hidden8);
+                                        
+//                                     }
+                                    
+//                                 document.body.appendChild(form);
+//                                 form.submit();
+
+                            	modal.style.display = "none"; // 창 닫기
+                            
+                            } else {
+                                  alert("제목과 일정을 입력해 주세요.")
+		                          calendar.fullCalendar('unselect');
+                            }
+                            
+                            
+                        }); // click-#okBtn
                         
+                        // 수정 > 취소 버튼 누르기
+                        $("#cancelBtn").click(function(event) {
+                            var cancelAnswer = confirm("수정을 취소하시겠습니까?");
+                            if(cancelAnswer) modal.style.display = "none";
+                            else return;
+                        }); // click-#cancelBtn
                         
                     }); // modifyBtn
+                    
+                    
+                    // 클릭한 이벤트 삭제하기
+                    $("#deleteBtn").on("click", function(event) {
+                    	if ($("#eventTitle").val().includes("스터디룸")) {
+                            alert("삭제가 불가합니다. 스터디룸 예약 페이지에서 확인하세요");
+                            modal.style.display = "none";
+                            return;
+                        };
+                        
+                    	var answer = confirm("정말로 삭제하시겠습니까?");
+                        if (answer) location.href="/manage/myPage/deleteEvent?id="+$("#eventId").val()+"&student_num=${vo.student_num}";
+                        else return;
+                    }); // click-#deleteBtn
                     
                 }, // eventClick
     
@@ -555,11 +799,16 @@
             $(".checkbox").each(function (index, item){
                 $(item).prop("checked", false); // 체크박스 초기화
             }) // each
+            
             // 이벤트 클릭시 수정/삭제 버튼 -> 확인/취소 버튼으로 변경
             $("#okBtn").attr("id", "modifyBtn");
             $("#modifyBtn").val("수정");
             $("#cancelBtn").attr("id", "deleteBtn");
             $("#deleteBtn").val("삭제");
+            // 이벤트 클릭시 수정->공식이벤트란 hide
+            $("#adminArea").empty();
+            $("#adminArea").hide();
+            
             modal.style.display = "block";
         })
         
@@ -574,6 +823,7 @@
                 modal.style.display = "none";
             }
         } 
+        return modal;
     }; // addEvent   
     
     // 이벤트 클릭시 이벤트 정보를 보여주는 모달창 띄우기
@@ -682,8 +932,8 @@
                         <input type="checkbox" class="checkbox" id="second" value="34"><label for="second">34기</label>
                     </td>
                     <td>
-                        <select id='option'>
-                            <option value=''>---선택---</option>
+                        <select id="option">
+<!--                             <option value=''>---선택---</option> -->
                             <option value='announcement'>내부/공지사항</option>
                             <option value='session'>외부/설명회</option>
                             <option value='exam'>평가/시험</option>
@@ -713,7 +963,10 @@
            <table>
                 <tr>
                     <td>제목</td>
-                    <td><input type="text" id="eventTitle" readonly></td>
+                    <td>
+                        <input type="text" id="eventTitle" readonly>
+                        <input type="hidden" id="eventId">
+                    </td>
                 </tr>
                 <tr>
                     <td>내용</td>
@@ -728,15 +981,17 @@
                     <td><input type="text" id="eventFormal" readonly></td>
                 </tr>
                 <tr>
-                   <div id="adminArea"><!-- 공식이벤트 여부 수정 --></div>
+                <div id="adminArea">
+                   <!-- 공식이벤트 여부 수정 -->
+                </div>
                 </tr>   
                 <tr>
-           <div id="writerArea">
                     <td colspan="2">
+           <div id="writerArea">
                         <input type="button" value="수정" id="modifyBtn" data-dismiss="modal">
                         <input type="button" value="삭제" id="deleteBtn" data-dismiss="modal">
-                   </td>
             </div>
+                   </td>
                 </tr>
            </table>
       </div>
