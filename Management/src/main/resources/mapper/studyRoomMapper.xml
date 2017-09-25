@@ -210,7 +210,7 @@
 	   <!-- 관리자 메뉴- 스터디룸의 좌석 등록하기 -->
     <insert id="addSR_Seat" parameterType="StudyRoomVO">
        INSERT INTO STUDYROOM VALUES (
-           #{studyroom_num}, #{sr_seat_num}, 'N', null, #{room_x}, #{room_y}, #{seat_x}, #{seat_y}, 1
+           #{studyroom_num}, #{sr_seat_num}, null, #{room_x}, #{room_y}, #{seat_x}, #{seat_y}, 1
        )
     </insert>
     
@@ -232,8 +232,7 @@
             AND SR_SEAT_NUM = #{sr_seat_num}
         </if>
         
-    </select>
-    
+    </select>    
         <!-- 관리자 메뉴- 스터디룸의 좌석 삭제하기 -->
     <delete id="dropSR_Seat" parameterType="StudyRoomVO">
         DELETE STUDYROOM WHERE STUDYROOM_NUM = #{studyroom_num} AND SR_SEAT_NUM = #{sr_seat_num}
@@ -265,7 +264,7 @@
            <!-- 관리자 메뉴- 스터디룸의 등록하기 , 좌석 1번 임의 등록-->
     <insert id="addSR" parameterType="StudyRoomVO">
        INSERT INTO STUDYROOM VALUES (
-           #{studyroom_num}, 1, 'N', null, #{room_x}, #{room_y}, 1, 1, 1
+           #{studyroom_num}, 1, null, #{room_x}, #{room_y}, 1, 1, 1
        )
     </insert>
     
