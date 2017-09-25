@@ -32,7 +32,7 @@ public class StudyRoomVO { //
 	public void setSr_seat_num(int sr_seat_num) {
 		this.sr_seat_num = sr_seat_num;
 	}
-	
+
 	public String getSeated_status() {
 		return seated_status;
 	}
@@ -123,10 +123,10 @@ public class StudyRoomVO { //
 
 	@Override
 	public String toString() {
-		return "StudyRoomVO [studyroom_num=" + studyroom_num + ", sr_seat_num=" + sr_seat_num + ", + ", seated_status=" 
-				+ seated_status + ", room_x=" + room_x + ", room_y=" + room_y
-				+ ", seat_x=" + seat_x + ", seat_y=" + seat_y + ", activate=" + activate + ", seven=" + seven
-				+ ", eight=" + eight + ", nine=" + nine + ", ten=" + ten + ", count_seat=" + count_seat + "]";
+		return "StudyRoomVO [studyroom_num=" + studyroom_num + ", sr_seat_num=" + sr_seat_num + ", seated_status="
+				+ seated_status + ", room_x=" + room_x + ", room_y=" + room_y + ", seat_x=" + seat_x + ", seat_y="
+				+ seat_y + ", activate=" + activate + ", seven=" + seven + ", eight=" + eight + ", nine=" + nine
+				+ ", ten=" + ten + ", count_seat=" + count_seat + "]";
 	}
 
 }
