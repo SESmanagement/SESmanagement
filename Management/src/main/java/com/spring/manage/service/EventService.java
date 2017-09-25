@@ -1,13 +1,8 @@
 package com.spring.manage.service;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
-import com.spring.manage.vo.SR_ReservationVO;
-import com.spring.manage.util.PageNavigator2;
 import com.spring.manage.vo.EventVO;
-import com.spring.manage.vo.SR_FacilityVO;
-import com.spring.manage.vo.StudyRoomVO;
 
 public interface EventService {
 
@@ -17,7 +12,17 @@ public interface EventService {
 	// 캘린더 조회 시점의 현재 시각
 	public String getSysdate();
 
-	// // 이벤트 등록하기
-	public String addEvent(EventVO vo);
+	// 이벤트 등록하기
+	public ArrayList<EventVO> addEvent(EventVO vo);
+	
+	// 이벤트 수정하기
+	public String modifyEvent(EventVO vo);
+
+	// 이벤트 삭제하기
+	public String deleteEvent(EventVO vo);
+
+	// 이벤트 일정 드래그로 수정하기
+	public String modifyEventDrag(EventVO vo);
+
 
 }
