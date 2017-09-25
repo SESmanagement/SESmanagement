@@ -98,5 +98,4 @@ public interface StudyRoomDAO { //
 	// 캘린더-이벤트 가지고 오기
 	public ArrayList<EventVO> getEvent(int student_num);
 
-
 }
