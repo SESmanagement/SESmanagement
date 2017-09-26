@@ -1,16 +1,20 @@
 package com.spring.manage.service;
 
-import java.util.List;
-import java.util.Map;
+import java.util.ArrayList;
 
-import com.spring.manage.vo.LendVO;
+import com.spring.manage.vo.ArrangeVO;
+import com.spring.manage.vo.ClassRoomVO;
+import com.spring.manage.vo.PartyVO;
+import com.spring.manage.vo.Room_StatusVO;
 
-public interface AdminService {
-	public List<LendVO> getStatusList(String status, String searchType, String searchValue);
-	public int lendBook(Map<String, Integer> map);
-	public int rejectBook(int num);
-	public int returnBook(int num);
-	public int updateDelayed();
-	public int returnDelayedBook(int num);
-	
+public interface ArrangeService {
+	public ArrayList<ClassRoomVO> getClassRoom();
+	public ArrayList<PartyVO> getPartyList();
+	public void updateRoom(ClassRoomVO room);
+	public ArrayList<Room_StatusVO> getRoom_Status(int classRoom_num);
+	public ClassRoomVO selectRoom(int num);
+	public ArrayList<Room_StatusVO> changeServiceAble(Room_StatusVO status); 
+	public ArrayList<ClassRoomVO> callRooms(int num);
+	public int countPartyMember(int party_num);
+	public ArrayList<ArrangeVO> ArrangeClass(int party_num);
 }
