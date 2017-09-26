@@ -15,7 +15,7 @@ public interface BookDAO {
 	public BookVO selectOne(int num);
 	public int insert(BookVO book);
 	public int reserveBook(Map<String, Object> map);
-	public List<LendVO> borrowList(int member_num, RowBounds rb);
+	public List<LendVO> borrowList(String mem_num, RowBounds rb);
 	public int getBookCount(Map<String, String> map);
-	public int getBorrowCount(int member_num);
+	public int getBorrowCount(String mem_num);
 }
