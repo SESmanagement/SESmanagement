@@ -36,7 +36,7 @@ $(function(){
 	});
 });
 
-//처음에 리스트 불러오기
+//처음에 리스트. 불러오기
 function reservedList(resp){
 	var temp="<table><tr><th>책 제목</th><th>신청자</th><th>액션</th></tr>";
 	$.each(resp, function(index, item){
