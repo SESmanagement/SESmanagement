@@ -74,9 +74,9 @@
             <li class=""> <a class="dropdown-toggle" href="/manage">Home</a></li>
             <li class="dropdown"> <a class="dropdown-toggle" href="#">도서예약 <i class="fa fa-caret-down"></i></a>
               <ul class="dropdown-menu">
-                <li><a href="/manage/book/getBookList">책목록</a></li>
-                <li><a href="">도서대출상태</a></li>
-                <li><a href="">대출신청</a></li>
+              	  <li><a href="/manage/bookList">도서리스트</a></li>
+                  <li><a href="/manage/lendList">대출목록</a></li>
+              	  <li><a href="/manage/delayList">연체목록</a></li>
               </ul>
             </li>
             <li class="dropdown"> <a class="dropdown-toggle" href="#">스터디룸예약 <i class="fa fa-caret-down"></i></a>
