@@ -177,9 +177,7 @@
     <script  src="/manage/resources/like/index.js"></script>
 <!--/ like / -->
 							</c:forEach>
-							
 				</div>
-				
 				</li>
 				</ul>
 				
@@ -190,7 +188,25 @@
 
 			<!--  -->
 				<!-- 페이징 출력 -->
-								
+<!-- 				<div id="navigator"> -->
+				<!-- page 맨 앞으로 가기 -->
+<%-- 					<a	href="bookList?currentPage=${navi.currentPage-navi.pagePerGroup}&searchType=${searchType}&searchValue=${searchValue}&showNum=${showNum}">◁◁	</a>  --%>
+<%-- 					<a	href="bookList?currentPage=${navi.currentPage-1}&searchType=${searchType}&searchValue=${searchValue}&showNum=${showNum}">◀ </a> --%>
+
+<%-- 					<c:forEach var="page" begin="${navi.startPageGroup}" end="${navi.endPageGroup}"> --%>
+<%-- 						<c:if test="${page eq navi.currentPage}"> --%>
+<%-- 							<span style="color: red; font-weight: bolder; font-size: 1em">${page}</span> --%>
+<%-- 						</c:if> --%>
+<%-- 						<c:if test="${page ne navi.currentPage}"> --%>
+<%-- 							<a	href="bookList?currentPage=${page}&searchType=${searchType}&searchValue=${searchValue}&showNum=${showNum}">${page}</a> --%>
+<%-- 						</c:if> --%>
+<%-- 					</c:forEach> --%>
+
+<%-- 					<a	href="bookList?currentPage=${navi.currentPage+1}&searchType=${searchType}&searchValue=${searchValue}&showNum=${showNum}">▶</a>  --%>
+<%-- 					<a	href="bookList?currentPage=${navi.currentPage+navi.pagePerGroup}&searchType=${searchType}&searchValue=${searchValue}&showNum=${showNum}">▷▷</a> --%>
+				
+<!-- 				</div> -->
+				
   				  <ul class="pagination pagination-lg">
                       <li><a href="bookList?currentPage=${navi.currentPage-1}&searchType=${searchType}&searchValue=${searchValue}&showNum=${showNum}">  <i class="fa fa-angle-left"></i>Previous</a></li>
                   <c:forEach var="page" begin="${navi.startPageGroup}" end="${navi.endPageGroup}">
@@ -208,15 +224,11 @@
 	</div>
 
 <!--  -->
-    <ul class="pagination pagination-lg">
-                                                <li><a href="#"><i class="fa fa-angle-left"></i>Previous</a></li>
-                                                <li class="active"><a href="#">1</a></li>
-                                                <li><a href="#">2</a></li>
-                                                <li><a href="#">3</a></li>
-                                                <li><a href="#">4</a></li>
-                                                <li><a href="#">5</a></li>
-                                                <li><a href="#">Next <i class="fa fa-angle-right"></i></a></li>
-                                            </ul>
+
+
+
+
+
 
 <!--  -->
 </body>
