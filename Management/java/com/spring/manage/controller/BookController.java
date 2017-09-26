@@ -22,7 +22,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.spring.manage.dao.AdminDAOImpl;
 import com.spring.manage.dao.BookDAOImpl;
 import com.spring.manage.util.FileService;
-import com.spring.manage.util.PageNavigator2;
+import com.spring.manage.util.PageNavigator;
 import com.spring.manage.vo.BookVO;
 import com.spring.manage.vo.LendVO;
 import com.spring.manage.vo.MemberVO;
@@ -54,7 +54,7 @@ public class BookController {
 		
 		int totalRecordCount = repo.getBookCount(searchType, searchValue);
 		System.out.println("===========>"+totalRecordCount);
-		PageNavigator2 navi=new PageNavigator2(showNum, currentPage, totalRecordCount);
+		PageNavigator navi=new PageNavigator(showNum, currentPage, totalRecordCount);
 		List<BookVO> list = repo.selectAll(searchType, searchValue, navi.getStartRecord(), navi.getCountPerPage());
 		for (BookVO b : list) {
 			if (b.getStatus() == null || b.getStatus().equals("returned") || b.getStatus().equals("rejected")
@@ -105,16 +105,17 @@ public class BookController {
 
 	//대출 신청
 	@RequestMapping(value = "/borrowApply", method = RequestMethod.GET)
-	public @ResponseBody boolean borrowApply(int booknum, String mem_num) {
+	public @ResponseBody String borrowApply(int booknum, String mem_num) {
 		Map<String, Object> map = new HashMap<>();
 		map.put("booknum", booknum);
 		map.put("mem_num", mem_num);
 		int result = repo.reserveBook(map);
 		if (result > 0) {
-			return true;
+			return "정상적으로 신청되었습니다";
 		}
-		return false;
+		return "대출신청이 실패하였습니다.";
 	}
+	
 	
 	//대출이력으로 이동
 	@RequestMapping(value = "/borrowList", method = RequestMethod.GET)
@@ -123,10 +124,10 @@ public class BookController {
 			@RequestParam(value="currentPage", defaultValue="1") int currentPage
 	) {
 		MemberVO member = (MemberVO)session.getAttribute("member");
-		String member_num = ""+member.getStudent_num();
+		int member_num = member.getStudent_num();
 		
 		int totalRecordCount = repo.getBorrowCount(member_num);
-		PageNavigator2 navi=new PageNavigator2(10, currentPage, totalRecordCount);
+		PageNavigator navi=new PageNavigator(10, currentPage, totalRecordCount);
 		repoA.updateDelayed();
 		List<LendVO> borrowlist=repo.borrowList(navi.getStartRecord(), navi.getCountPerPage(), member_num);
 		for(LendVO l  : borrowlist){
@@ -196,6 +197,5 @@ public class BookController {
 		// DB에 저장
 		repo.insert(book);
 		return "book/bookList";
-	}
-		
+	}		
 }
