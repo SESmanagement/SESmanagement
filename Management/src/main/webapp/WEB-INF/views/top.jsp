@@ -68,19 +68,6 @@
       
       <div class="navbar-collapse nav-main-collapse collapse"> 
         
-        <!--Header Search-->
-        <div class="search" id="headerSearch"> <a href="#" id="headerSearchOpen"><i class="fa fa-search"></i></a>
-          <div class="search-input">
-            <form id="headerSearchForm" action="#" method="get">
-              <div class="input-group">
-                <input type="text" class="form-control search" name="q" id="q" placeholder="Search...">
-                <span class="input-group-btn">
-                <button class="btn btn-primary" type="button"><i class="fa fa-search"></i></button>
-                </span> </div>
-            </form>
-            <span class="v-arrow-wrap"><span class="v-arrow-inner"></span></span> </div>
-        </div>
-        <!--End Header Search--> 
         <!--Main Menu-->
         <nav class="nav-main mega-menu">
           <ul class="nav nav-pills nav-main" id="mainMenu">
@@ -116,13 +103,13 @@
             <c:if test="${vo.student_num == 00001}">
             <li class="dropdown"> <a class="dropdown-toggle" href="#">관리자 메뉴<i class="fa fa-caret-down"></i></a>
               <ul class="dropdown-menu">
-                <li><a href="/manage/book/writeForm">도서 등록</a></li>
-           		<li><a href="applyList">대출승인리스트</a></li>
-                <li><a href="lendList">대출목록</a></li>
-                <li><a href="delayList">연체목록</a></li>
+                <li><a href="/manage/registBook">도서 등록</a></li>
+           		<li><a href="/manage/applyList">대출승인리스트</a></li>
+                <li><a href="/manage/lendList">대출목록</a></li>
+                <li><a href="/manage/delayList">연체목록</a></li>
                 <li><a href="">강의실</a></li>
-	            <li><a href="">스터디룸 관리</a></li>	
-	            <li><a href="/manage/book/getBookList">도서리스트</a></li>
+	            <li><a href="/manage/studyroom/adminPage">스터디룸 관리</a></li>  	
+	            <li><a href="/manage/bookList">도서리스트</a></li>
               </ul>
             </li>
             </c:if> 

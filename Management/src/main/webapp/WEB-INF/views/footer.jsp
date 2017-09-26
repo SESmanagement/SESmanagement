@@ -30,19 +30,19 @@
     <div id="back-to-top" class="animate-top"><i class="fa fa-angle-up"></i></div>
 
     <!-- Libs -->
-<!--     <script src="/manage/resources/HTML/js/jquery.min.js"></script>  -->
-    <script src="/manage/resources/HTML/js/bootstrap.min.js"></script>
-    <script src="/manage/resources/HTML/js/jquery-ui-1.10.2.custom.min.js"></script>
-    <script src="/manage/resources/HTML/js/jquery.flexslider-min.js"></script>
-    <script src="/manage/resources/HTML/js/jquery.easing.js"></script>
-    <script src="/manage/resources/HTML/js/jquery.fitvids.js"></script>
-    <script src="/manage/resources/HTML/js/jquery.carouFredSel.min.js"></script>
-    <script src="/manage/resources/HTML/js/jquery.validate.js"></script>
-    <script src="/manage/resources/HTML/js/theme-plugins.js"></script>
-    <script src="/manage/resources/HTML/js/jquery.isotope.min.js"></script>
-    <script src="/manage/resources/HTML/js/imagesloaded.js"></script>
+<!--     <script src="/manage/resources/js/jquery.min.js"></script>  -->
+    <script src="/manage/resources/js/bootstrap.min.js"></script>
+    <script src="/manage/resources/js/jquery-ui-1.10.2.custom.min.js"></script>
+    <script src="/manage/resources/js/jquery.flexslider-min.js"></script>
+    <script src="/manage/resources/js/jquery.easing.js"></script>
+    <script src="/manage/resources/js/jquery.fitvids.js"></script>
+    <script src="/manage/resources/js/jquery.carouFredSel.min.js"></script>
+    <script src="/manage/resources/js/jquery.validate.js"></script>
+    <script src="/manage/resources/js/theme-plugins.js"></script>
+    <script src="/manage/resources/js/jquery.isotope.min.js"></script>
+    <script src="/manage/resources/js/imagesloaded.js"></script>
 
-    <script src="/manage/resources/HTML/js/view.min.js?auto"></script>
-    <script src="/manage/resources/HTML/js/theme-core.js"></script>
+    <script src="/manage/resources/js/view.min.js?auto"></script>
+    <script src="/manage/resources/js/theme-core.js"></script>
 </body>
 </html>
