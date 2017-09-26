@@ -118,19 +118,19 @@ public class BookController {
 	}
 	
 	
-	//대출이력으로 이동
+//대출이력으로 이동
 	@RequestMapping(value = "/borrowList", method = RequestMethod.GET)
 	public String borrowList(
 			HttpSession session, Model model,
 			@RequestParam(value="currentPage", defaultValue="1") int currentPage
 	) {
 		MemberVO member = (MemberVO)session.getAttribute("member");
-		int member_num = member.getStudent_num();
+		int mem_num = member.getStudent_num();
 		
-		int totalRecordCount = repo.getBorrowCount(member_num);
-		PageNavigator2 navi=new PageNavigator2(10, currentPage, totalRecordCount);
+		int totalRecordCount = repo.getBorrowCount(mem_num);
+		PageNavigator navi=new PageNavigator(10, currentPage, totalRecordCount);
 		repoA.updateDelayed();
-		List<LendVO> borrowlist=repo.borrowList(navi.getStartRecord(), navi.getCountPerPage(), member_num);
+		List<LendVO> borrowlist=repo.borrowList(navi.getStartRecord(), navi.getCountPerPage(), mem_num);
 		for(LendVO l  : borrowlist){
 			switch(l.getStatus()){
 				case "reserved" : 
