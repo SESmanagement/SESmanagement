@@ -99,7 +99,7 @@ function dealyedList(resp){
 <%-- 				<td colspan="2"><%@include file="../books/menu.jsp" %></td> --%>
 <!-- 			</tr> -->
 <!-- 			<tr> -->
-<%-- 				<td >${user.username}로그인중</td> --%>
+<%-- 				<td >${user.username}로그인중.</td> --%>
 <!-- 				<td>연체 목록</td> -->
 <!-- 				<td id="todayDate"></td> -->
 <!-- 			</tr> -->
