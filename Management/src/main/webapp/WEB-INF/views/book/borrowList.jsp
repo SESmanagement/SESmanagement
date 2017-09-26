@@ -93,7 +93,7 @@ function dateDiff(_date1, _date2) {
 			</tr>
 		</table>
 	</div>
-	<!-- 페이징 출력 -->
+	<!-- 페이징 출력. -->
 	<div id="navigator">
 		<a href="borrowList?currentPage=${navi.currentPage-1}">◀</a>
 		<a href="borrowList?currentPage=${navi.currentPage+1}"> ▶</a>
