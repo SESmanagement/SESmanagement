@@ -16,7 +16,6 @@ import com.spring.manage.vo.LendVO;
 @Repository
 public class BookDAOImpl{
 
-	
 	@Autowired
 	private SqlSession sqlSession;
 	
@@ -44,10 +43,10 @@ public class BookDAOImpl{
 		return dao.reserveBook(map);
 	}
 	
-	public List<LendVO> borrowList(int startRecord, int countPerPage, String mem_num){
+	public List<LendVO> borrowList(int startRecord, int countPerPage, int member_num){
 		BookDAO dao=sqlSession.getMapper(BookDAO.class);
 		RowBounds rb=new RowBounds(startRecord, countPerPage);
-		return dao.borrowList(mem_num, rb);
+		return dao.borrowList(member_num, rb);
 	}
 	
 	public int getBookCount(String searchType, String searchValue){
@@ -58,8 +57,8 @@ public class BookDAOImpl{
 		return dao.getBookCount(map);
 	}
 	
-	public int getBorrowCount(String mem_num){
+	public int getBorrowCount(int member_num){
 		BookDAO dao=sqlSession.getMapper(BookDAO.class);
-		return dao.getBorrowCount(mem_num);
+		return dao.getBorrowCount(member_num);
 	}
 }
