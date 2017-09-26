@@ -23,6 +23,7 @@ import com.spring.manage.dao.AdminDAOImpl;
 import com.spring.manage.dao.BookDAOImpl;
 import com.spring.manage.util.FileService;
 import com.spring.manage.util.PageNavigator;
+import com.spring.manage.util.PageNavigator2;
 import com.spring.manage.vo.BookVO;
 import com.spring.manage.vo.LendVO;
 import com.spring.manage.vo.MemberVO;
@@ -54,7 +55,7 @@ public class BookController {
 		
 		int totalRecordCount = repo.getBookCount(searchType, searchValue);
 		System.out.println("===========>"+totalRecordCount);
-		PageNavigator navi=new PageNavigator(showNum, currentPage, totalRecordCount);
+		PageNavigator2 navi=new PageNavigator2(showNum, currentPage, totalRecordCount);
 		List<BookVO> list = repo.selectAll(searchType, searchValue, navi.getStartRecord(), navi.getCountPerPage());
 		for (BookVO b : list) {
 			if (b.getStatus() == null || b.getStatus().equals("returned") || b.getStatus().equals("rejected")
@@ -127,7 +128,7 @@ public class BookController {
 		int member_num = member.getStudent_num();
 		
 		int totalRecordCount = repo.getBorrowCount(member_num);
-		PageNavigator navi=new PageNavigator(10, currentPage, totalRecordCount);
+		PageNavigator2 navi=new PageNavigator2(10, currentPage, totalRecordCount);
 		repoA.updateDelayed();
 		List<LendVO> borrowlist=repo.borrowList(navi.getStartRecord(), navi.getCountPerPage(), member_num);
 		for(LendVO l  : borrowlist){

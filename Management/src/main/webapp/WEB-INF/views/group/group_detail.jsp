@@ -8,6 +8,7 @@
 <title>세부사항</title>
 <script src="../resources/js/jquery-3.2.1.min.js"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.0/jquery-confirm.min.css">
+<link rel="stylesheet" type="text/css" href="/manage/resources/ckeditor/contents.css"/>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.0/jquery-confirm.min.js"></script>
 <style>
 .center{
@@ -76,7 +77,7 @@ margin: 0 auto;
 </head>
 <body>
 	<%@ include file="../top.jsp"%>
-	<div>
+	<div class="container">
 		<div class="v-heading-v2">
 			<br>
 			<br>
@@ -109,7 +110,7 @@ margin: 0 auto;
 				<td>모집내용</td>
 				<td>
 				<div class="col-sm-12">
-				<textarea readonly style="border:none;" rows="10" cols="100" >${detail.content_detail }</textarea>
+				<textarea readonly>${detail.content_detail }</textarea>
 				</div>
 				</td>
 			</tr>

@@ -4,7 +4,6 @@ import java.util.Date;
 
 public class MemberVO {
 
-	private String num;			// 
 	private int student_num;		//학번
 	private String pwd;				//비밀번호
 	private int party_num;			//기수번호
@@ -13,7 +12,7 @@ public class MemberVO {
 	private String call;			//전화 번호
 	private String phone;			//핸드폰 번호
 	private String zip;				//우편번호
-	private String address1;		//주소1
+	private String address;		//주소1
 	private String address2;		//주소2
 	private String email;			//이메일
 	private String photo;			//포토
@@ -25,7 +24,7 @@ public class MemberVO {
 	public MemberVO() {}
 
 	public MemberVO(int student_num, String pwd, int party_num, String name, String sex, String call, String phone,
-			String zip, String address1, String address2, String email, String photo, Date birthdate,
+			String zip, String address, String address2, String email, String photo, Date birthdate,
 			int status_room_seat, int classroom_num) {
 		super();
 		this.student_num = student_num;
@@ -36,7 +35,7 @@ public class MemberVO {
 		this.call = call;
 		this.phone = phone;
 		this.zip = zip;
-		this.address1 = address1;
+		this.address = address;
 		this.address2 = address2;
 		this.email = email;
 		this.photo = photo;
@@ -109,12 +108,12 @@ public class MemberVO {
 		this.zip = zip;
 	}
 
-	public String getAddress1() {
-		return address1;
+	public String getAddress() {
+		return address;
 	}
 
-	public void setAddress1(String address1) {
-		this.address1 = address1;
+	public void setAddress(String address) {
+		this.address = address;
 	}
 
 	public String getAddress2() {
@@ -168,7 +167,7 @@ public class MemberVO {
 	@Override
 	public String toString() {
 		return "MemberVO [student_num=" + student_num + ", pwd=" + pwd + ", party_num=" + party_num + ", name=" + name
-				+ ", sex=" + sex + ", call=" + call + ", phone=" + phone + ", zip=" + zip + ", address1=" + address1
+				+ ", sex=" + sex + ", call=" + call + ", phone=" + phone + ", zip=" + zip + ", address=" + address
 				+ ", address2=" + address2 + ", email=" + email + ", photo=" + photo + ", birthdate=" + birthdate
 				+ ", status_room_seat=" + status_room_seat + ", classroom_num=" + classroom_num + "]";
 	}

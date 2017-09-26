@@ -24,6 +24,7 @@ public class MemberDAOImpl implements MemberDAO {
 	@Override
 	public int join(MemberVO vo) {
 		MemberMapper mapper = sqlSession.getMapper(MemberMapper.class);
+		System.out.println("dao가라"+vo);
 		return mapper.join(vo);
 	}
 	

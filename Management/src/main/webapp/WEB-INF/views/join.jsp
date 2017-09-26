@@ -12,16 +12,13 @@
 
 
 	$(function(){
-		if("${result}" != "" &&"${result}"==false){
-			alert('회원정보수정오류!');
-		}
 		if("${vo.address}" == ""){
 			alert('회원정보 입력 후 이용해주세요.');
 		}
 	});
 	
 	function openSearch(){
-		window.open('/manage/add/open', 'child', 'width=700, height=400');
+		window.open('/manage/add/open', 'child', 'width=840, height=410, fullscreen=no, resizable=0');
 	}
 	
 	function confirmOk(){
@@ -38,7 +35,7 @@
 			return false;
 		}
 		
-		if(addr1=="" || addr1==""){
+		if(addr1=="" || addr2==""){
 			alert('주소를 입력해주세요');
 			return false;
 		}
@@ -54,6 +51,7 @@
 </head>
 <body>
 <%@ include file="top.jsp" %>
+<div class="container">
 	<div class="v-heading-v2">
 	<br><br>
 	 <h3>회원정보수정</h3>
@@ -76,7 +74,7 @@
 		</tr>
 		<tr>
 			<td>기수</td>
-			<td> ${vo.member_num }</td>
+			<td> ${vo.party_num }</td>
 		</tr>
 		<tr>
 			<td>이름</td>
@@ -89,29 +87,25 @@
 		</tr>
 		<tr>
 			<td></td>
-			<td><input type="text" name="addr1" id="addr1" value="${vo.address}" readonly></td>
+			<td><input type="text" name="address" id="address" value="${vo.address}" readonly></td>
 		</tr>
 		<tr>
 			<td></td>
-			<td><input type="text" placeholder="나머지 주소를 입력해주세요." id="addr2" name="addr2"></td>
+			<td><input type="text" placeholder="나머지 주소를 입력해주세요." value="${vo.address2 }" id="address2" name="address2"></td>
 		</tr>
 		<tr>
 			<td>메일</td>
 			<td><input type="email" id="email" name="email" value="${vo.email }" required></td>
 		</tr>
 		
-		<!-- 파일첨부는 나중에 구현 -->
-<!-- 		<tr> -->
-<!-- 			<td>사진</td> -->
-<!-- 			<td><input type="file" id="photo" name="photo"></td> -->
-<!-- 		</tr> -->
-		
 		<tr>
 			<td><button class="btn v-btn v-alizarin v-small-button" type="submit">수정완료</button></td>
-			<td></td>
+			<td><input type="hidden" name="student_num" value="${vo.student_num}"></td>
 		</tr>
 	</table>
 </form>
+</div>
+
 <%@ include file="footer.jsp" %>
 </body>
 </html>

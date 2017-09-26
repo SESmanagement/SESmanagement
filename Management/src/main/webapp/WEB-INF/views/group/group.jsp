@@ -71,10 +71,8 @@
 								class="v-portfolio-filter-nav bar-styling filtering col-sm-12 clearfix">
 								<li class="all selected"><a data-filter="*" href="#"><span
 										class="item-name">All</span><span class="item-count">0</span></a></li>
-								<li><a href="#" class="장기스터디" data-filter=".장기스터디"><span
-										class="item-name">장기스터디</span><span class="item-count">0</span></a></li>
-								<li><a href="#" class="단기스터디" data-filter=".단기스터디"><span
-										class="item-name">단기스터디</span><span class="item-count">0</span></a></li>
+								<li><a href="#" class="스터디" data-filter=".스터디"><span
+										class="item-name">스터디</span><span class="item-count">0</span></a></li>
 								<li><a href="#" class="일본문화" data-filter=".일본문화"><span
 										class="item-name">일본문화</span><span class="item-count">0</span></a></li>
 								<li><a href="#" class="쉬는시간" data-filter=".쉬는시간"><span
@@ -89,21 +87,10 @@
 
 							<c:forEach items="${list }" var="vo">
 								<li
-									class="clearfix v-portfolio-item col-sm-4 gallery-item ${vo.content } center">
-									<figure class="animated-overlay center ">
-										<c:if test="${vo.end == 1 }">
-										<a class="tooltip tooltip-effect-3" href="/manage/group/detail?group_num=${vo.group_num }"
-											class="link-to-post center ">
-											<span class="tooltip-content">
-<!-- 										<span class="tooltip-front"><img src="img/user3.png" alt="user3"/></span> -->
-										<span class="tooltip-back">모집 1일 남았음!</span>
-										</span>
-											</a>
-											</c:if>
-											<c:if test="${vo.end != 1 }">
+									class="clearfix v-portfolio-item col-sm-4 gallery-item ${vo.content } feature-box">
+									<figure class="animated-overlay feature-box-text">
 										<a href="/manage/group/detail?group_num=${vo.group_num }"
-											class="link-to-post center "></a>
-											</c:if>
+											class="link-to-post feature-box-text "></a>
 										<h4 class="center">
 											<b>${vo.group_title }</b>
 										</h4>

@@ -51,7 +51,6 @@
 <!-- Custom CSS -->
 <link rel="stylesheet" href="/manage/resources/HTML/css/custom.css">
 
-
 <script>
 
 	//벌금내역1
@@ -73,8 +72,14 @@
 									+ item.penalty_per + "</td><td>"+item.penalty_date+"</td></tr>"
 						})
 						test += "</table>";
+						test += "<div><div class='col-md-3'><span class='label label-success'>사용할 금액</span></div>";
+						test += "<div class='col-sm-3'><input type='text' id='inputpenalty' placeholder='사용할 금액 입력'></div>";
+						test += "<div class='col-md-3'>";
+						test += "<button type='button' class='btn v-btn v-alizarin v-small-button'>사용함</button></div></div>";
 						$.confirm({
-							   theme: 'modern',
+							 boxWidth: '450px',
+							  useBootstrap: false,
+							 theme: 'modern',
 							   animation: 'zoom',
 							    closeAnimation: 'scale',
 							   buttons : {
@@ -110,6 +115,7 @@
 					}
 				})
 				test += "</table>";
+				test += "<div><input type='text' id='inputpenalty'><button type='button' class='btn v-btn v-alizarin'></div>";
 				$.confirm({
 					   theme: 'modern',
 					   animation: 'zoom',
@@ -121,7 +127,7 @@
 							action : function() {
 							}
 						}
-					},
+					},	//button
 					title : '<h3 class="v-heading v-center-heading"><span>벌금 이력</span></h3>',
 					content : test
 				})
@@ -362,6 +368,7 @@
 <body>
 
 	<!-- 토글창 시작 -->
+	<div class="container">
 	<div class="row">
 		<div class="col-sm-12">
 			<div class="v-heading-v2">
@@ -373,13 +380,14 @@
 				<c:forEach items="${myvolist }" var="myvo" varStatus="status">
 					<div class="panel panel-default">
 						<div class="panel-heading">
-							<h4 class="panel-title">
+							<h3 class="panel-title">
 								<a class="accordion-toggle collapsed" data-toggle="collapse"
 									data-parent="#Div1" href="#Div${status.count + 1}"> <!-- 제목 넣는 곳 -->
-									<c:if test="${myvo.end <0}"><strike>소모임명 : ${myvo.group_title}</strike> <strong>종료된 소모임</strong></c:if>
-								<c:if test="${myvo.end >= 0}">소모임명 : ${myvo.group_title}		</c:if>
+									<c:if test="${myvo.end <0}"><strike>소모임명 : ${myvo.group_title}</strike> <span class="label label-success">종료된 소모임</span></c:if>
+								<c:if test="${myvo.end >= 0 && myvo.dday >= 0}">소모임명 : ${myvo.group_title}		</c:if>
+								<c:if test="${myvo.dday<0 }">소모임명 : ${myvo.group_title} <span class="label label-warning">미시작</span></c:if>
 								</a>
-							</h4>
+							</h3>
 						</div>
 						<!-- 내용 넣는 곳 -->
 						<div id="Div${status.count+1}" class="accordion-body collapse">
@@ -404,7 +412,6 @@
 										<c:if test="${myvo.dday >= 0 }"><h5>시작한 지 ${myvo.dday }일 지났고 
 										<c:if test="${myvo.end < 0 }"> 끝났다!!</c:if>
 										<c:if test="${myvo.end >= 0 }">${myvo.end }일 남았다!!</c:if></h5></c:if>
-										<div><button class="btn v-btn v-pomegranate v-small-button"><i class="icon icon-edit-3">자세한 정보</i></button></div>
 									</div>
 								</div>
 
@@ -466,12 +473,13 @@
 				<c:forEach items="${gvolist}" var="gvo" varStatus="status">
 					<div class="panel panel-default">
 						<div class="panel-heading">
-							<h4 class="panel-title">
+							<h3 class="panel-title">
 								<a class="accordion-toggle collapsed" data-toggle="collapse"
 									data-parent="#Divv1" href="#Divv${status.count + 1 }"> <!-- 제목 넣는 곳 -->
-									소모임명 : ${gvo.group_title}
-								</a>
-							</h4>
+						<c:if test="${gvo.end <0}"><strike>소모임명 : ${gvo.group_title}</strike> <span class="label label-success">종료된 소모임</span></c:if>								
+						<c:if test="${gvo.end >= 0 && gvo.dday >= 0}">소모임명 : ${gvo.group_title}		</c:if>
+						<c:if test="${gvo.dday<0 }">소모임명 : ${gvo.group_title} <span class="label label-warning">미시작</span></c:if>
+							</a></h3>
 						</div>
 						<!-- 내용 넣는 곳 -->
 						<div id="Divv${status.count + 1 }" class="accordion-body collapse">
@@ -493,7 +501,9 @@
 										<br>
 										<h3>${gvo.start_date }~${gvo.end_date }</h3>
 										<c:if test="${gvo.dday < 0 }"><h5>소모임 시작까지 ${gvo.dday }일 남았습니다.</h5></c:if>
-										<c:if test="${gvo.dday >= 0 }"><h5>시작한 지 ${gvo.dday }일 지났고 ${gvo.end }일 남았다!!</h5></c:if>
+										<c:if test="${gvo.dday >= 0 }"><h5>시작한 지 ${gvo.dday }일 지났고 
+										<c:if test="${gvo.end < 0 }"> 끝났다!!</c:if>
+										<c:if test="${gvo.end >= 0 }">${gvo.end }일 남았다!!</c:if></h5></c:if>
 									</div>
 								</div>
 								<!-- circle chart 끝 -->
@@ -540,6 +550,7 @@
 				</c:forEach>
 			</div>
 		</div>
+	</div>
 	</div>
 
 

@@ -57,7 +57,7 @@
 				<div class="row">
 					<div class="col-sm-6 right-text">
 						<h3>로그인을 한 후 이용해 주세요</h3>
-						<h2>YEAH!</h2>
+						<h2>SESSCHOOL</h2>
 						<a href="/manage/member/search_member" class="learn-btn">학번/비밀번호 찾기</a>
 					</div>
 					<div class="col-sm-6 center">

@@ -23,7 +23,7 @@ public class Interceptor extends HandlerInterceptorAdapter{
 			}else if(vo.getStudent_num() == 0){
 				response.sendRedirect("/manage/member/join");
 				return false;
-			}else if(vo.getAddress1() == null) {
+			}else if(vo.getAddress() == null) {
 				return false;
 			}
 			else return true;

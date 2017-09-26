@@ -20,16 +20,16 @@ $(function(){
 <body>
 <%@ include file="../top.jsp" %>
 <div id="wrapper">
-<table>
 
-<!-- 	<tr> -->
-<%-- 		<td colspan="2"><%@include file="../books/menu.jsp" %></td> --%>
-<!-- 	</tr> -->
-	<tr>
-		<td>${vo.name}로그인중</td>
-		<td>도서 등록</td>
-		<td id="todayDate"></td>
-	</tr>
+<div class="container">
+<div class="v-heading-v2">
+			<br>
+			<br>
+			<h3>도서 등록</h3>
+		</div>
+		${vo.name}로그인중
+		<div id="todayDate"></div>
+<table>
 	<tr>
 		<td>
 		<form action="registBook" method="post" enctype="multipart/form-data">
@@ -58,14 +58,15 @@ $(function(){
 					<td><br /></td>
 				</tr>
 				<tr>
-					<td colspan="2"><input type="submit" value="등록하기"> 
-					<input type="button" id="cancel" value="취소"></td>
+					<td colspan="2">
+					<button type="button" class="btn v-btn v-small-button v-alizarin"> 등록하기</button>
+					<button type="button" class="btn v-btn v-small-button" id="cancel">취소</button></td>
 				</tr>
 			</table>
 		</form>
 	</tr>
 </table>
 	</div>
-	
+<%@ include file="../footer.jsp" %>
 </body>
 </html>

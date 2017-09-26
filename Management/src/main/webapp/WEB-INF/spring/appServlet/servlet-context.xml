@@ -41,16 +41,14 @@
 
 
 	<mvc:interceptors>
-
-
 		<interceptor>
-
 			<mvc:mapping path="/studyroom/**" />
-
 			<beans:ref bean="Interceptor" />
-
 		</interceptor>
-
+		<interceptor>
+			<mvc:mapping path="/group/**" />
+			<beans:ref bean="Interceptor" />
+		</interceptor>
 	</mvc:interceptors>
-
+	
 </beans:beans>

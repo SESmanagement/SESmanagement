@@ -62,8 +62,7 @@
 								<td>콘텐츠</td>
 								<td><select name="content" class="form-control"
 									onchange="javascript:change(this)">
-										<option>장기스터디</option>
-										<option>단기스터디</option>
+										<option>스터디</option>
 										<option>일본문화</option>
 										<option>쉬는시간</option>
 										<option>밥</option>

@@ -18,10 +18,20 @@ public class MemberController {
 	private MemberService service;
 	
 	
+	//로그인 화면으로 이동
+	@RequestMapping(value="loginform", method=RequestMethod.GET)
+	public String loginform(){
+		return "loginform";
+	}
+	
+	//학번, 비밀번호 찾기 창으로 이동
+	@RequestMapping(value = "search_member", method=RequestMethod.GET)
+	public String search_member(){
+		return "member/searchMember";
+	}
+	
 	@RequestMapping(value ="login", method= RequestMethod.POST)
-	public String login(HttpSession session, int student_num, String pwd, MemberVO vo){
-		vo.setStudent_num(student_num);
-		vo.setPwd(pwd);
+	public String login(HttpSession session, MemberVO vo){
 		vo = service.login(vo);
 		session.setAttribute("vo", vo);
 		return "redirect:/";
@@ -41,12 +51,8 @@ public class MemberController {
 	
 	//회원가입처리
 	@RequestMapping(value = "join", method = RequestMethod.POST)
-	public String join(String pwd, String zip, String addr1, String addr2, String email, HttpSession session) {
-		MemberVO vo = (MemberVO)session.getAttribute("vo");
-		vo.setPwd(pwd);
-		vo.setZip(zip);
-		vo.setAddress1(addr1+","+addr2);
-		vo.setEmail(email);
+	public String join(MemberVO vo, HttpSession session) {
+		System.out.println("수정하러가자"+vo);
 		if(service.join(vo)==false) {
 			session.setAttribute("result", service.join(vo));
 			return "join";

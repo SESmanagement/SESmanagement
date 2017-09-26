@@ -213,114 +213,115 @@ CREATE TABLE EXAM_SCORE
 	JAP_3 NUMBER,
 	LIVE_SCORE NUMBER
 );	
+
 -- 시험성적 기본 데이터가 입력되어있어야한다. 
-insert into	exam_score	(student_num)	values	(	33001	);
-insert into	exam_score	(student_num)	values	(	33002	);
-insert into	exam_score	(student_num)	values	(	33003	);
-insert into	exam_score	(student_num)	values	(	33004	);
-insert into	exam_score	(student_num)	values	(	33005	);
-insert into	exam_score	(student_num)	values	(	33006	);
-insert into	exam_score	(student_num)	values	(	33007	);
-insert into	exam_score	(student_num)	values	(	33008	);
-insert into	exam_score	(student_num)	values	(	33009	);
-insert into	exam_score	(student_num)	values	(	33010	);
-insert into	exam_score	(student_num)	values	(	33011	);
-insert into	exam_score	(student_num)	values	(	33012	);
-insert into	exam_score	(student_num)	values	(	33013	);
-insert into	exam_score	(student_num)	values	(	33014	);
-insert into	exam_score	(student_num)	values	(	33015	);
-insert into	exam_score	(student_num)	values	(	33016	);
-insert into	exam_score	(student_num)	values	(	33017	);
-insert into	exam_score	(student_num)	values	(	33018	);
-insert into	exam_score	(student_num)	values	(	33019	);
-insert into	exam_score	(student_num)	values	(	33020	);
-insert into	exam_score	(student_num)	values	(	33021	);
-insert into	exam_score	(student_num)	values	(	33022	);
-insert into	exam_score	(student_num)	values	(	33023	);
-insert into	exam_score	(student_num)	values	(	33024	);
-insert into	exam_score	(student_num)	values	(	33025	);
-insert into	exam_score	(student_num)	values	(	33026	);
-insert into	exam_score	(student_num)	values	(	33027	);
-insert into	exam_score	(student_num)	values	(	33028	);
-insert into	exam_score	(student_num)	values	(	33029	);
-insert into	exam_score	(student_num)	values	(	33030	);
-insert into	exam_score	(student_num)	values	(	33031	);
-insert into	exam_score	(student_num)	values	(	33032	);
-insert into	exam_score	(student_num)	values	(	33033	);
-insert into	exam_score	(student_num)	values	(	33034	);
-insert into	exam_score	(student_num)	values	(	33035	);
-insert into	exam_score	(student_num)	values	(	33036	);
-insert into	exam_score	(student_num)	values	(	33037	);
-insert into	exam_score	(student_num)	values	(	33038	);
-insert into	exam_score	(student_num)	values	(	33039	);
-insert into	exam_score	(student_num)	values	(	33040	);
-insert into	exam_score	(student_num)	values	(	33041	);
-insert into	exam_score	(student_num)	values	(	33042	);
-insert into	exam_score	(student_num)	values	(	33043	);
-insert into	exam_score	(student_num)	values	(	33044	);
-insert into	exam_score	(student_num)	values	(	33045	);
-insert into	exam_score	(student_num)	values	(	33046	);
-insert into	exam_score	(student_num)	values	(	33047	);
-insert into	exam_score	(student_num)	values	(	33048	);
-insert into	exam_score	(student_num)	values	(	33049	);
-insert into	exam_score	(student_num)	values	(	33050	);
-insert into	exam_score	(student_num)	values	(	33051	);
-insert into	exam_score	(student_num)	values	(	33052	);
-insert into	exam_score	(student_num)	values	(	33053	);
-insert into	exam_score	(student_num)	values	(	33054	);
-insert into	exam_score	(student_num)	values	(	33055	);
-insert into	exam_score	(student_num)	values	(	33056	);
-insert into	exam_score	(student_num)	values	(	33057	);
-insert into	exam_score	(student_num)	values	(	33058	);
-insert into	exam_score	(student_num)	values	(	33059	);
-insert into	exam_score	(student_num)	values	(	33060	);
-insert into	exam_score	(student_num)	values	(	33061	);
-insert into	exam_score	(student_num)	values	(	33062	);
-insert into	exam_score	(student_num)	values	(	33063	);
-insert into	exam_score	(student_num)	values	(	33064	);
-insert into	exam_score	(student_num)	values	(	33065	);
-insert into	exam_score	(student_num)	values	(	33066	);
-insert into	exam_score	(student_num)	values	(	33067	);
-insert into	exam_score	(student_num)	values	(	33068	);
-insert into	exam_score	(student_num)	values	(	33069	);
-insert into	exam_score	(student_num)	values	(	33070	);
-insert into	exam_score	(student_num)	values	(	33071	);
-insert into	exam_score	(student_num)	values	(	33072	);
-insert into	exam_score	(student_num)	values	(	33073	);
-insert into	exam_score	(student_num)	values	(	33074	);
-insert into	exam_score	(student_num)	values	(	33075	);
-insert into	exam_score	(student_num)	values	(	33076	);
-insert into	exam_score	(student_num)	values	(	33077	);
-insert into	exam_score	(student_num)	values	(	33078	);
-insert into	exam_score	(student_num)	values	(	33079	);
-insert into	exam_score	(student_num)	values	(	33080	);
-insert into	exam_score	(student_num)	values	(	33081	);
-insert into	exam_score	(student_num)	values	(	33082	);
-insert into	exam_score	(student_num)	values	(	33083	);
-insert into	exam_score	(student_num)	values	(	33084	);
-insert into	exam_score	(student_num)	values	(	33085	);
-insert into	exam_score	(student_num)	values	(	33086	);
-insert into	exam_score	(student_num)	values	(	33087	);
-insert into	exam_score	(student_num)	values	(	33088	);
-insert into	exam_score	(student_num)	values	(	33089	);
-insert into	exam_score	(student_num)	values	(	33090	);
-insert into	exam_score	(student_num)	values	(	33091	);
-insert into	exam_score	(student_num)	values	(	33092	);
-insert into	exam_score	(student_num)	values	(	33093	);
-insert into	exam_score	(student_num)	values	(	33094	);
-insert into	exam_score	(student_num)	values	(	33095	);
-insert into	exam_score	(student_num)	values	(	33096	);
-insert into	exam_score	(student_num)	values	(	33097	);
-insert into	exam_score	(student_num)	values	(	33098	);
-insert into	exam_score	(student_num)	values	(	33099	);
-insert into	exam_score	(student_num)	values	(	33100	);
-insert into	exam_score	(student_num)	values	(	33101	);
-insert into	exam_score	(student_num)	values	(	33102	);
-insert into	exam_score	(student_num)	values	(	33103	);
-insert into	exam_score	(student_num)	values	(	33104	);
-insert into	exam_score	(student_num)	values	(	33105	);
-insert into	exam_score	(student_num)	values	(	33106	);
-insert into	exam_score	(student_num)	values	(	33107	);
+insert into exam_score (student_num) values(	33001	);
+insert into exam_score (student_num) values(	33002	);
+insert into exam_score (student_num) values(	33003	);
+insert into exam_score (student_num) values(	33004	);
+insert into exam_score (student_num) values(	33005	);
+insert into exam_score (student_num) values(	33006	);
+insert into exam_score (student_num) values(	33007	);
+insert into exam_score (student_num) values(	33008	);
+insert into exam_score (student_num) values(	33009	);
+insert into exam_score (student_num) values(	33010	);
+insert into exam_score (student_num) values(	33011	);
+insert into exam_score (student_num) values(	33012	);
+insert into exam_score (student_num) values(	33013	);
+insert into exam_score (student_num) values(	33014	);
+insert into exam_score (student_num) values(	33015	);
+insert into exam_score (student_num) values(	33016	);
+insert into exam_score (student_num) values(	33017	);
+insert into exam_score (student_num) values(	33018	);
+insert into exam_score (student_num) values(	33019	);
+insert into exam_score (student_num) values(	33020	);
+insert into exam_score (student_num) values(	33021	);
+insert into exam_score (student_num) values(	33022	);
+insert into exam_score (student_num) values(	33023	);
+insert into exam_score (student_num) values(	33024	);
+insert into exam_score (student_num) values(	33025	);
+insert into exam_score (student_num) values(	33026	);
+insert into exam_score (student_num) values(	33027	);
+insert into exam_score (student_num) values(	33028	);
+insert into exam_score (student_num) values(	33029	);
+insert into exam_score (student_num) values(	33030	);
+insert into exam_score (student_num) values(	33031	);
+insert into exam_score (student_num) values(	33032	);
+insert into exam_score (student_num) values(	33033	);
+insert into exam_score (student_num) values(	33034	);
+insert into exam_score (student_num) values(	33035	);
+insert into exam_score (student_num) values(	33036	);
+insert into exam_score (student_num) values(	33037	);
+insert into exam_score (student_num) values(	33038	);
+insert into exam_score (student_num) values(	33039	);
+insert into exam_score (student_num) values(	33040	);
+insert into exam_score (student_num) values(	33041	);
+insert into exam_score (student_num) values(	33042	);
+insert into exam_score (student_num) values(	33043	);
+insert into exam_score (student_num) values(	33044	);
+insert into exam_score (student_num) values(	33045	);
+insert into exam_score (student_num) values(	33046	);
+insert into exam_score (student_num) values(	33047	);
+insert into exam_score (student_num) values(	33048	);
+insert into exam_score (student_num) values(	33049	);
+insert into exam_score (student_num) values(	33050	);
+insert into exam_score (student_num) values(	33051	);
+insert into exam_score (student_num) values(	33052	);
+insert into exam_score (student_num) values(	33053	);
+insert into exam_score (student_num) values(	33054	);
+insert into exam_score (student_num) values(	33055	);
+insert into exam_score (student_num) values(	33056	);
+insert into exam_score (student_num) values(	33057	);
+insert into exam_score (student_num) values(	33058	);
+insert into exam_score (student_num) values(	33059	);
+insert into exam_score (student_num) values(	33060	);
+insert into exam_score (student_num) values(	33061	);
+insert into exam_score (student_num) values(	33062	);
+insert into exam_score (student_num) values(	33063	);
+insert into exam_score (student_num) values(	33064	);
+insert into exam_score (student_num) values(	33065	);
+insert into exam_score (student_num) values(	33066	);
+insert into exam_score (student_num) values(	33067	);
+insert into exam_score (student_num) values(	33068	);
+insert into exam_score (student_num) values(	33069	);
+insert into exam_score (student_num) values(	33070	);
+insert into exam_score (student_num) values(	33071	);
+insert into exam_score (student_num) values(	33072	);
+insert into exam_score (student_num) values(	33073	);
+insert into exam_score (student_num) values(	33074	);
+insert into exam_score (student_num) values(	33075	);
+insert into exam_score (student_num) values(	33076	);
+insert into exam_score (student_num) values(	33077	);
+insert into exam_score (student_num) values(	33078	);
+insert into exam_score (student_num) values(	33079	);
+insert into exam_score (student_num) values(	33080	);
+insert into exam_score (student_num) values(	33081	);
+insert into exam_score (student_num) values(	33082	);
+insert into exam_score (student_num) values(	33083	);
+insert into exam_score (student_num) values(	33084	);
+insert into exam_score (student_num) values(	33085	);
+insert into exam_score (student_num) values(	33086	);
+insert into exam_score (student_num) values(	33087	);
+insert into exam_score (student_num) values(	33088	);
+insert into exam_score (student_num) values(	33089	);
+insert into exam_score (student_num) values(	33090	);
+insert into exam_score (student_num) values(	33091	);
+insert into exam_score (student_num) values(	33092	);
+insert into exam_score (student_num) values(	33093	);
+insert into exam_score (student_num) values(	33094	);
+insert into exam_score (student_num) values(	33095	);
+insert into exam_score (student_num) values(	33096	);
+insert into exam_score (student_num) values(	33097	);
+insert into exam_score (student_num) values(	33098	);
+insert into exam_score (student_num) values(	33099	);
+insert into exam_score (student_num) values(	33100	);
+insert into exam_score (student_num) values(	33101	);
+insert into exam_score (student_num) values(	33102	);
+insert into exam_score (student_num) values(	33103	);
+insert into exam_score (student_num) values(	33104	);
+insert into exam_score (student_num) values(	33105	);
+insert into exam_score (student_num) values(	33106	);
+insert into exam_score (student_num) values(	33107	);  
 
 
 
@@ -346,22 +347,6 @@ CREATE TABLE STUDENT_STATUS
 );
 
 system 로그인후 ALTER system SET processes=1000 scope=spfile; 설정해줘야한다.
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 commit;

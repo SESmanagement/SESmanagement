@@ -15,6 +15,7 @@
 		pwd = #{pwd},
 		zip = #{zip},
 		address = #{address},
+		address2 = #{address2},
 		email = #{email} 
 		where student_num = #{student_num}
 		
