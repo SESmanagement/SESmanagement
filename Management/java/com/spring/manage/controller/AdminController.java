@@ -106,6 +106,6 @@ public class AdminController {
 		if(repo.returnDelayedBook(num)>0){
 			return "반납 되었습니다";
 		}
-		return "반납 실패하였습니다";
+		return "반납 실패하였습니다.";
 	}
 }
