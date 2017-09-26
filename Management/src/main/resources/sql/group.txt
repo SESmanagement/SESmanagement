@@ -1,0 +1,31 @@
+
+
+drop table group_total;
+drop table group_member;
+drop sequence group_seq;
+
+
+
+create table group_total(
+	group_num number primary key,
+	group_title varchar2(50) not null,
+	seek_start_date date,
+	seek_end_date date,
+	start_date date,
+	end_date date,
+	penalty_total number,
+	content varchar2(50) not null,
+	headcount number,
+	content_detail varchar2(500),
+	student_num number not null
+);
+
+create sequence group_seq;
+
+create table group_member(
+group_num number constraint group_num_fk references group_total(group_num),
+student_num number constraint student_num_fk references member(student_num),
+penalty_per number,
+penalty_date date
+);
+
