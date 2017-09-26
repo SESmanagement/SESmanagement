@@ -118,14 +118,16 @@ public class BookController {
 	}
 	
 	
-//대출이력으로 이동
+	//대출이력으로 이동
 	@RequestMapping(value = "/borrowList", method = RequestMethod.GET)
 	public String borrowList(
 			HttpSession session, Model model,
 			@RequestParam(value="currentPage", defaultValue="1") int currentPage
 	) {
-		MemberVO member = (MemberVO)session.getAttribute("member");
-		int mem_num = member.getStudent_num();
+		
+		MemberVO vo = (MemberVO)session.getAttribute("vo");
+		String mem_num = Integer.toString(vo.getStudent_num());
+		
 		
 		int totalRecordCount = repo.getBorrowCount(mem_num);
 		PageNavigator navi=new PageNavigator(10, currentPage, totalRecordCount);
