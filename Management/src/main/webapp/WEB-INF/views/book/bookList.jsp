@@ -202,31 +202,20 @@
 
 			<!--  -->
 				<!-- 페이징 출력 -->
-				<div id="navigator">
-				
-					<a
-						href="bookList?currentPage=${navi.currentPage-navi.pagePerGroup}&searchType=${searchType}&searchValue=${searchValue}&showNum=${showNum}">◁◁
-					</a> <a
-						href="bookList?currentPage=${navi.currentPage-1}&searchType=${searchType}&searchValue=${searchValue}&showNum=${showNum}">◀</a>
-
-					<c:forEach var="page" begin="${navi.startPageGroup}"
-						end="${navi.endPageGroup}">
-						<c:if test="${page eq navi.currentPage}">
-							<span style="color: red; font-weight: bolder; font-size: 1em">${page}</span>
-						</c:if>
-						<c:if test="${page ne navi.currentPage}">
-							<a
-								href="bookList?currentPage=${page}&searchType=${searchType}&searchValue=${searchValue}&showNum=${showNum}">${page}</a>
-						</c:if>
-					</c:forEach>
-
-					<a
-						href="bookList?currentPage=${navi.currentPage+1}&searchType=${searchType}&searchValue=${searchValue}&showNum=${showNum}">
-						▶</a> <a
-						href="bookList?currentPage=${navi.currentPage+navi.pagePerGroup}&searchType=${searchType}&searchValue=${searchValue}&showNum=${showNum}">
-						▷▷</a>
-				</div>
-				<a href="/manage"><input type="button" value="메인으로"></a>
+								
+  				  <ul class="pagination pagination-lg">
+                      <li><a href="bookList?currentPage=${navi.currentPage-1}&searchType=${searchType}&searchValue=${searchValue}&showNum=${showNum}">  <i class="fa fa-angle-left"></i>Previous</a></li>
+                  <c:forEach var="page" begin="${navi.startPageGroup}" end="${navi.endPageGroup}">
+                      <li class="active">
+<%--                   <c:if test="${page ne navi.currentPage}"> --%>
+<%-- 					<li><a	href="bookList?currentPage=${page}&searchType=${searchType}&searchValue=${searchValue}&showNum=${showNum}">${page}</a></li> --%>
+<%-- 				</c:if> --%>
+                       <li>  <a	href="bookList?currentPage=${page}&searchType=${searchType}&searchValue=${searchValue}&showNum=${showNum}">${page}</a></li>
+                </c:forEach>
+                   <li><a href="bookList?currentPage=${navi.currentPage+1}&searchType=${searchType}&searchValue=${searchValue}&showNum=${showNum}">  Next <i class="fa fa-angle-right"></i></a></li>
+                   </ul>
+           <div>
+              <a href="/manage"><button type="button" class="btn v-btn v-third-light">메인으로</button></a>
 		</div>
 	</div>
 
