@@ -53,7 +53,7 @@ function lentList(resp){
 	$("#lentresult").html(temp);
 	
 	
-	//반납 버튼을 클릭했을 때
+	//반납 버튼을 클릭했을 때.
 	$(".returnBook").click(function(){
 		var removetr = $(this).parent().parent();
 		var result=confirm("반납처리 하시겠습니까?");
