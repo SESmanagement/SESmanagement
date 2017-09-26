@@ -90,8 +90,7 @@
             <li class="dropdown"> <a class="dropdown-toggle" href="#">마이페이지 <i class="fa fa-caret-down"></i></a>
               <ul class="dropdown-menu">
                 <li><a href="/manage/myPage/mySchedule">스케줄 확인</a></li>
-		  <li><a href="/manage/lendList">대출목록 확인</a></li>
-              	  <li><a href="/manage/delayList">연체목록 확인</a></li>
+                  <li><a href="/manage/borrowList">대출현황</a></li>
 	            <li><a href="/manage/studyroom/myResvInfoPage?student_num=${sessionScope.vo.student_num }">스터디룸 에약 확인</a></li>	
 	            <li><a href="/manage/group/mygroup?student_num=${vo.student_num }">소모임 확인</a></li>
               </ul>
