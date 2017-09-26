@@ -2,38 +2,102 @@
 <!DOCTYPE mapper
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 반배치 SQL -->
 
-<!-- 반배치  SQL -->
 <mapper namespace="com.spring.manage.dao.ArrangeMapper">
 
-	<!-- 강의실 리스트  온다 -->
-	<select id="getClassRoom" resultType="ClassRoomVO">
-		select * from classroom
-	</select>
+<!-- 강의실 리스트 온다 -->
 
-	<!-- 기수 리스트를 가지고 온다 -->
-	<select id="getPartyList" resultType="PartyVO">
-		select * from party order by party_num 
-	</select>	
 
-	<!-- 강의실 업데이트 -->
-	<update id="updateRoom" parameterType="ClassRoomVO">
-		update classroom set 
-			width = #{width},
-			height = #{height},
-			party_num = #{party_num}
-		where num = #{num}
-	</update>
-	
-	<!-- 강의실 좌석 전체 삭제 -->
-	<delete id="deleteSeat" parameterType="ClassRoomVO">
-		delete from room_status where classroom_num = #{num}
-	</delete>
-	
-	<!-- 강의실 좌석 번호 설정 -->
-	<insert id="insertSeat" parameterType="Room_StatusVO">
- 		insert into room_status(classroom_num, seat) values(#{classRoom_num}, #{seat})
- 	</insert>
- 		
+<select resultType="ClassRoomVO" id="getClassRoom">
+	select * from classroom
+</select>
+
+<!-- 기수 리스트를 가지고 온다 -->
+
+
+<select resultType="PartyVO" id="getPartyList">
+	select * from party order by party_num 
+</select>
+
+<!-- 강의실 업데이트 -->
+
+
+<update id="updateRoom" parameterType="ClassRoomVO">
+	update classroom set width = #{width}, height = #{height}, party_num = #{party_num} where num = #{num}
+</update>
+
+<!-- 강의실 좌석 전체 삭제 -->
+
+
+<delete id="deleteSeat" parameterType="ClassRoomVO"> 
+	delete from room_status where classroom_num = #{num} 
+</delete>
+
+<!-- 강의실 좌석 번호 설정 -->
+
+
+<insert id="insertSeat" parameterType="Room_StatusVO"> 
+	insert into room_status(classroom_num, seat) values(#{classRoom_num}, #{seat}) 
+</insert>
+
+<!-- 강의실상태 전체 호출 -->
+
+
+<select resultType="Room_StatusVO" id="getRoom_Status" parameterType="int"> 
+	select * from room_status where classroom_num = #{classRoom_num} order by seat asc 
+</select>
+
+<!-- 정해징 강의실 룸 호출 -->
+
+
+<select resultType="ClassRoomVO" id="selectRoom" parameterType="int"> 
+	select * from classroom where num = #{num} 
+</select>
+
+<!-- 좌석 사용여부 가져오기 -->
+
+
+<select resultType="Room_StatusVO" id="callService" parameterType="Room_StatusVO"> 
+	select * from room_status where classRoom_num = #{classRoom_num} and seat = #{seat} 
+</select>
+
+<!-- 좌석 사용여부 변경 -->
+
+
+<update id="changeServiceAble" parameterType="Room_StatusVO"> 
+	update room_status set serviceable = #{serviceable} where classroom_num = #{classRoom_num} and seat = #{seat} 
+</update>
+
+
+<select id="callRooms" parameterType="int" resultType="ClassRoomVO">
+	select * from classroom where party_num = #{party_num}
+</select>
+
+<select id="countPartyMember" parameterType="int" resultType="int">
+	select count(*) from member where party_num=#{party_num}
+</select>
+
+<select id="callMember" parameterType="int"  resultType="MemberVO">
+	select * from member where party_num = #{party_num} order by student_num asc
+</select>
+
+<select id="callScore" parameterType="int" resultType="Exam_ScoreVO">
+	select * from exam_score
+</select>
+
+<select id="countService" parameterType="int" resultType="int">
+	select count(*) from room_status where classroom_num = #{classroom_num} and serviceable = 0
+</select>
+
+<select id="callNote" parameterType="int" resultType="Member_NoteVO">
+	select * from member_note order by student_number asc
+</select>
+
+<update id="arrangeClass" parameterType="ArrangeVO">
+	update member set classroom_num = #{classroom_num} where student_num = #{student_num}
+</update>
+
 
 </mapper>
+
