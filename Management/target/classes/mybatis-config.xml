@@ -12,11 +12,18 @@
 		<typeAlias type="com.spring.manage.vo.EventVO" alias="EventVO" />
 		<typeAlias type="com.spring.manage.vo.LendVO" alias="LendVO" />
 		<typeAlias alias="ClassRoomVO" type="com.spring.manage.vo.ClassRoomVO"/>
+		
 		<typeAlias alias="PartyVO" type="com.spring.manage.vo.PartyVO"/>
 		<typeAlias alias="Room_StatusVO" type="com.spring.manage.vo.Room_StatusVO"/>
 		<typeAlias type="com.spring.manage.vo.GroupVO" alias="GroupVO" />
 		<typeAlias type="com.spring.manage.vo.GroupJoinVO" alias="GroupJoinVO"/>
 		<typeAlias type="com.spring.manage.util.PageNavigator" alias="navi"/>
+		
+		<typeAlias alias="Exam_ScoreVO" type="com.spring.manage.vo.Exam_ScoreVO"/>
+		<typeAlias alias="Member_NoteVO" type="com.spring.manage.vo.Member_NoteVO"/>
+		<typeAlias alias="Student_StatusVO" type="com.spring.manage.vo.Student_StatusVO"/>
+		<typeAlias alias="ArrangeVO" type="com.spring.manage.vo.ArrangeVO"/>
+
 	</typeAliases>
 	<mappers>
 		<mapper resource="mapper/memberMapper.xml" />

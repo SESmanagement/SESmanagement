@@ -45,7 +45,7 @@ public class MemberController {
 		MemberVO vo = (MemberVO)session.getAttribute("vo");
 		vo.setPwd(pwd);
 		vo.setZip(zip);
-		vo.setAddress(addr1+","+addr2);
+		vo.setAddress1(addr1+","+addr2);
 		vo.setEmail(email);
 		if(service.join(vo)==false) {
 			session.setAttribute("result", service.join(vo));

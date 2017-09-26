@@ -31,7 +31,7 @@ public class StudentServiceImpl implements StudentService{
 	public ArrayList<MemberVO> selectHateStudent(int member_num, String name) {
 		MemberVO vo = new MemberVO();
 		System.out.println(member_num);
-		vo.setMember_num(member_num);
+		vo.setParty_num(member_num);
 		vo.setName(name);
 		return dao.selectHateStudent(vo);
 	}

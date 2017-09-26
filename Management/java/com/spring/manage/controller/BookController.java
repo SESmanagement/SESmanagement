@@ -123,7 +123,7 @@ public class BookController {
 			@RequestParam(value="currentPage", defaultValue="1") int currentPage
 	) {
 		MemberVO member = (MemberVO)session.getAttribute("member");
-		String member_num = member.getNum();
+		String member_num = ""+member.getStudent_num();
 		
 		int totalRecordCount = repo.getBorrowCount(member_num);
 		PageNavigator2 navi=new PageNavigator2(10, currentPage, totalRecordCount);
