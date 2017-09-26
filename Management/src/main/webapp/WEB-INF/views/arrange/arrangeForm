@@ -12,7 +12,7 @@
 </script>
 </head>
 <body>
-	<%-- <%@ include file="../top.jsp" %> --%>
+	<%@ include file="../top.jsp" %>
 	<br>
 	<br>
 	<hr>
