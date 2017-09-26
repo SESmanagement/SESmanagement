@@ -104,12 +104,13 @@
             <li class="dropdown"> <a class="dropdown-toggle" href="#">관리자 메뉴<i class="fa fa-caret-down"></i></a>
               <ul class="dropdown-menu">
                 <li><a href="/manage/registBook">도서 등록</a></li>
-           		<li><a href="/manage/applyList">대출승인리스트</a></li>
+           	<li><a href="/manage/applyList">대출승인리스트</a></li>
                 <li><a href="/manage/lendList">대출목록</a></li>
                 <li><a href="/manage/delayList">연체목록</a></li>
-                <li><a href="">강의실</a></li>
-	            <li><a href="/manage/studyroom/adminPage">스터디룸 관리</a></li>  	
-	            <li><a href="/manage/bookList">도서리스트</a></li>
+                <li><a href="/manage/arrange/arrangeForm">강의실</a></li>
+		<li><a href="/manage/student/studentForm">학생 관리</a></li>
+	        <li><a href="/manage/studyroom/adminPage">스터디룸 관리</a></li>  	
+	        <li><a href="/manage/bookList">도서리스트</a></li>
               </ul>
             </li>
             </c:if> 
