@@ -95,6 +95,68 @@
 	.v-btn {
         background-color: #FFF;
     }
+    
+    table {
+        font-family: Arial, Helvetica, sans-serif;
+        color: #666;
+        font-size: 12px;
+        text-shadow: 1px 1px 0px #fff;
+        background: #eaebec;
+        margin: auto;
+        text-align: center;
+    }
+    
+    table > thead th {
+        padding: 21px 25px 22px 25px;
+        border-top: 1px solid #e0e0e0;
+        border-bottom: 1px solid #e0e0e0;
+    
+        background: #ededed; /* Old browsers */
+        background: -moz-linear-gradient(top,  #ededed 0%, #ebebeb 100%); /* FF3.6+ */
+        background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ededed), color-stop(100%,#ebebeb)); /* Chrome,Safari4+ */
+        background: -webkit-linear-gradient(top,  #ededed 0%,#ebebeb 100%); /* Chrome10+,Safari5.1+ */
+        background: -o-linear-gradient(top,  #ededed 0%,#ebebeb 100%); /* Opera 11.10+ */
+        background: -ms-linear-gradient(top,  #ededed 0%,#ebebeb 100%); /* IE10+ */
+        background: linear-gradient(to bottom,  #ededed 0%,#ebebeb 100%); /* W3C */
+        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ededed', endColorstr='#ebebeb',GradientType=0 ); /* IE6-9 */
+    }
+    
+    table > tbody > tr {
+        text-align: center;
+        padding-left: 20px;
+    }
+    
+    table > tbody > tr > td {
+        padding:18px;
+        border-top: 1px solid #ffffff;
+        border-bottom: 1px solid #e0e0e0;
+        border-left: 1px solid #e0e0e0;
+        border-right: 1px solid #e0e0e0;
+    
+        background: #fbfbfb; /* Old browsers */
+        background: -moz-linear-gradient(top,  #fbfbfb 0%, #fafafa 100%); /* FF3.6+ */
+        background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#fbfbfb), color-stop(100%,#fafafa)); /* Chrome,Safari4+ */
+        background: -webkit-linear-gradient(top,  #fbfbfb 0%,#fafafa 100%); /* Chrome10+,Safari5.1+ */
+        background: -o-linear-gradient(top,  #fbfbfb 0%,#fafafa 100%); /* Opera 11.10+ */
+        background: -ms-linear-gradient(top,  #fbfbfb 0%,#fafafa 100%); /* IE10+ */
+        background: linear-gradient(to bottom,  #fbfbfb 0%,#fafafa 100%); /* W3C */
+        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fbfbfb', endColorstr='#fafafa',GradientType=0 ); /* IE6-9 */
+    }
+    
+    table > tbody > tr:last-child > td{
+        text-align: center;
+    }
+    
+    table > tbody > tr:hover > td {
+        background: #f2f2f2; /* Old browsers */
+        background: -moz-linear-gradient(top,  #f2f2f2 0%, #f0f0f0 100%); /* FF3.6+ */
+        background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#f2f2f2), color-stop(100%,#f0f0f0)); /* Chrome,Safari4+ */
+        background: -webkit-linear-gradient(top,  #f2f2f2 0%,#f0f0f0 100%); /* Chrome10+,Safari5.1+ */
+        background: -o-linear-gradient(top,  #f2f2f2 0%,#f0f0f0 100%); /* Opera 11.10+ */
+        background: -ms-linear-gradient(top,  #f2f2f2 0%,#f0f0f0 100%); /* IE10+ */
+        background: linear-gradient(to bottom,  #f2f2f2 0%,#f0f0f0 100%); /* W3C */
+        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f2f2f2', endColorstr='#f0f0f0',GradientType=0 ); /* IE6-9 */
+    }
 	
 </style>
 </head>
@@ -155,12 +217,13 @@
 
 <div class="container">
 		<h3 class="v-heading v-text-heading"><span>${sessionScope.vo.name } 님의 스터디룸 예약 현황</span></h3>
-		<h5 style="text-align:right">현재 시각 : ${sysdate } </h5>
+<%-- 		<h5 style="text-align:right">현재 시각 : ${sysdate } </h5> --%>
 </div>
 
 <div class="container">
 	<form method="post" id="fm">
 	<table border="1">
+	   <thead>
 		<tr>
 			<th><input type="checkbox" id="checkAll"><label for="checkAll">전체 선택</label></th>
 			<th>예약 일자</th>
@@ -169,6 +232,7 @@
 			<th>시작 시간</th>
 			<th>종료 시간</th>
 		</tr>
+		</thead>
 		<c:if test="${empty myResvList}">
 		<tr>
 			<td colspan="6" style="text-align: center">금일 예약내역이 없습니다.</td>
@@ -196,15 +260,17 @@
 		</tr>
 		</c:forEach>
 		</c:if>
+		<tfoot>
 			<tr>
 				<td colspan="6" style="text-align: center">
 					<input type="button" value="취소 신청" id="submit" class="btn v-btn v-btn-default v-small-button">
 					<input type="reset" value="전체 선택취소" class="btn v-btn v-btn-default v-small-button">
 					<a href="/manage/studyroom/rooms">
-					<button type="button" class="btn v-btn v-second-dark" style="border-color:#f5245f; font-size:12px; color:#f5245f!important;">현황페이지로</button>
+					<button type="button" class="btn v-btn v-btn-default v-small-button v-second-dark" style="border-color:#f5245f; font-size:12px; color:#f5245f!important;">현황페이지로</button>
                     </a>
-				</td>	
+				</td>
 			</tr>
+		</tfoot>
 	</table>
 	
 	</form>
@@ -228,6 +294,6 @@
     <script src="/manage/resources/HTML/js/imagesloaded.js"></script>
     <script src="/manage/resources/HTML/js/view.min.js?auto"></script>
     <script src="/manage/resources/HTML/js/theme-core.js"></script>
-	
+
 </body>
 </html>
