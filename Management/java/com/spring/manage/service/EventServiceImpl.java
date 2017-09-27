@@ -27,14 +27,10 @@ public class EventServiceImpl implements EventService {
 		
 		for (EventVO vo : eventList) {
 			String originalTitle = vo.getTitle();
-//			if (vo.getSource() != null && vo.getSource().contains("SRR")) {
 			if (vo.getMemo().length() <= 5) {
 				vo.setTitle(originalTitle+":"+vo.getMemo()); // 달력에 title + memo 표시 //달력에 스터디룸  + 스터디룸번호-좌석번호 표시
 			} else vo.setTitle(originalTitle+":"+vo.getMemo().substring(0, 5));
-//			} 
-//				System.out.println("서비스임플-allday: " + vo.isAllDay());
-//				System.out.println("서비스임플-editable: " + vo.isEditable());
-//			System.out.println("서비스임플-resourceEdi: " + vo.isResourceEditable());
+			
 		}
 		return eventList;
 	}
