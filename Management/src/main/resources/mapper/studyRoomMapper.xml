@@ -127,7 +127,7 @@
 	
 	   <!-- 캘린더 - 예약 취소건 EVENT 테이블에 delete -->
     <delete id="deleteEvent" parameterType="string">
-        DELETE EVENT WHERE SOURCE_EVENT = #{sr_resv_num}
+        DELETE EVENT WHERE REFERENCE = #{sr_resv_num}
     </delete>
 	
 	<!-- 시간대별 예약가능현황 조회  : 징검다리 조회 되는지 확인하기!!!!!!!!!!!!!!!!!!!!!-->
@@ -232,7 +232,8 @@
             AND SR_SEAT_NUM = #{sr_seat_num}
         </if>
         
-    </select>    
+    </select>
+    
         <!-- 관리자 메뉴- 스터디룸의 좌석 삭제하기 -->
     <delete id="dropSR_Seat" parameterType="StudyRoomVO">
         DELETE STUDYROOM WHERE STUDYROOM_NUM = #{studyroom_num} AND SR_SEAT_NUM = #{sr_seat_num}
