@@ -81,6 +81,18 @@
 		group_member(group_num, student_num) values(#{group_num},
 		#{student_num})
 	</insert>
+	
+	<!-- 캘린더 - join 완료건 EVENT 테이블에 insert -->
+    <insert id="addEvent" parameterType="GroupJoinVO">
+        INSERT INTO EVENT VALUES (
+		  #{student_num}, (SELECT GROUP_TITLE FROM GROUP_TOTAL WHERE GROUP_NUM = #{group_num}), 
+		  'EV'||EV_SEQ.NEXTVAL, '소모임', 1,
+		  TO_TIMESTAMP((SELECT START_DATE FROM GROUP_TOTAL WHERE GROUP_NUM = #{group_num})||' '||'00:00:00', 'YY/MM/DD HH24:MI:SS'),
+		  TO_TIMESTAMP((SELECT END_DATE FROM GROUP_TOTAL WHERE GROUP_NUM = #{group_num})||' '||'00:00:00', 'YY/MM/DD HH24:MI:SS'), null, null, 0,
+		  0, 0, 0, 0, 0, 0,
+		  null, '#ffb5ad', null, '#1b0266', 'GR'||#{group_num}
+        )
+    </insert>
 
 	<!-- 가입된 인원 수 확인 -->
 	<select id="member_count" parameterType="int" resultType="int">
