@@ -46,6 +46,7 @@ public class EventController {//
 		// 세션 가져오기 (학번)
 		MemberVO vo = (MemberVO) session.getAttribute("vo");
 		int student_num = vo.getStudent_num(); // 세션의 학생번호
+		
 		model.addAttribute("student_num", student_num);
 		model.addAttribute("vo", vo);
 		
