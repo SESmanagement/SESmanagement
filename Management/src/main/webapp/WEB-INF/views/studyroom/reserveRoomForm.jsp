@@ -45,7 +45,6 @@
 	
 <style type="text/css">
  	[class="timeline2525"] { 
- 		background-color: lime; 
  		border: 1px solid #ffffff;
  		width: 100px; 
  		height: 30px;
@@ -73,8 +72,8 @@
         padding-left: 1px;
         margin-top: 1px;
         margin-bottom: 1px;
-        width: 35px;
-        height: 35px;
+        width: 40px;
+        height: 40px;
      }
     
     .leftside {
@@ -88,6 +87,94 @@
     .v-btn {
         background-color: #FFF;
     }
+    
+    table {
+        font-family: Arial, Helvetica, sans-serif;
+        color: #666;
+        font-size: 12px;
+        text-shadow: 1px 1px 0px #fff;
+        background: #eaebec;
+        margin: auto;
+        text-align: center;
+    }
+    
+    table > thead th {
+        text-align: left;
+        padding-top: 10px;
+        padding-bottom: 10px;
+        border-top: 1px solid #e0e0e0;
+        border-bottom: 1px solid #e0e0e0;
+    
+        background: #ededed; /* Old browsers */
+        background: -moz-linear-gradient(top,  #ededed 0%, #ebebeb 100%); /* FF3.6+ */
+        background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ededed), color-stop(100%,#ebebeb)); /* Chrome,Safari4+ */
+        background: -webkit-linear-gradient(top,  #ededed 0%,#ebebeb 100%); /* Chrome10+,Safari5.1+ */
+        background: -o-linear-gradient(top,  #ededed 0%,#ebebeb 100%); /* Opera 11.10+ */
+        background: -ms-linear-gradient(top,  #ededed 0%,#ebebeb 100%); /* IE10+ */
+        background: linear-gradient(to bottom,  #ededed 0%,#ebebeb 100%); /* W3C */
+        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ededed', endColorstr='#ebebeb',GradientType=0 ); /* IE6-9 */
+    }
+    
+    table > thead > tr:nth-child(2) > th {
+        text-align : justify;
+        text-justify: inter-cluster;
+        padding-right: 0px;
+        padding-left: 0px;
+        border-top: none;
+    }
+    
+    table > tbody > tr > th {
+        text-align: center;
+        padding-right: 0px;
+        border-left: 1px solid #e0e0e0;
+        
+        background: #ededed; /* Old browsers */
+        background: -moz-linear-gradient(top,  #ededed 0%, #ebebeb 100%); /* FF3.6+ */
+        background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ededed), color-stop(100%,#ebebeb)); /* Chrome,Safari4+ */
+        background: -webkit-linear-gradient(top,  #ededed 0%,#ebebeb 100%); /* Chrome10+,Safari5.1+ */
+        background: -o-linear-gradient(top,  #ededed 0%,#ebebeb 100%); /* Opera 11.10+ */
+        background: -ms-linear-gradient(top,  #ededed 0%,#ebebeb 100%); /* IE10+ */
+        background: linear-gradient(to bottom,  #ededed 0%,#ebebeb 100%); /* W3C */
+        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ededed', endColorstr='#ebebeb',GradientType=0 ); /* IE6-9 */
+    }
+    
+    table > tbody > tr {
+        text-align: center;
+        padding-left: 20px;
+    }
+    
+    table > tbody > tr > td {
+        padding:18px;
+        border-top: 1px solid #ffffff;
+        border-bottom: 1px solid #e0e0e0;
+        border-left: 1px solid #e0e0e0;
+        border-right: 1px solid #e0e0e0;
+    
+        background: #fbfbfb; /* Old browsers */
+        background: -moz-linear-gradient(top,  #fbfbfb 0%, #fafafa 100%); /* FF3.6+ */
+        background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#fbfbfb), color-stop(100%,#fafafa)); /* Chrome,Safari4+ */
+        background: -webkit-linear-gradient(top,  #fbfbfb 0%,#fafafa 100%); /* Chrome10+,Safari5.1+ */
+        background: -o-linear-gradient(top,  #fbfbfb 0%,#fafafa 100%); /* Opera 11.10+ */
+        background: -ms-linear-gradient(top,  #fbfbfb 0%,#fafafa 100%); /* IE10+ */
+        background: linear-gradient(to bottom,  #fbfbfb 0%,#fafafa 100%); /* W3C */
+        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fbfbfb', endColorstr='#fafafa',GradientType=0 ); /* IE6-9 */
+    }
+    
+    table > tbody > tr:last-child > td{
+        text-align: center;
+    }
+    
+    table > tbody > tr:hover > td {
+        background: #f2f2f2; /* Old browsers */
+        background: -moz-linear-gradient(top,  #f2f2f2 0%, #f0f0f0 100%); /* FF3.6+ */
+        background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#f2f2f2), color-stop(100%,#f0f0f0)); /* Chrome,Safari4+ */
+        background: -webkit-linear-gradient(top,  #f2f2f2 0%,#f0f0f0 100%); /* Chrome10+,Safari5.1+ */
+        background: -o-linear-gradient(top,  #f2f2f2 0%,#f0f0f0 100%); /* Opera 11.10+ */
+        background: -ms-linear-gradient(top,  #f2f2f2 0%,#f0f0f0 100%); /* IE10+ */
+        background: linear-gradient(to bottom,  #f2f2f2 0%,#f0f0f0 100%); /* W3C */
+        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f2f2f2', endColorstr='#f0f0f0',GradientType=0 ); /* IE6-9 */
+    }
+    
 </style>
 </head>
 <body>
@@ -114,7 +201,7 @@
 					type : "post",
 					success : function(result) {
 						$(".timeline2525").empty(); // 초기화
-						$(".timeline2525").css("background-color", "lime"); // 초기화
+						$(".timeline2525").css("background-color", "#2ECC71"); // 초기화
 						$(".timeline2525").val(""); // 초기화
 						resvApplyArr = []; // 초기화
 
@@ -130,28 +217,28 @@
 								var end_time = item.end_time.substring(0, 2); // 예약 종료시간
 								var resv_time = end_time - start_time; // 예약 시간 (종료-시작)
 
-								if (item.sr_seat_num == id) { // item.sr_seat_num : 예약현황의 좌석번호/자지마 공부해야지 놀지마 코드짜야지
-									if (start_time == '19') {// 당신의 이름표를 훔쳐가겠다 -괴도키드
+								if (item.sr_seat_num == id) { // item.sr_seat_num : 예약현황의 좌석번호 
+									if (start_time == '19') {
 										for (var i = 1; i <= resv_time; i++) {
-											$("#" + id).siblings("#time" + i).css("background-color", "red");
+											$("#" + id).siblings("#time" + i).css("background-color", "grey");
 											$("#" + id).siblings("#time" + i).val("non-selectable");
 										} // for
 									} 
 									if (start_time == '20') {
 										for (var i = 2; i <= resv_time + 1; i++) {
-											$("#" + id).siblings("#time"+ i).css("background-color", "red");
+											$("#" + id).siblings("#time"+ i).css("background-color", "grey");
 											$("#"+ id).siblings("#time"+ i).val("non-selectable");
 										} // for
 									}
 									if (start_time == '21') {
 										for (var i = 3; i <= resv_time + 2; i++) {
-											$("#"+ id).siblings("#time"+ i).css("background-color","red");
+											$("#"+ id).siblings("#time"+ i).css("background-color","grey");
 											$("#"+ id).siblings("#time"+ i).val("non-selectable");
 										} // for
 									}
 									if (start_time == '22') {
 										for (var i = 4; i <= resv_time + 3; i++) {
-											$("#"+ id).siblings("#time"+ i).css("background-color","red");
+											$("#"+ id).siblings("#time"+ i).css("background-color","grey");
 											$("#"+ id).siblings("#time"+ i).val("non-selectable");
 										} // for
 									}
@@ -228,7 +315,7 @@
 						} else {
 							alert("동일 시간대에 나의 예약내역이 있습니다. 다시 확인하세요.");
 							resvApplyArr.pop();
-							target.css("background-color","lime");
+							target.css("background-color","#2ECC71");
 							target.val("");
 							return;
 						}
@@ -239,7 +326,7 @@
 
 		// 선택불가 셀(value="non-selectable")이 선택시 함수 종료
 		if ($(this).val() == "non-selectable") {
-			alert("이미 예약된 좌석이거나 예약가능시간이 아닙니다. 다시 확인하세요");
+			alert("현재 예약이 가능한 좌석이 아닙니다. 다시 확인하세요");
 			return;
 		} // if
 
@@ -248,7 +335,7 @@
 			alert("선택이 취소됩니다.");
 			var removeIndex = resvApplyArr.indexOf("${studyroom_num}"+ ":"+ $(this).siblings(".sr_seat_num").text() + ":" + this.id); // 선택 셀의 인덱스값 확인
 			resvApplyArr.splice(removeIndex, 1); // 배열에서 선택 셀 삭제
-			$(this).css("background-color", "lime");
+			$(this).css("background-color", "#2ECC71");
 			$(this).val("");
 			return;
 		} // if
@@ -268,7 +355,7 @@
 			if (select_timeline2525 == selected_timeline2525) {
 				alert("동일 시간대에 예약내역이 있습니다. 다시 확인하세요.");
 				resvApplyArr.pop();
-				$(this).css("background-color", "lime");
+				$(this).css("background-color", "#2ECC71"); // emerald
 				$(this).val("");
 			}
 		} // for
@@ -294,7 +381,7 @@
 		location.href = "/manage/studyroom/resvApply?resvApplyArr=" + resvApplyArr;
 	});
 
-	// 해당 스터디룸(studyroom_num)에 마우스 오버시 툴팁 띄우기
+	// 해당 스터디룸(studyroom_num)에 마우스 오버시 배치도 띄우기
 	window.onload = function(studyroom_num) {
 		var studyroom_num = '${studyroom_num}';
 		$("#rightside").empty();
@@ -319,6 +406,11 @@
 	                    $("#rightside").children("#"+item.seat_x+"_"+item.seat_y+"").attr("margin", "0px");
 	                    if (item.activate == 0) {
 	                        $("#rightside").children("#"+item.seat_x+"_"+item.seat_y+"").addClass("btn v-btn v-midnight-blue");
+	                        
+	                        for (var i = 1; i <= 4; i++) { // 예약 테이블에 예약 불가 처리
+                                $("#" + item.sr_seat_num).siblings("#time" + i).css("background-color", "#2C3E50");
+                                $("#" + item.sr_seat_num).siblings("#time" + i).val("non-selectable");
+                            }// for
 	                        
 	                    } else if (now_mm < '18:59') { // 19시 이전
 	                        if (item.seven == item.count_seat && item.eight == item.count_seat && 
@@ -381,20 +473,22 @@
 
 <div class="container">
 			<h3 class="v-heading v-text-heading"><span>스터디룸 ${studyroom_num}</h1></span></h3>
-			<h5 style="text-align:right">현재 시각 : ${sysdate } </h5>
-	<div id="leftside" style="display:inline-block">
-		<table id="tb" border="1">
-			<tr>
-				<td rowspan="2" style="vertical-align:middle; text-align:center;" rowspan="2">좌석번호</td>
-				<td colspan="4" style="text-align:center">이용시간</td>
-			</tr>
-			<tr>
-				<td style="text-align:left">7</td>
-				<td style="text-align:left">8</td>
-				<td style="text-align:left">9</td>
-				<td style="text-align:left">10</td>
-				<td style="text-align:left; width:0px;">11</td>
-			</tr>
+<%-- 			<h5 style="text-align:right">현재 시각 : ${sysdate } </h5> --%>
+	<div id="leftside" style="display:inline-block" class="v-gallery-widget col-sm-6">
+		<table id="tb"> <!--  border="1" -->
+		  <thead>
+				<tr>
+					<th rowspan="2" style="vertical-align:middle; text-align:center; padding-right: 0px;">좌석<br>번호</th>
+					<th colspan="4" style="text-align:center">이용시간</th>
+				</tr>
+				<tr>
+					<th>7</th>
+					<th>8</th>
+					<th>9</th>
+					<th style="text-align:justify;"><div style="text-align:left; display:inline-block;">10</div><div style="float:right; display:inline-block;">11</div></th>
+<!-- 					<th style="width:0px;">11</th> -->
+				</tr>
+			</thead>
 			<c:set var="now" value="${sysdate }"/>
 			<c:if test="${fn:substring(now, 18, 19) == '토'||fn:substring(now, 18, 19) == '일'}">
 				<tr>
@@ -412,20 +506,30 @@
 				</tr>
 			</c:forEach>
 			</c:if>
+			 <tfoot>
 				<tr>
 					<td></td>
 					<td colspan="4" style="text-align:center">
 						<button id="resvApply" class="btn v-btn v-btn-default v-small-button">예약 신청</button>
 						<button id="reset" class="btn v-btn v-btn-default v-small-button">전체 선택 취소</button>
-						<button class="btn v-btn v-second-dark" style="border-color:#f5245f; font-size:12px;">
+<!-- 						<button class="btn v-btn v-second-dark" style="border-color:#f5245f; font-size:12px;"> -->
+<!-- 						  <a href="/manage/studyroom/rooms">현황페이지로</a> -->
+<!-- 						</button> -->
+						<button class="btn v-btn v-btn-default v-small-button v-second-dark" style="border-color:#f5245f; font-size:12px;">
 						  <a href="/manage/studyroom/rooms">현황페이지로</a>
 						</button>
 					</td>
 				</tr>
+			 </tfoot>
 		</table>
 	</div>
 
-    <div id="rightside" style="display:inline-block"></div>
+    <div >
+		<div class="v-heading-v2" style="display:inline-block">
+			<h3>배치도</h3> 
+		</div>
+		<div id="rightside" style="display:inline-block;" class="v-gallery-widget col-sm-6"><!-- 스터디룸 배치도 --></div>
+	</div>
 
 </div>
 	
