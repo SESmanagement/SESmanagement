@@ -90,7 +90,7 @@
 		  TO_TIMESTAMP((SELECT START_DATE FROM GROUP_TOTAL WHERE GROUP_NUM = #{group_num})||' '||'00:00:00', 'YY/MM/DD HH24:MI:SS'),
 		  TO_TIMESTAMP((SELECT END_DATE FROM GROUP_TOTAL WHERE GROUP_NUM = #{group_num})||' '||'00:00:00', 'YY/MM/DD HH24:MI:SS'), null, null, 0,
 		  0, 0, 0, 0, 0, 0,
-		  null, '#ffb5ad', null, '#1b0266', 'GR'||#{group_num}
+		  null, '#ffb5ad', null, '#000000', 'GR'||#{group_num}
         )
     </insert>
 
