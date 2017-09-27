@@ -110,6 +110,78 @@
         height: 5px!important;
     }
     
+    #submit {
+        border-color:#f5245f; 
+        font-size:12px; 
+        color:white!important; 
+        float: right;
+        background-color:#f5245f!important;
+        padding-right: 20px!important;
+        padding-left: 20px!important;
+    }
+    
+	table#resvTable {
+	    font-family: Arial, Helvetica, sans-serif;
+	    color: #666;
+	    font-size: 14px;
+	    text-shadow: 1px 1px 0px #fff;
+/* 	    background: #eaebec; */
+	    margin: auto;
+	    text-align: center;
+	}
+	
+	table#resvTable > thead th {
+	    padding: 21px 25px 22px 25px;
+	    border-top: 1px solid #e0e0e0;
+	    border-bottom: 1px solid #e0e0e0;
+	
+	    background: #ededed; /* Old browsers */
+	    background: -moz-linear-gradient(top,  #ededed 0%, #ebebeb 100%); /* FF3.6+ */
+	    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ededed), color-stop(100%,#ebebeb)); /* Chrome,Safari4+ */
+	    background: -webkit-linear-gradient(top,  #ededed 0%,#ebebeb 100%); /* Chrome10+,Safari5.1+ */
+	    background: -o-linear-gradient(top,  #ededed 0%,#ebebeb 100%); /* Opera 11.10+ */
+	    background: -ms-linear-gradient(top,  #ededed 0%,#ebebeb 100%); /* IE10+ */
+	    background: linear-gradient(to bottom,  #ededed 0%,#ebebeb 100%); /* W3C */
+	    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ededed', endColorstr='#ebebeb',GradientType=0 ); /* IE6-9 */
+	}
+	
+	table#resvTable > tbody > tr {
+	    text-align: center;
+	    padding-left: 20px;
+	}
+	
+	table#resvTable > tbody > tr > td {
+	    padding:18px;
+	    border-top: 1px solid #ffffff;
+	    border-bottom: 1px solid #e0e0e0;
+	    border-left: 1px solid #e0e0e0;
+	    border-right: 1px solid #e0e0e0;
+	
+	    background: #fbfbfb; /* Old browsers */
+	    background: -moz-linear-gradient(top,  #fbfbfb 0%, #fafafa 100%); /* FF3.6+ */
+	    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#fbfbfb), color-stop(100%,#fafafa)); /* Chrome,Safari4+ */
+	    background: -webkit-linear-gradient(top,  #fbfbfb 0%,#fafafa 100%); /* Chrome10+,Safari5.1+ */
+	    background: -o-linear-gradient(top,  #fbfbfb 0%,#fafafa 100%); /* Opera 11.10+ */
+	    background: -ms-linear-gradient(top,  #fbfbfb 0%,#fafafa 100%); /* IE10+ */
+	    background: linear-gradient(to bottom,  #fbfbfb 0%,#fafafa 100%); /* W3C */
+	    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fbfbfb', endColorstr='#fafafa',GradientType=0 ); /* IE6-9 */
+	}
+	
+	table#resvTable > tbody > tr:last-child > td{
+	    text-align: center;
+	}
+	
+	table#resvTable > tbody > tr:hover > td {
+	    background: #f2f2f2; /* Old browsers */
+	    background: -moz-linear-gradient(top,  #f2f2f2 0%, #f0f0f0 100%); /* FF3.6+ */
+	    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#f2f2f2), color-stop(100%,#f0f0f0)); /* Chrome,Safari4+ */
+	    background: -webkit-linear-gradient(top,  #f2f2f2 0%,#f0f0f0 100%); /* Chrome10+,Safari5.1+ */
+	    background: -o-linear-gradient(top,  #f2f2f2 0%,#f0f0f0 100%); /* Opera 11.10+ */
+	    background: -ms-linear-gradient(top,  #f2f2f2 0%,#f0f0f0 100%); /* IE10+ */
+	    background: linear-gradient(to bottom,  #f2f2f2 0%,#f0f0f0 100%); /* W3C */
+	    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f2f2f2', endColorstr='#f0f0f0',GradientType=0 ); /* IE6-9 */
+	}
+    
 </style>    
     
 </head>
@@ -141,7 +213,7 @@
             
             var addRow = "";
             for (var i = 0; i < checkList.length; i++) {
-            	  addRow += "스터디룸 "+checkList[i]+" ";
+            	  addRow += checkList[i]+"&nbsp;&nbsp&nbsp" // "스터디룸 "+
 			}
             $("#text-area_SR").append(addRow);
             studyroom_checkList = checkList;
@@ -363,7 +435,6 @@
  // Third Modal - 기타 조건 선택 (+좌석번호)
     // 조건 삭제
     $(document).on("click", "#deleteLine", function() {
-    	alert($("#tbody").children("tr").length)
     	if ($("#tbody").children("tr").length < 2){
     		alert("최소 1개의 조건이 필요합니다.")
     		return;
@@ -382,7 +453,7 @@
         var addRow = "";
         addRow += "<tr><td>";
         addRow += "<select name='etc' class='option'><option value='sr_seat_num'>좌석번호</option><option value='name'>이름</option>";
-        addRow += "<option value='student_num'>학번</option><option value='party_num'>기수</option></select></td>";
+        addRow += "<option value='student_num'>학번</option><option value='member_num'>기수</option></select></td>";
         addRow += "<td><input name='keyword' type='text' class='keyword'></td></tr>"
         
         $("#tbody").append(addRow);
@@ -443,10 +514,10 @@
                 option = "학번";
             } else if (array[0] == "name") {
                 option = "이름";
-            } else if (array[0] == "party_num") {
+            } else if (array[0] == "member_num") {
                 option = "기수";
             }
-              addRow += option+":"+array[1]+" <br>";
+              addRow += option+":"+array[1]+"&nbsp;&nbsp&nbsp";
         }
         $("#text-area_etc").append(addRow);
         etc_checkList = checkList;
@@ -524,6 +595,16 @@
         form.submit();
     }
  
+ // 검색 결과 출력 테이블 - 테이블 비우기
+    $(document).on("click", "#tableReset", function() {
+    	var resvList = [];
+    	resvList = "${resvList}";
+    	resvList = []; // 결과 리스트 지우기
+    	$("#noneResult").remove(); // '검색내역없음' 행 삭제
+    	$("#resvTable > tbody").empty(); // 테이블의 검색리스트 출력 비우기
+    	$("#resvTable").append("<tr><td colspan='8'>검색 내역이 없습니다.</td></tr>")
+    });
+ 
 </script>
 
 
@@ -542,6 +623,7 @@
 
 <div class="container">
     <div class="row">
+    
 <!--========== First Modal ==========-->
 <article class="col-md-4 well">
     <h3 class="page-header text-center">스터디룸 조회<br />
@@ -550,7 +632,7 @@
         <div id="text-area_SR" style="text-align:center"></div> <!-- 선택된 내역 표시 -->
     <hr> 
     <div class="text-center">
-        <a class="btn btn-success" href="#successModal" data-toggle="modal" id="searchSR"><i class="glyphicon glyphicon-eye-open"></i> Start Quiz</a>
+        <a class="btn btn-success" href="#successModal" data-toggle="modal" id="searchSR"><i class="fa fa-cube"></i>입력</a>
     </div>
     <!-- Modal -->
     <div class="modal fade" id="successModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -558,11 +640,12 @@
             <div class="modal-content">
                 <div class="modal-header modal-header-success">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">[ × ]</button>
-                    <h2><i class="glyphicon glyphicon-cloud"></i>   스터디룸 번호 선택</h2>
+                    <h2><i class="fa fa-cube"></i>   스터디룸 번호 선택</h2>
                 </div>
                 <div class="modal-body">
                     <div class="col-md-12 radio-choices">
                         <div class="col-md-6 col-xs-6 radio-left" style="width:30%">
+                            <form role="form">
                             <div id="roleForm">
                                 <!-- 스터디룸 텍스트 목록 -->
                             </div>
@@ -580,9 +663,10 @@
 
                 </div><div class="clearfix" style="box-size:700px"></div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-danger pull-left" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary pull-right" data-dismiss="modal" id="studyroomSubmit">Next</button>
+                    <input type="reset" class="btn btn-danger pull-left" value="취소"><!-- data-dismiss="modal" -->
+                    <button type="button" class="btn btn-primary pull-right" data-dismiss="modal" id="studyroomSubmit">확인</button>
                 </div>
+                        </form>
             </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->
     </div><!-- /.modal -->
@@ -596,20 +680,20 @@
     <div id="text-area_date" style="text-align:center"></div> <!-- 선택된 내역 표시 -->
     <hr>
     <div class="text-center">
-        <a class="btn btn-warning" href="#warningModal" data-toggle="modal" id="searchDate"><i class="glyphicon glyphicon-briefcase"></i> Add Contact</a>
+        <a class="btn btn-warning" href="#warningModal" data-toggle="modal" id="searchDate"><i class="fa fa-calendar"></i>  입력</a>
     </div>
     <!-- Modal -->
     <div class="modal fade" id="warningModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header modal-header-warning">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                    <h2><i class="glyphicon glyphicon-user"></i>   날짜 및 시간 조회</h2>
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">[ × ]</button>
+                    <h2><i class="fa fa-calendar"></i>   날짜 및 시간 조회</h2>
                 </div>
                 <div class="modal-body">
                     <div class="col-md-12 radio-choices">
                         <div class="col-md-6 col-xs-6 radio-left">
-<!--                             <form role="form" action=""> -->
+                            <form role="form">
                             <div class="radio">
                                 <label>조회시작일자</label>
                             </div>
@@ -625,15 +709,15 @@
                             <div class="radio">
                                 <input type="text" id="toDate">
                             </div>
-<!--                             </form> -->
                         </div>
                     </div><!-- ends col-12 -->
 
                 </div><div class="clearfix"></div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-danger pull-left" data-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary pull-right" data-dismiss="modal" id="dateSubmit">Submit</button>
+                    <input type="reset" class="btn btn-danger pull-left" value="취소"><!-- data-dismiss="modal" -->
+                    <button type="submit" class="btn btn-primary pull-right" data-dismiss="modal" id="dateSubmit">확인</button>
                 </div>
+                            </form>
             </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->
     </div><!-- /.modal -->
@@ -647,20 +731,20 @@
      <div id="text-area_etc" style="text-align:center"></div> <!-- 선택된 내역 표시 -->
     <hr>
     <div class="text-center">
-        <a class="btn btn-primary" href="#primaryModal" data-toggle="modal"><i class="glyphicon glyphicon-shopping-cart"></i> Shopping Cart</a>
+        <a class="btn btn-primary" href="#primaryModal" data-toggle="modal"><i class="fa fa-user"></i> 입력</a>
     </div>
     <!-- Modal -->
     <div class="modal fade" id="primaryModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header modal-header-primary">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true"> [ × ] </button>
-                    <h2><i class="glyphicon glyphicon-shopping-cart"></i>   기타 조건 조회</h2>
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">[ × ]</button>
+                    <h2><i class="fa fa-user"></i>   기타 조건 조회</h2>
                 </div>
                 <div class="modal-body">
                     <div class="col-md-12">
                       <div class="table-responsive">
-<!--                         <form action="" method="" name=""> -->
+                        <form role="form">
                         <table class="table table-condensed"><thead>
                         <tr>
                         <th>조건 선택</th>
@@ -673,7 +757,7 @@
                             <option value='sr_seat_num'>좌석번호</option>
                             <option value='name'>이름</option>
                             <option value='student_num'>학번</option>
-                            <option value='party_num'>기수</option>
+                            <option value='member_num'>기수</option>
                         </select>
                         </td>
 
@@ -684,43 +768,57 @@
                         </tr>
                         </tbody></table>
 <!--                         </form> -->
-                           <button id="addLine" class="btn v-btn v-btn-default v-small-button">조건 추가</button>
-                           <button id="deleteLine" class="btn v-btn v-small-button v-second-dark"
+                           <button type="button" id="addLine" class="btn v-btn v-btn-default v-small-button">조건 추가</button>
+                           <button type="button" id="deleteLine" class="btn v-btn v-small-button v-second-dark"
                                 style="border-color:#f5245f; color:#f5245f!important;">조건 삭제</button>
                       </div>
                     </div><!-- ends col-12 -->
 
                 </div><div class="clearfix"></div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-danger pull-left" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary pull-right" data-dismiss="modal" id="etcSubmit">Continue Shopping</button>
+                    <input type="reset" class="btn btn-danger pull-left" value="취소"><!-- data-dismiss="modal" -->
+                    <button type="button" class="btn btn-primary pull-right" data-dismiss="modal" id="etcSubmit">확인</button>
                 </div>
+                            </form>
 
             </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->
     </div><!-- /.modal -->
 </article>
 
-<!--========== 제출 버튼 어디에 두지?? ==========-->
-<article class="col-md-4 well">
-    <button id="submit" class="btn v-btn v-btn-default large pink standard">버튼</button>
-</article>
+<!--========== 검색 결과 출력 테이블 ==========-->
     </div> <!-- row -->
 <div id="resultside" style="text-align: center"> <!-- 검색 결과 내역 -->
-	<table>
-		<tr>
-			<th>조회번호</th>
+	<table id="resvTable">
+	   <thead>
+	   <tr>
+	       <td colspan="8">
+	            <div class="v-heading-v2" style="text-align: left;">
+                     <h4 style="display: inline-block">검색 결과</h4>
+                     <button id="submit" class="btn v-btn v-btn-default v-second-dark"><i class="fa fa-search"></i>조회 시작</button>
+                     <button id="tableReset" class="btn v-btn v-second-dark" 
+                             style="border-color:#f5245f; font-size:12px; color:#f5245f!important; float: right;"><i class="fa fa-trash"></i>비우기</button>
+                </div>
+            </td>
+        </tr>
+        <tr>
+			<th style="border-left: 1px solid #e0e0e0;">조회번호</th>
 			<th>예약일자</th>
 			<th>예약시간</th>
 			<th>스터디룸</th>
 			<th>좌석번호</th>
 			<th>이름</th>
 			<th>학번</th>
-			<th>기수</th>
+			<th style="border-right: 1px solid #e0e0e0;">기수</th>
 		</tr>
+		</thead>
+		
+	   <thead>
 	<c:if test="${empty resvList}">
-		<tr><td colspan="6">검색 내역이 없습니다.</td></tr>
+		<tr id="noneResult"><td colspan="8">검색 내역이 없습니다.</td></tr>
 	</c:if>
+		</thead>
+	
 	<c:if test="${!empty resvList}">
     <c:forEach items="${resvList}" var="vo" varStatus="status">
     <c:set var="start_time" value="${vo.start_time }"></c:set>
@@ -732,24 +830,27 @@
             <td>${vo.sr_seat_num}</td>
             <td>${vo.name}</td>
             <td>${vo.student_num}</td>
-            <td>${vo.party_num}</td>
+            <td>${vo.member_num}</td>
         </tr>
     </c:forEach>
+        <thead>
         <tr>
-            <td id="navigator" colspan="6">
-                <a href="javascript:pageProc(${navi.currentPage - navi.pagePerGroup}, ${studyroom_checkList}, ${date_checkList}, ${etc_checkList})">◁◁ </a>
-                <a href="javascript:pageProc(${navi.currentPage - 1}, ${studyroom_checkList}, ${date_checkList}, ${etc_checkList})">◀</a>
+            <td id="navigator" colspan="8">
+            <ul class="pagination pagination-lg">
+                <li><a href="javascript:pageProc(${navi.currentPage - navi.pagePerGroup}, ${studyroom_checkList}, ${date_checkList}, ${etc_checkList})"><i class="fa fa-angle-left"></i>  Previous  </a></li>
+                <li><a href="javascript:pageProc(${navi.currentPage - 1}, ${studyroom_checkList}, ${date_checkList}, ${etc_checkList})">◀</a></li>
             
                 <c:forEach var="counter" begin="${navi.startPageGroup}" end="${navi.endPageGroup}"> 
-                    <c:if test="${counter == navi.currentPage}"><b></c:if>
-                        <a href="javascript:pageProc(${counter}, ${studyroom_checkList}, ${date_checkList}, ${etc_checkList})">${counter}</a>
-                    <c:if test="${counter == navi.currentPage}"></b></c:if>
+	                <li class="current <c:if test="${counter == navi.currentPage}">active</c:if>">
+	                        <li><a href="javascript:pageProc(${counter}, ${studyroom_checkList}, ${date_checkList}, ${etc_checkList})">${counter}</a></li>
+	                </li>
                 </c:forEach>
-                <a href="javascript:pageProc(${navi.currentPage + 1}, ${studyroom_checkList}, ${date_checkList}, ${etc_checkList})">▶</a>
-                <a href="javascript:pageProc(${navi.currentPage + navi.pagePerGroup}, ${studyroom_checkList}, ${date_checkList}, ${etc_checkList})">▷▷</a>
+                <li><a href="javascript:pageProc(${navi.currentPage + 1}, ${studyroom_checkList}, ${date_checkList}, ${etc_checkList})">▶</a></li>
+                <li><a href="javascript:pageProc(${navi.currentPage + navi.pagePerGroup}, ${studyroom_checkList}, ${date_checkList}, ${etc_checkList})">  Next  <i class="fa fa-angle-right"></i></a></li>
+             </ul>   
             </td>
         </tr>
-	</c:if>
+    </c:if>
     </table>
 
 </div> <!-- #resultside -->
@@ -784,3 +885,4 @@
     <script src="/manage/resources/js/jquery.datetimepicker.full.min.js"></script>
 
 </html>
+	
