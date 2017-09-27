@@ -69,7 +69,11 @@ public class GroupDAOImpl implements GroupDAO {
 	@Override
 	public int join(GroupJoinVO vo){
 		GroupMapper mapper = sqlSession.getMapper(GroupMapper.class);
-		if(mapper.join_mae(vo) == null) return mapper.join(vo);
+		if(mapper.join_mae(vo) == null) {
+			int result = mapper.join(vo);
+			mapper.addEvent(vo); // 캘린더에 소모임 이벤트 추가
+			return result;
+		}
 		else return 0;
 	}
 	
