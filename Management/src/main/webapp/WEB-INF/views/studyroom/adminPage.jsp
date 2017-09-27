@@ -733,7 +733,7 @@ section {
 	            var addRow = "<tr><td>스터디룸 번호</td><td>현재 상태</td><td>변경 내용</td></tr>";
 	            $("#selectedTopTb").append(addRow);
 	            // 처리 버튼 이름 표시 
-	            document.getElementById("top_btn_name").innerHTML = "스터디룸 비활성화"; 
+	            document.getElementById("top_btn_name").innerHTML = "<h4>스터디룸 비활성화</h4>"; 
 	            
 	            // 스터디룸 선택
 	            $("#outside > button").on("click", function () {
@@ -908,7 +908,7 @@ section {
 	              var addRow = "<tr><td>스터디룸 번호</td><td>x 위치</td><td>y 위치</td></tr>";
 	              $("#selectedTopTb").append(addRow);
 	              // 처리 버튼 이름 표시 
-	              document.getElementById("top_btn_name").innerHTML = "스터디룸 등록"; 
+	              document.getElementById("top_btn_name").innerHTML = "<h4>스터디룸 등록</h4>"; 
 
 	              // 셀 선택
 //	            $(document).on("click", "#inside > button", function() {
@@ -1029,7 +1029,7 @@ section {
 	                 var addRow = "<tr><td>스터디룸 번호</td><td>현재 상태</td><td>변경 내용</td></tr>";
 	                 $("#selectedTopTb").append(addRow);
 	                 // 처리 버튼 이름 표시 
-	                 document.getElementById("top_btn_name").innerHTML = "스터디룸 삭제"; 
+	                 document.getElementById("top_btn_name").innerHTML = "<h4>스터디룸 삭제</h4>"; 
 	                 
 	                 $("#outside > button").on("click", function () {
 	                     if (this.getAttribute("class") == "btn v-btn v-concrete" ||
@@ -1121,8 +1121,12 @@ section {
         </div>
 
 <div class="container">
-	<h3 class="v-heading v-text-heading"><span>${sessionScope.vo.name } 페이지 - 스터디룸 관리</h1></span></h3>
-	<h5 style="text-align:right">현재 시각 : ${sysdate } </h5>
+<%-- 	<h3 class="v-heading v-text-heading" ><span>${sessionScope.vo.name } 페이지 - 스터디룸 관리</h1></span></h3> --%>
+	            <a href="/manage/studyroom/searchResult">
+            <button id="searchTop" class="btn v-btn v-small-button v-second-dark" 
+                style="border-color:#f5245f; color:#f5245f!important; float: right;">예약현황 조회하기</button>
+            </a>
+<%-- 	<h5 style="text-align:right">현재 시각 : ${sysdate } </h5> --%>
 
 <div class="leftside" id="left-top">
     <div class="topside">
@@ -1131,7 +1135,7 @@ section {
 	</div>
 
     <div class="bottomside" id="left-bottom">
-		<h3  class="v-heading v-text-heading"><span id="outside_studyroom_num"></span></h3>
+		<h3 ><span id="outside_studyroom_num"></span></h3> <!-- class="v-heading v-text-heading" -->
 	<section id="inside" style="display: inline-block;"> <!-- margin-left: 100px;  -->
 	</div>
 
@@ -1141,13 +1145,14 @@ section {
 <div class="rightside" >
     
     <div class="topside" id="right-top">
-	        <h3  class="v-heading v-text-heading"><span id="top_btn_name"></span></h3>
+        <div class="v-heading-v2" style="display: inline-block">
+<!-- 	        <h3 class="" id="top_btn_line"> -->
+	        <div id="top_btn_name"><!-- 선택버튼 표시 --></div>
+<!-- 	        </h3> v-heading v-text-heading -->
+	    </div>
         <section id="btnTopSection">
             <div style="text-align: center">
-            <a href="/manage/studyroom/searchResult">
-            <button id="searchTop" class="btn v-btn v-small-button v-second-dark" 
-                style="border-color:#f5245f; color:#f5245f!important;">예약현황 조회하기</button>
-            </a>
+
             <table id="selectedTopTb"></table>
             <button id="inactivateTop" class="btn v-btn v-btn-default v-small-button">비활성화</button>
             <button id="addTop" class="btn v-btn v-btn-default v-small-button">등록</button>
