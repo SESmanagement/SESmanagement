@@ -44,14 +44,18 @@
 
 
 <style type="text/css">
+    #leftside {
+        margin-top: 40px;
+        margin-bottom: 40px;
+    }
 
 	 #leftside > button {
 	    font-size: 10px;
 	    text-align: center;
 	    padding-right: 0px;
 	    padding-left: 0px;
-	    width: 60px;
-	    height: 35px;
+	    width: 65px;
+	    height: 40px;
 	 }
 	 
 	    #rightside > button {
@@ -61,8 +65,8 @@
         padding-left: 1px;
         margin-top: 1px;
         margin-bottom: 1px;
-        width: 35px;
-        height: 35px;
+        width: 40px;
+        height: 40px;
      }
  	
  	.leftside {
@@ -194,7 +198,7 @@
                         $(result).each(function(index, item) {
                             if (item.activate == 0) { // 비활성화 표시
                                 $("#"+item.room_x+"__"+item.room_y).addClass("btn v-btn v-midnight-blue");
-                            } else if (now_mm > '00:00' && now_mm < '18:59') { // 19시 이전
+                            } else if (now_mm >= '08:30' && now_mm < '18:59') { // 19시 이전
                                 if (item.seven < item.count_seat || item.eight < item.count_seat || 
                                         item.nine < item.count_seat || item.ten < item.count_seat) {
                                     $("#"+item.room_x+"__"+item.room_y).addClass("v-emerald");
@@ -211,7 +215,7 @@
                                 if (item.ten < item.count_seat) {
                                     $("#"+item.room_x+"__"+item.room_y).addClass("v-emerald");
                                 } else $("#"+item.room_x+"__"+item.room_y).css("background-color", "grey");
-                            } else if (now_mm >= '22:00') {
+                            } else if (now_mm >= '22:00' || now_mm < '08:30') { // 비활성화 표시
                             	$("#"+item.room_x+"__"+item.room_y).css("background-color", "grey");
                             }
                         }) // each
@@ -247,7 +251,7 @@
 
         if ($(this).css("background-color") == "rgb(255, 255, 255)") {
 	    	document.getElementById("right_studyroom_num").innerHTML = "";
-		} else document.getElementById("right_studyroom_num").innerHTML = "스터디룸 " + studyroom_num; 
+		} else document.getElementById("right_studyroom_num").innerHTML = "<h4>스터디룸 "+studyroom_num+"</h4>"; 
         
         
 //      해당 스터디룸 배치
@@ -262,7 +266,7 @@
                     if (item.activate == 0) {
                         $("#rightside").children("#"+item.seat_x+"_"+item.seat_y+"").addClass("btn v-btn v-midnight-blue");
                         
-                    } else if (now_mm < '18:59') { // 19시 이전
+                    } else if (now_mm <= '18:59') { // 19시 이전
                         if (item.seven == item.count_seat && item.eight == item.count_seat && 
                                 item.nine == item.count_seat && item.ten == item.count_seat) {
                             $("#rightside").children("#"+item.seat_x+"_"+item.seat_y+"").addClass("btn v-btn");
@@ -325,7 +329,7 @@
         // 스터디룸 번호, 처리 버튼 이름 표시 해제 
         if ($(this).css("background-color") == "rgb(255, 255, 255)") {
             document.getElementById("right_studyroom_num").innerHTML = "";
-        } else document.getElementById("right_studyroom_num").innerHTML = "스터디룸 " + studyroom_num; 
+        } else document.getElementById("right_studyroom_num").innerHTML = "<h4>스터디룸 "+studyroom_num+"</h4>"; 
         
 // 		해당 스터디룸 배치
 		$.ajax({ 
@@ -564,19 +568,22 @@
         </div>
 
             <div class="container">
-            <h5 style="text-align:right">현재 시각 : ${sysdate }</h5>
+<%--             <h5 style="text-align:right">현재 시각 : ${sysdate }</h5> --%>
                 <!--Article-->
                     <article class="col-sm-9">
                         <div class="post-info clearfix">
-<%--                     <c:set var="now" value="${sysdate }"/> --%>
-<%--                     <c:if test="${fn:substring(now, 18, 19) == '토'||fn:substring(now, 18, 19) == '일'}"> --%>
-<!--                         <h3>금일은 스터디룸 예약 이용시간이 아닙니다.</h3> -->
-<%--                     </c:if> --%>
-<%--                     <c:if test="${fn:substring(now, 9, 13) < '08:30' && fn:substring(now, 9, 11) >= '22'}"> --%>
-<!--                         <h3>스터디룸 예약 이용시간이 아닙니다.</h3> -->
-<%--                     </c:if> --%>
+                    <c:set var="now" value="${sysdate }"/>
+                    <c:if test="${fn:substring(now, 18, 19) == '토'||fn:substring(now, 18, 19) == '일'}">
+                        <h3>금일은 스터디룸 예약 이용시간이 아닙니다.</h3>
+                    </c:if>
+                    <c:if test="${fn:substring(now, 9, 13) < '08:30' && fn:substring(now, 9, 11) >= '22'}">
+                        <h3>스터디룸 예약 이용시간이 아닙니다.</h3>
+                    </c:if>
                         <span class="vcard author">
-                             <h4>시간대별 예약가능 현황</h4> 
+                            <div class="v-heading-v2" style="display: inline-block">
+			                    <h4>시간대별 예약가능 현황</h4> 
+			                </div>
+                             
                             <table>
                                     <tr>
                                     <td><input type="checkbox" id="checkAll" value="99" /><label for="checkAll">전체</label></td>
@@ -600,16 +607,16 @@
         
                  <!--Article-->
             <section class="article-body-wrap">
-                <div class="container">
-                    <span class="tooltip"><table class="srList"><br></table></span>
-<!--                    <article class="col-sm-9"> -->
-                        <div id="leftside" style="display: inline-block"></div> 
-                        
-                        
-                    <h3  class="v-heading v-text-heading" style="display: inline-block"><span id="right_studyroom_num"></span></h3>
-                        <div id="rightside" style="display: inline-block">
-                        </div>
-                </div>
+         <div class="container">
+<!-- 			    <div class="v-heading-v2" style="display: inline-block"> -->
+<!--                     <h4>센터</h4> -->
+<!--                 </div> -->
+				<div id="leftside" class="v-gallery-widget col-sm-6"><!-- 센터 배치도  style="display: inline-block" --></div>
+				<div class="v-heading-v2" style="display: inline-block;" id="right_studyroom_num">
+					<!-- 스터디룸 + 번호 -->
+				</div>
+				<div id="rightside" class="v-gallery-widget col-sm-6"><!-- 스터디룸 배치도 style="display: inline-block;"  --></div>
+		</div> <!-- container -->
             </section>
         
 
@@ -631,6 +638,6 @@
     <script src="/manage/resources/HTML/js/imagesloaded.js"></script>
     <script src="/manage/resources/HTML/js/view.min.js?auto"></script>
     <script src="/manage/resources/HTML/js/theme-core.js"></script>
- 
+
 </body>
 </html>
