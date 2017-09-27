@@ -24,7 +24,7 @@
         margin: 0 auto;
     }
     
-        /* The Modal (background) */
+     /* The Modal (background) */
     .modal {
         display: none; /* Hidden by default */
         position: fixed; /* Stay in place */
@@ -39,14 +39,14 @@
         background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
     }
     
-    /* Modal Content */
+        /* Modal Content */
     .modal-content {
         position: relative;
         background-color: #fefefe;
         margin: auto;
         padding: 0;
         border: 1px solid #888;
-        width: 80%;
+        width: 40%;
         box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
         -webkit-animation-name: animatetop;
         -webkit-animation-duration: 0.4s;
@@ -60,36 +60,14 @@
         to {top:0; opacity:1}
     }
     
-    @keyframes animatetop {
-        from {top:-300px; opacity:0}
-        to {top:0; opacity:1}
-    }
-    
-    /* The Close Button */
-    .close {
-        color: white;
-        float: right;
-        font-size: 28px;
-        font-weight: bold;
-    }
-    
-    .close:hover,
-    .close:focus {
-        color: #000;
-        text-decoration: none;
-        cursor: pointer;
-    }
-    
     .modal-header {
-        padding: 2px 16px;
+        padding: 5px 30px!important;
         background-color: #5cb85c;
         color: white;
     }
     
-    .modal-body {padding: 2px 16px;}
-    
     .modal-footer {
-        padding: 2px 16px;
+        padding: 5px 30px!important;
         background-color: #5cb85c;
         color: white;
     }
@@ -132,6 +110,22 @@
         text-align: center;  
         line-height: 18px;  
     }
+    
+    table {
+        margin-left: auto;
+        margin-right: auto;
+        text-align: left;
+    }
+    
+    table input[type=text] {
+        border: none;
+        background-color: #e5fce5!important;
+    }
+    
+    table textarea {
+        border: none;
+        background-color: #e5fce5!important;
+    }
 
 </style>
 </head>
@@ -159,42 +153,72 @@
             editable: true,
             eventLimit: true, // allow "more" link when too many events
             
-//             eventSources: [
-// //             events: 
-//             {
-//             	url: '/manage/myPage/getEvent',
-//             	type: 'post',
-//             	data: {"student_num": '${student_num}'},
-//                 success: function(result) {
-//             		var eventArray = [];
-//             		$(result).each(function(index, item) {
-//             			eventArray.push({
-//             				   title: item.title,
-//             				   start: item.start,
-//             				   end: item.end,
-//             				   allDay: item.allDay,
-//             				   id: item.id,
-//             				   student_num: item.student_num,
-//             				   className: item.className,
-//             			});
-//             		}) // each
-            		
-//             		calendar.fullCalendar('renderEvent', eventArray, true)
-//             	} // success
-//             } // events   ,
-//             ],
-            
             eventSources: [
-                // your event source
-                {
-                    url: '/manage/myPage/getEvent',
-                    type: 'POST',
-                    data: {"student_num": '${student_num}'},
-                    success: function(result) {
-//                        $(result).each(function(index, item) { //
-//                      	  // 이벤트가 중복으로 생긴다 (타입: 개인 일정)
-// //                      	  if (item.title) {
-// //                      		  alert("생성 아이디: " + item.id)
+//             events: 
+            {
+             url: '/manage/myPage/getEvent',
+             type: 'post',
+             data: {"student_num": '${student_num}'},
+                success: function(result) {
+                	
+// // 	                        calendar.fullCalendar('removeEvents');
+// // //                         calendar.fullCalendar('addEventSource', events);         
+// //                         calendar.fullCalendar('rerenderEvents', result, true );
+	             
+	
+                 var eventArray = [];
+                 $(result).each(function(index, item) {
+                     eventArray.push({
+                            title: item.title,
+                            start: item.start,
+                            end: item.end,
+                            allDay: item.allDay,
+                            id: item.id,
+                            student_num: item.student_num,
+                            className: item.className,
+                            editable: item.editable,
+                            reference: item.reference,
+                     });
+//                     $('#calendar').fullCalendar( 'removeEventSource', item.id);
+                 }) // each
+
+
+// //                  $('#calendar').fullCalendar('addEventSource', eventArray);
+//                  $('#calendar').fullCalendar('renderEvents', eventArray, true); //  
+//                  $('#calendar').fullCalendar('removeEvents', result);
+//                  $('#calendar').fullCalendar('removeEvents', eventArray);
+
+
+//                     $('#calendar').fullCalendar( 'addEventSource', result);         
+//                     $('#calendar').fullCalendar( 'refetchEvents' );
+//                     $('#calendar').fullCalendar( 'removeEventSources', result);
+//                  $('#calendar').fullCalendar('renderEvents', eventArray, true);
+             }, // success
+//              error: function() {
+// 	              calendar.fullCalendar('unselect'); 
+// // 	              $('#calendar').fullCalendar('removeEvents');
+// 	          }
+            } // events   ,
+            
+            ],
+            
+            
+//             eventSources: [
+//                 // your event source
+//                 {
+//                     url: '/manage/myPage/getEvent',
+//                     type: 'POST',
+//                     data: {"student_num": '${student_num}'},
+//                     success: function(events) {
+// //                         calendar.fullCalendar('removeEvents', events);
+// //                         calendar.fullCalendar('addEventSource', events);         
+// //                         calendar.fullCalendar('rerenderEvents', events, true );
+
+                        
+//                        $(events).each(function(index, item) { //
+//                            // 이벤트가 중복으로 생긴다 (타입: 개인 일정)
+// //                         if (item.title) {
+// //                             alert("생성 아이디: " + item.id)
 //                                calendar.fullCalendar('renderEvent',
 //                                    {
 // //                                        title: $(this).attr('title'),
@@ -213,22 +237,25 @@
 //                                    },
 //                                    true // make the event "stick"
 //                                );
-
+// //                                calendar.fullCalendar('refetchEvents'); //refetchEvents
 // //                            } // if
-//                            calendar.fullCalendar('unselect');
+//                               calendar.fullCalendar('removeEventSource', item.id);
+// //                            calendar.fullCalendar('unselect');
 //                        }); // each
-                    }, // success
-                    error: function() {
-                        alert('there was an error while fetching events!');
-                    }
+// //                        calendar.fullCalendar('refetchEvents'); //refetchEvents
+//                     } // success
+// //                     error: function() {
+// //                         alert('there was an error while fetching events!');
+// //                     }
                 
-                } // eventSources
+//                 } // eventSources
                 
-                // any other sources...
-            ],
+//                 // any other sources...
+                
+//             ],
             
 //             viewRender: function(view, element) { 
-//                 $("#calendar").fullCalendar( 'refresh' ) 
+//                 $("#calendar").fullCalendar('refetchEvents'); // 'refresh'
 //             },
             
             // drop 처리
@@ -236,19 +263,19 @@
             eventDrop: function(event, delta, revertFunc, jsEvent, ui, view) {
                 $('.draggable').data('event', { title: event.id }); // event.title
                 
-                if (confirm("Are you sure about this change?")) {
-                	alert("yes")
+                if (confirm("일정을 정말 변경하시겠습니까?")) {
+                    alert("yes")
                     // 날짜 포맷  변경
                     var start_date = moment(event.start).format('YYYY/MM/DD HH:mm:SS');
                     var end_date = moment(event.end).format('YYYY/MM/DD HH:mm:SS');
                     
-                	$.ajax({
+                    $.ajax({
                         url: "/manage/myPage/modifyEventDrag",
                         type: "post",
                         data: {"start":start_date, "end":end_date, "id":event.id, "student_num":event.student_num},
                         success: function(result) {
-                        	if (result == "true") alert("수정이 완료되었습니다.");
-                        	else alert("수정에 실패했습니다.");
+                            if (result == "true") alert("수정이 완료되었습니다.");
+                            else alert("수정에 실패했습니다.");
                             location.href = "/manage/myPage/mySchedule";
                         } // success
                     }); // ajax
@@ -260,7 +287,7 @@
                 alert(event.title + " end is now " + event.end.format());
 
                 if (confirm("is this okay?")) {
-                	// 날짜 포맷  변경
+                    // 날짜 포맷  변경
                     var start_date = moment(event.start).format('YYYY/MM/DD HH:mm:SS');
                     var end_date = moment(event.end).format('YYYY/MM/DD HH:mm:SS');
                     
@@ -288,12 +315,12 @@
             
             timeFormat: 'H(:mm)', // uppercase H for 24-hour clock
             
-            // 날짜 빈 공간 클릭시 개인 일정 등록
+            // 날짜 빈 공간 클릭시 일정 등록
                 navLinks: true, // can click day/week names to navigate views
                 selectable: true,
                 selectHelper: true,
                 select: function(start, end) {
-                	var modal = addEvent(); // 일정 등록 창(modal) 띄우기 - css 나중에 하기!!!!
+                    var modal = addEvent(); // 일정 등록 창(modal) 띄우기 - css 나중에 하기!!!!
                     
                     // 날짜 포맷  변경
                     var start_date = moment(start).format('YYYY/MM/DD HH:mm:SS');
@@ -301,7 +328,7 @@
                     
                     // 클릭된 날짜 입력
                     $("#startDate").val(start_date);
-                    $("#endDate").val(start_date);
+                    $("#endDate").val(end_date);
                     
                     // 하루종일(checkAllDay)에 체크했을 경우
                     $(document).on("click", "#checkAllDay", function() {
@@ -316,20 +343,47 @@
                     
                     // 이벤트 시간 입력
                     $("#startDate").datetimepicker({
-                        format: "yyyy-mm-dd hh:ii:ss",
-                        showMeridian: true,
-                        autoclose: true,
-                        todayBtn: true,
-                        initialDate: new Date(start_date),
+//                         format: "yyyy-mm-dd hh:ii:ss",
+//                         showMeridian: true,
+//                         autoclose: true,
+//                         todayBtn: true,
+//                         initialDate: new Date(start_date),
+
+                            format : 'Y/m/d H:i',
+                            value : start_date,
+                            onShow : function() {
+                                this.setOptions({
+                                    maxDate : jQuery('#endDate').val() ? jQuery(
+                                            '#endDate').val() : false,
+                                    maxTime : jQuery('#endDate').val() ? jQuery(
+                                    '#endDate').val() : false,
+                                })
+                            },
+                            timepicker : true
+// //                             allowTimes:['19:00', '20:00', '21:00', '22:00'],
+
                     });
                     
                     $("#endDate").datetimepicker({
-                        format: "yyyy-mm-dd hh:ii:ss",
-                        showMeridian: true,
-                        autoclose: true,
-                        todayBtn: true,
-                        initialDate: new Date(end_date),
-                        startDate: new Date(start_date) // 시작 날짜보다 앞선 날짜는 선택하지 못하게 한다.
+//                         format: "yyyy-mm-dd hh:ii:ss",
+//                         showMeridian: true,
+//                         autoclose: true,
+//                         todayBtn: true,
+//                         initialDate: new Date(end_date),
+//                         startDate: new Date(start_date), // 시작 날짜보다 앞선 날짜는 선택하지 못하게 한다.
+
+                    	format : 'Y/m/d H:i',
+                    	value : end_date,
+                        onShow : function() {
+                            this.setOptions({
+                                minDate : jQuery('#startDate').val() ? jQuery(
+                                        '#startDate').val() : false,
+                                minTime : jQuery('#startDate').val().substring(11, 16) ? jQuery(
+                                        '#startDate').val().substring(11, 16) : false
+                            })
+                        },
+                        timepicker : true
+// //                         allowTimes:['19:00', '20:00', '21:00', '22:00'],
                     });
                     
                     
@@ -362,30 +416,30 @@
                             
                             // 공식 이벤트 구분
                             if (constraint != 0) {
-	                            if (constraintList.length != 0 && $("#option option:selected").val() == '') {
-	                                alert("공식이벤트 구분을 선택해 주세요");
-	                                $(".checkbox").prop("checked", false);
-	                                constraintList.empty();
-	                                reference = "";
-	                                backgroundColor = "";
-	                                return;
-	                            } 
-	                            else if ($("#option option:selected").val() != null && $("#option option:selected").val() == 'announcement') {
-	                                reference = "내부/공지사항";
-	                                backgroundColor = "#5cb85c"; // 내부/공지사항
-	                            }
-	                            else if ($("#option option:selected").val() != null && $("#option option:selected").val() == 'session') {
-	                                reference = "외부/설명회";
-	                                backgroundColor = "#cdf441"; // 외부/설명회
-	                            }
-	                            else if ($("#option option:selected").val() != null && $("#option option:selected").val() == 'exam') {
-	                                reference = "평가/시험";
-	                                backgroundColor = "#fdffbc";    // 평가/시험
-	                            } 
-	//                             else {
-	//                                 reference = "";
-	//                                 backgroundColor = "";
-	//                             }
+                                if (constraintList.length != 0 && $("#option option:selected").val() == '') {
+                                    alert("공식이벤트 구분을 선택해 주세요");
+                                    $(".checkbox").prop("checked", false);
+                                    constraintList.empty();
+                                    reference = "";
+                                    backgroundColor = "";
+                                    return;
+                                } 
+                                else if ($("#option option:selected").val() != null && $("#option option:selected").val() == 'announcement') {
+                                    reference = "내부/공지사항";
+                                    backgroundColor = "#5cb85c"; // 내부/공지사항
+                                }
+                                else if ($("#option option:selected").val() != null && $("#option option:selected").val() == 'session') {
+                                    reference = "외부/설명회";
+                                    backgroundColor = "#cdf441"; // 외부/설명회
+                                }
+                                else if ($("#option option:selected").val() != null && $("#option option:selected").val() == 'exam') {
+                                    reference = "평가/시험";
+                                    backgroundColor = "#fdffbc";    // 평가/시험
+                                } 
+    //                             else {
+    //                                 reference = "";
+    //                                 backgroundColor = "";
+    //                             }
                             }  
                             // if-#option
                         } // if-관리자
@@ -396,27 +450,28 @@
                         if (reference == '') reference = null;
                         
                         if (title && start_dt && end_dt) { // title값은 필수임!!!!!!!! 
-                        	$.ajax({
-                        		url: "/manage/myPage/addEvent",
-                        		type: "post",
-                        		data: {
-	                        			"title":title, "start":start_dt, "end":end_dt, "memo":memo, "student_num":student_num,
-	                        			"constraint":constraint, "backgroundColor":backgroundColor,
-	                        			"reference":reference
-	                        			},
-                        		success: function(result) {
-                        			location.href = "/manage/myPage/mySchedule";
-                        		}, // success
-                        		error: function() {
+                            $.ajax({
+                                url: "/manage/myPage/addEvent",
+                                type: "post",
+                                data: {
+                                        "title":title, "start":start_dt, "end":end_dt, "memo":memo, "student_num":student_num,
+                                        "constraint":constraint, "backgroundColor":backgroundColor,
+                                        "reference":reference
+                                        },
+                                success: function() {
+                                    location.href = "/manage/myPage/mySchedule";
+                                }, // success
+                                error: function() {
                                     alert('등록실패??? 왜????');
                                 }
-                        	}); // ajax
+                            }); // ajax
                         
-                        	modal.style.display = "none";
+                            modal.style.display = "none";
                         } else {
                               alert("제목과 일정을 입력해 주세요.")
                               calendar.fullCalendar('unselect');
                         }
+                        
                     }); // #addBtn-click
                 }, // select
                 
@@ -424,12 +479,11 @@
 //                         clickEvent(event);
                     // 해당 이벤트의 id
                     var id = event.id;
-                    alert("id: " + id)
                     
-                    // 스터디룸의 경우 수정/삭제버튼 숨기기
-                     if ($("#eventTitle").val().includes("스터디룸")) {
-                    	 $("#writerArea").css("display", "none");
-                        };
+                    // 스터디룸, 소모임의 경우 수정/삭제버튼 숨기기
+//                     if (event.reference != null && (event.reference.includes("SRR") || event.reference.includes("GR"))) {
+//                     	$("#writerArea").css("display", "none");
+//                     };
                     
                     // 본인 작성 이벤트일 경우에는 수정/삭제버튼 확인 가능
                     $("#writerArea").css("visibility", "");
@@ -471,22 +525,38 @@
                         $("#eventStart").attr("readOnly", true);
                         $("#eventEnd").attr("readOnly", true);
                         
-                        // 이벤트 클릭시 수정/삭제 버튼 -> 확인/취소 버튼으로 변경
-                        $("#okBtn").attr("id", "modifyBtn");
-                        $("#modifyBtn").val("수정");
-                        $("#cancelBtn").attr("id", "deleteBtn");
-                        $("#deleteBtn").val("삭제");
+                        // 이벤트 클릭시 버튼의 이전 상태가 확인/취소 일 경우 -> 수정/삭제 버튼으로 변경
+                        $("button").each(function(index, item) {
+                        	if (item.id == "okBtn") {
+                        		alert(item.textContent);
+                        		item.id = "modifyBtn";
+                        		item.textContent = "수정";
+                        		$("#okBtn").off("click");
+//                                 $(item).attr("id", "modifyBtn");
+//                                 $(item).val("수정");
+                        	}
+                        	if (item.id == "cancelBtn") {
+                        		alert(item.textContent);
+                                item.id = "deleteBtn";
+                                item.textContent= "삭제";
+                                $("#cancelBtn").off("click");
+//                         		$(item).attr("id", "deleteBtn");
+//                         		$(item).val("삭제");
+                        	}
+                        });
                         
                         // 이벤트 클릭시 수정->공식이벤트 구분부분 숨김
-                        $("#adminArea").empty();
+                        $("#adminArea1").empty();
+                        $("#adminArea2").empty();
                         
                         modal.style.display = "block";
                     })
                     
                  // When the user clicks on <span> (x), close the modal
-                    span.onclick = function() {
-                        modal.style.display = "none";
-                    }
+			        span.onclick = function() {
+			            modal.style.display = "none";
+			        }
+
             
                     // When the user clicks anywhere outside of the modal, close it
                     window.onclick = function(event) {
@@ -496,13 +566,33 @@
                     } // window.onclick
                     
                     $("#modifyBtn").on("click", function(event) {
-                    	$("#deleteBtn").off("click"); // 삭제버튼 이벤트 삭제
-                    	
-                        if ($("#eventTitle").val().includes("스터디룸")) {
-                            alert("수정이 불가합니다. 스터디룸 예약 페이지에서 확인하세요");
+                    	alert("수정수정");
+                        $("#deleteBtn").off("click"); // 삭제버튼 이벤트 삭제
+                        
+//                         if ($("#eventTitle").val().includes("스터디룸")) {
+//                             alert("수정이 불가합니다. 스터디룸 예약 페이지에서 확인하세요");
+//                             modal.style.display = "none";
+//                             return;
+//                         };
+                        
+                        if (event.reference != null && event.reference.includes("SRR")) {
+	                         alert("수정이 불가합니다. 스터디룸 예약 페이지에서 확인하세요");
+	                         modal.style.display = "none";
+	                         return;
+                        };
+                        
+                        if (event.reference != null && event.reference.includes("GR")) {
+                            alert("수정이 불가합니다. 소모임 페이지에서 확인하세요");
                             modal.style.display = "none";
                             return;
-                        };
+                       };
+                        
+//                         if ($("#eventTitle").val().includes("소모임")) {
+//                             alert("수정이 불가합니다. 소모임 페이지에서 확인하세요");
+//                             modal.style.display = "none";
+//                             return;
+//                         };
+                        
                         
                         $("#eventTitle").attr("readOnly", false);
                         $("#eventMemo").attr("readOnly", false);
@@ -511,64 +601,112 @@
                         
                         // 수정/삭제 버튼 -> 확인/취소 버튼으로 변경
                         $("#modifyBtn").attr("id", "okBtn");
-                        $("#okBtn").val("확인");
+                        $("#okBtn").text("확인");
                         $("#deleteBtn").attr("id", "cancelBtn");
-                        $("#cancelBtn").val("취소");
+                        $("#cancelBtn").text("취소");
                         
                         // 이벤트 시간 입력
                         $("#eventStart").datetimepicker({
-                            format: "yyyy-mm-dd hh:ii:ss",
-                            showMeridian: true,
-                            autoclose: true,
-                            todayBtn: true,
-                            initialDate: new Date($("#eventStart").val()),
+//                             format: "yyyy-mm-dd hh:ii:ss",
+//                             showMeridian: true,
+//                             autoclose: true,
+//                             todayBtn: true,
+//                             initialDate: new Date($("#eventStart").val()),
+
+                            format : 'Y/m/d H:i',
+//                             value : start_date,
+//                             onShow : function() {
+//                                 this.setOptions({
+//                                     maxDate : jQuery('#eventEnd').val() ? jQuery(
+//                                             '#eventEnd').val() : false,
+//                                     maxTime : jQuery('#eventEnd').val() ? jQuery(
+//                                     '#eventEnd').val() : false,
+//                                 })
+//                             },
+                            timepicker : true
                         });
                         
                         $("#eventEnd").datetimepicker({
-                            format: "yyyy-mm-dd hh:ii:ss",
-                            showMeridian: true,
-                            autoclose: true,
-                            todayBtn: true,
-                            initialDate: new Date($("#eventEnd").val()),
-//                             startDate: new Date($("#eventStart").datetimepicker('update')) // 시작 날짜보다 앞선 날짜는 선택하지 못하게 한다. - 안먹힘..ㅠㅠ
+//                             format: "yyyy-mm-dd hh:ii:ss",
+//                             showMeridian: true,
+//                             autoclose: true,
+//                             todayBtn: true,
+//                             initialDate: new Date($("#eventEnd").val()),
+//                             startDate: new Date($("#eventStart").datetimepicker({format: 'yyyy-mm-dd hh:ii'})), // 시작 날짜보다 앞선 날짜는 선택하지 못하게 한다. - 안먹힘..ㅠㅠ
+                            
+                            format : 'Y/m/d H:i',
+//                             value : end_date,
+                            onShow : function() {
+                                this.setOptions({
+                                    minDate : jQuery('#eventStart').val() ? jQuery(
+                                            '#eventStart').val() : false,
+                                    minTime : jQuery('#eventStart').val() ? jQuery(
+                                            '#eventStart').val() : false
+                                })
+                            },
+                            timepicker : true
                         });
                         
                         // 공식 이벤트인 경우
                         if ($("#eventFormal").val() != '개인') {
                             if ("${vo.student_num}" == 1) { // 관리자만 수정 가능
-                                $("#adminArea").empty();
-                                var addRow = "";
-                                addRow += "<td>공식이벤트 여부</td>";
-                                addRow += "<td><input type='checkbox' class='checkboxEvent' id='modifyFirst' value='33'><label for='modifyFirst'>33기</label>";
-                                addRow += "<input type='checkbox' class='checkboxEvent' id='modifySecond' value='34'><label for='modifySecond'>34기</label></td>";
-                                addRow += "<td><select id='option_modify'>";
-                                addRow += "<option value=''>---선택---</option>";
-                                addRow += "<option value='announcement'>내부/공지사항</option>";
-                                addRow += "<option value='session'>외부/설명회</option>";
-                                addRow += "<option value='exam'>평가/시험</option>";
-                                addRow += "</select></td>";
-                                $("#adminArea").append(addRow);
+                                $("#adminArea1").empty();
+                                $("#adminArea2").empty();
+                                var addRow1 = "";
+                                var addRow2 = "";
+                                addRow1 += "공식이벤트 여부";
+                                addRow2 += "<input type='checkbox' class='checkboxEvent' id='modifyFirst' value='33'><label for='modifyFirst'>33기</label>";
+                                addRow2 += "<input type='checkbox' class='checkboxEvent' id='modifySecond' value='34'><label for='modifySecond'>34기</label>";
+                                addRow2 += "<select id='option_modify'>";
+                                addRow2 += "<option value=''>---선택---</option>";
+                                addRow2 += "<option value='announcement'>내부/공지사항</option>";
+                                addRow2 += "<option value='session'>외부/설명회</option>";
+                                addRow2 += "<option value='exam'>평가/시험</option>";
+                                addRow2 += "</select>";
+                                $("#adminArea1").append(addRow1);
+                                $("#adminArea2").append(addRow2);
                                 
+                                var constraintList_modify = [];
                                 // 기존 기수 체크내역 표시하기
                                 if ($("#eventFormal").val().substring(0, 2) == "33") {
                                     $("#modifyFirst").prop("checked", true);
+                                    constraintList_modify.push($("#modifyFirst").val());
                                 } else if ($("#eventFormal").val().substring(0, 2) == "34") {
                                     $("#modifySecond").prop("checked", true);
+                                    constraintList_modify.push($("#modifySecond").val());
                                 } if ($("#eventFormal").val().substring(0, 2) == "전체") {
                                     $("#modifyFirst").prop("checked", true);
                                     $("#modifySecond").prop("checked", true);
+                                    constraintList_modify.push($("#modifyFirst").val());
+                                    constraintList_modify.push($("#modifySecond").val());
                                 }
                                 
                                 // 기존 레퍼런스 체크내역 표시하기
                                 if ($("#eventFormal").val().split("-")[1] == "내부/공지사항") {
-                                	$("#option_modify").val("announcement");
+                                    $("#option_modify").val("announcement");
                                 } else if ($("#eventFormal").val().split("-")[1] == "외부/설명회") {
                                     $("#option_modify").val("session");
                                 } else if ($("#eventFormal").val().split("-")[1] == "평가/시험") {
                                     $("#option_modify").val("exam");
                                 }
                                 
-                            } else { 
+                             // 새로 체크된 기수 내역 constraintList_modify 배열에 담기
+                                $(document).on("click", ".checkboxEvent", function() {
+                                    alert("기수: " + this.value);
+                                    if (constraintList_modify.indexOf(this.value) != -1) {
+                                        var index = constraintList_modify.indexOf(this.value);
+                                        alert("인덱스: " + index);
+                                        constraintList_modify.splice(index, 1);
+                                    } else constraintList_modify.push(this.value);
+                                });
+                                
+                             var optionValue_modify = $("#option_modify").val();
+                             // 새로 체크된 옵션 내역 #option_modify에 담기
+                             $(document).on("click", "#option_modify", function() {
+                            	 optionValue_modify = $("#option_modify").val();
+                             });
+                            
+                            } else { // 관리자가 아닌 경우
                                 alert("수정 권한이 없습니다.");
                                 modal.style.display = "none";
                                 return;
@@ -576,11 +714,8 @@
                         } // #eventFormal-if
                         
                         // 수정 > 확인 버튼 누르기
-                            var clickedAdd = false;
                         $("#okBtn").click(function(event) {
                             alert("확인버튼 클릭");
-                            clickedAdd = true;
-                            
                             
                          // db로 보낼 이벤트 수정 내역
                             var title = $("#eventTitle").val();
@@ -595,59 +730,42 @@
                             
                             // 관리자일 경우에만
                             if (student_num == 1) {
-                            	alert("관리자")
-                            	
-                            	   // 새로 체크된 내역이 안 뽑힘 ㅠㅠ 이건 나중에 시간 되면 다시 보기!!
-	                                var constraintList_modify = [];
-                            	 $(".checkboxEvent").change("click", function() {
-	                                $(".checkboxEvent").each(function (index, item) {
-	                                    if ($(item).is(":checked")) { // 체크된 내역
-	                                    	alert("체크체크: " + $(item).val())
-	                                    	constraintList_modify.push($(item).val());
-	                                    } // if
-	                                }) // each
-                            	 })
-
-	                                
-                                    if (constraintList_modify.length == 0 ) alert("선택된 체크박스 없음")
-	                                for (var i = 0; i < constraintList_modify.length; i++) {
-										alert("기수: " + constraintList_modify[i]);
-									}
-	                                
-	                                // 두 개의 기수가 모두 체크되어 있을 경우, constraint = 99 (all)
-	                                if (constraintList_modify.length == 2) constraint = 99;
-	                                else if (constraintList_modify.length == 1) constraint = constraintList_modify[0];
-	                                else constraint = 0;
-	                                
+                                    
+                                    // 두 개의 기수가 모두 체크되어 있을 경우, constraint = 99 (all)
+                                    if (constraintList_modify.length == 2) constraint = 99;
+                                    else if (constraintList_modify.length == 1) constraint = constraintList_modify[0];
+                                    else constraint = 0;
+                                    
                                 
-	                                // 공식 이벤트 구분
-	                                if (constraint != 0) {
-		                                alert("옵션: "+ $("#option_modify option:selected").val());
-		                                if ($("#option_modify option:selected").val() == '') {
-		                                    alert("공식이벤트 구분을 선택해 주세요");
-		                                    $(".checkboxEvent").prop("checked", false);
-		                                    constraintList_modify.empty();
-		                                    reference = "";
-		                                    backgroundColor = "";
-		                                    return;
-		                                } 
-		                                else if ($("#option_modify option:selected").val() != null && $("#option_modify option:selected").val() == 'announcement') {
-		                                    reference = "내부/공지사항";
-		                                    backgroundColor = "#5cb85c"; // 내부/공지사항
-		                                }
-		                                else if ($("#option_modify option:selected").val() != null && $("#option_modify option:selected").val() == 'session') {
-		                                    reference = "외부/설명회";
-		                                    backgroundColor = "#cdf441"; // 외부/설명회
-		                                }
-		                                else if ($("#option_modify option:selected").val() != null && $("#option_modify option:selected").val() == 'exam') {
-		                                    reference = "평가/시험";
-		                                    backgroundColor = "#fdffbc";    // 평가/시험
-		                                } 
-	//                                 else {
-	//                                     reference = "";
-	//                                     backgroundColor = "";
-	//                                 }
-	                               } // constraint != 0
+                                    // 공식 이벤트 구분
+                                    if (constraint != 0) {
+                                        alert("옵션: "+ optionValue_modify);
+                                        if (optionValue_modify == '') {
+                                            alert("공식이벤트 구분을 선택해 주세요");
+                                            $(".checkboxEvent").prop("checked", false);
+                                            constraintList_modify.empty();
+                                            optionValue_modify.empty();
+                                            reference = "";
+                                            backgroundColor = "";
+                                            return;
+                                        } 
+                                        else if (optionValue_modify != null && optionValue_modify == 'announcement') {
+                                            reference = "내부/공지사항";
+                                            backgroundColor = "#5cb85c"; // 내부/공지사항
+                                        }
+                                        else if (optionValue_modify != null && optionValue_modify == 'session') {
+                                            reference = "외부/설명회";
+                                            backgroundColor = "#cdf441"; // 외부/설명회
+                                        }
+                                        else if (optionValue_modify != null && optionValue_modify == 'exam') {
+                                            reference = "평가/시험";
+                                            backgroundColor = "#fdffbc";    // 평가/시험
+                                        } 
+                                    else {
+                                        reference = "";
+                                        backgroundColor = "";
+                                    }
+                                   } // constraint != 0
                             }// if-관리자
                             
                             // 개인 일정에 경우, 값이 없는 아래 3개에 디폴트값 넣어주기
@@ -656,7 +774,7 @@
                             if (reference == '') reference = null;
                             
                             if (title && start_dt && end_dt) { // title값은 필수임!!!!!!!! 
-                            	$.ajax({
+                                $.ajax({
                                     url: "/manage/myPage/modifyEvent",
                                     type: "post",
                                     data: {
@@ -664,11 +782,11 @@
                                         "constraint":constraint, "backgroundColor":backgroundColor,
                                         "reference":reference, "id":id
                                         },
-                                    success: function(result) {
+                                    success: function() {
                                         location.href = "/manage/myPage/mySchedule";
                                     } // success
                                 }); // ajax
-                            	
+                                
 //                                 var form = document.createElement("form");
 //                                 form.setAttribute("method", "post");
 //                                 form.setAttribute("action", "/manage/myPage/modifyEvent");
@@ -735,11 +853,11 @@
 //                                 document.body.appendChild(form);
 //                                 form.submit();
 
-                            	modal.style.display = "none"; // 창 닫기
+                                modal.style.display = "none"; // 창 닫기
                             
                             } else {
                                   alert("제목과 일정을 입력해 주세요.")
-		                          calendar.fullCalendar('unselect');
+                                  calendar.fullCalendar('unselect');
                             }
                             
                             
@@ -757,13 +875,20 @@
                     
                     // 클릭한 이벤트 삭제하기
                     $("#deleteBtn").on("click", function(event) {
-                    	if ($("#eventTitle").val().includes("스터디룸")) {
-                            alert("삭제가 불가합니다. 스터디룸 예약 페이지에서 확인하세요");
-                            modal.style.display = "none";
-                            return;
-                        };
+                       // 스터디룸 삭제 불가 처리
+                       if (event.reference != null && event.reference.includes("SRR")) {
+                    	   alert("삭제가 불가합니다. 스터디룸 예약 페이지에서 확인하세요");
+                           modal.style.display = "none";
+                           return;
+                      };
+                      // 소모임삭제 불가 처리
+                      if (event.reference != null && event.reference.includes("GR")) {
+                          alert("삭제가 불가합니다. 소모임 페이지에서 확인하세요");
+                          modal.style.display = "none";
+                          return;
+                     };
                         
-                    	var answer = confirm("정말로 삭제하시겠습니까?");
+                        var answer = confirm("정말로 삭제하시겠습니까?");
                         if (answer) location.href="/manage/myPage/deleteEvent?id="+$("#eventId").val()+"&student_num=${vo.student_num}";
                         else return;
                     }); // click-#deleteBtn
@@ -774,8 +899,6 @@
                 eventLimit: true // allow "more" link when too many events
         });
     }); // ready
-    
-    
     
     
     // 이벤트 등록 모달창 띄우기
@@ -806,8 +929,10 @@
             $("#cancelBtn").attr("id", "deleteBtn");
             $("#deleteBtn").val("삭제");
             // 이벤트 클릭시 수정->공식이벤트란 hide
-            $("#adminArea").empty();
-            $("#adminArea").hide();
+            $("#adminArea1").empty();
+            $("#adminArea1").hide();
+            $("#adminArea2").empty();
+            $("#adminArea2").hide();
             
             modal.style.display = "block";
         })
@@ -892,8 +1017,8 @@
     <!-- Modal content -->
     <div class="modal-content">
       <div class="modal-header">
-        <span class="close">&times;</span>
-        <h2>개인 일정 등록하기</h2>
+        <span class="close"> [ x ] </span> <!-- &times; --> 
+        <h2><i class="fa fa-calendar-plus-o"></i>  일정 등록하기</h2>
       </div>
       <div class="modal-body">
         <form>
@@ -909,18 +1034,27 @@
                 <tr>
                     <td>시간</td>
                     <td>
-                         <input type="checkbox" class="checkboxAllDay" id="checkAllDay"><label for="checkAllDay">하루종일</label>
-                    </td>
-                    <td>
-                        <div id="inputDate" class="input-append date form_datetime" data-date=""> <!-- 2012-12-21T15:25:00Z -->
-                            <input id="startDate" size="16" type="text" value="" readonly >
-                            to
-                            <input id="endDate" size="16" type="text" value="" readonly >
+                        <div class="input-daterange input-group" id="inputDate">
+                            <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                            <input type="text" class="form-control" name="start" id="startDate">
+                            <span class="input-group-addon">to</span>
+                            <input type="text" class="form-control" name="end" id="endDate">
                             <span class="add-on"><i class="icon-remove"></i></span>
                             <span class="add-on"><i class="icon-th"></i></span>
                         </div>
-                    </td>
-                    
+                        <input type="checkbox" class="checkboxAllDay" id="checkAllDay"><label for="checkAllDay">하루종일</label>
+                   </td>
+<!--                     <td> -->
+<!--                         <div id="inputDate" class="input-append date form_datetime" data-date=""> 2012-12-21T15:25:00Z -->
+<!--                             <input id="startDate" size="16" type="text" value="" readonly > -->
+<!--                             to -->
+<!--                             <input id="endDate" size="16" type="text" value="" readonly > -->
+<!--                             <span class="add-on"><i class="icon-remove"></i></span> -->
+<!--                             <span class="add-on"><i class="icon-th"></i></span> -->
+<!--                         </div> -->
+<!--                     <td> -->
+<!--                     </td> -->
+<!--                     </td> -->
                 </tr>
              
              <!-- 관리자 메뉴 -->
@@ -930,8 +1064,6 @@
                     <td>
                         <input type="checkbox" class="checkbox" id="first" value="33"><label for="first">33기</label>
                         <input type="checkbox" class="checkbox" id="second" value="34"><label for="second">34기</label>
-                    </td>
-                    <td>
                         <select id="option">
 <!--                             <option value=''>---선택---</option> -->
                             <option value='announcement'>내부/공지사항</option>
@@ -943,24 +1075,25 @@
             </c:if>
            
            </table>
-            <input type="button" value="등록" id="addBtn" data-dismiss="modal">
-            <input type="reset" value="취소" id="addReset" data-dismiss="modal">
-       </form>
+<!--             <input type="button" value="등록" id="addBtn" data-dismiss="modal"> -->
+<!--             <input type="reset" value="취소" id="addReset" data-dismiss="modal"> -->
       </div>
       <div class="modal-footer">
-        <h3>Modal Footer</h3>
+            <button type="button" id="addBtn" data-dismiss="modal" class="btn btn-success pull-left"><i class='fa fa-pencil'></i>  등록</button>
+            <button type="reset" id="addReset" data-dismiss="modal" class="btn btn-success pull-right"><i class='fa fa-undo'></i>  취소</button>
       </div>
+       </form>
     </div>
     
 <div id="clickModal" class="modal">
     <!-- Modal content -->
     <div class="modal-content">
       <div class="modal-header">
-        <span class="close">&times;</span>
-        <h2>이벤트 정보</h2>
+        <span class="close"> [ x ]</span> <!-- &times; -->
+        <h2><i class="fa fa-calendar-check-o"></i>  이벤트 정보</h2>
       </div>
       <div class="modal-body" id="clickModalBody">
-           <table>
+           <table id="eventInfo">
                 <tr>
                     <td>제목</td>
                     <td>
@@ -970,46 +1103,63 @@
                 </tr>
                 <tr>
                     <td>내용</td>
-                    <td><textarea id="eventMemo" class="form-control" rows="3" cols="40" readonly></textarea></td>
+                    <td><textarea id="eventMemo" rows="3" cols="40" readonly></textarea></td>
                 </tr>
                 <tr>
                     <td>시간</td>
-                    <td><input type="text" id="eventStart" readonly> to <input type="text" id="eventEnd" readonly></td>
+                    <td>
+                        <div class="input-daterange input-group" data-plugin-datepicker>
+                            <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                            <input type="text" class="form-control" name="start" id="eventStart" readonly>
+                            <span class="input-group-addon">to</span>
+                            <input type="text" class="form-control" name="end" id="eventEnd" readonly>
+                        </div>
+                   </td>
+<!--                     <td><input type="text" id="eventStart" readonly> to <input type="text" id="eventEnd" readonly></td> -->
                 </tr>
                 <tr>
                     <td>구분</td>
                     <td><input type="text" id="eventFormal" readonly></td>
                 </tr>
                 <tr>
-                <div id="adminArea">
-                   <!-- 공식이벤트 여부 수정 -->
-                </div>
+                    <td><div id="adminArea1"><!-- 공식이벤트 여부 수정 --></div></td>
+                    <td><div id="adminArea2"><!-- 공식이벤트 여부 수정 셀렉트박스 --></div></td>
                 </tr>   
-                <tr>
-                    <td colspan="2">
-           <div id="writerArea">
-                        <input type="button" value="수정" id="modifyBtn" data-dismiss="modal">
-                        <input type="button" value="삭제" id="deleteBtn" data-dismiss="modal">
-            </div>
-                   </td>
-                </tr>
+<!--                 <tr> -->
+<!--                     <td colspan="2"> -->
+<!--            <div id="writerArea"> -->
+<!--                         <input type="button" value="수정" id="modifyBtn" data-dismiss="modal"> -->
+<!--                         <input type="button" value="삭제" id="deleteBtn" data-dismiss="modal"> -->
+<!--             </div> -->
+<!--                    </td> -->
+<!--                 </tr> -->
            </table>
       </div>
       <div class="modal-footer">
-        <h3>Modal Footer</h3>
+         <div id="writerArea">
+               <button type="button" id="modifyBtn" data-dismiss="modal" class="btn btn-success pull-left"><i class="fa fa-spinner"></i>  수정</button>
+               <button type="button" id="deleteBtn" data-dismiss="modal" class="btn btn-success pull-right"><i class="fa fa-trash"></i>  삭제</button>
+         </div>
       </div>
     </div>
     
 </div>
 
-
 <!--// BACK TO TOP // -->
     <div id="back-to-top" class="animate-top"><i class="fa fa-angle-up"></i></div>
     
         <!-- datetimepicker -->
-    <link rel="stylesheet" href="/manage/resources/date2/bootstrap-datetimepicker.css" />
-    <script src="/manage/resources/date2/bootstrap-datetimepicker.js"></script>
+<!--     <link rel="stylesheet" href="/manage/resources/date2/bootstrap-datetimepicker.css" /> -->
+<!--     <script src="/manage/resources/date2/bootstrap-datetimepicker.js"></script> -->
+    
+        <!-- datetimepicker -->
+    <link rel="stylesheet" href="/manage/resources/date/jquery.datetimepicker.css" />
+<!--     <script src="/manage/resources/date/jquery.datetimepicker.min.js"></script> -->
+    <script src="/manage/resources/js/jquery.datetimepicker.full.min.js"></script>
 
  <%@ include file="../footer.jsp" %>
+ 
+ <script src="/manage/resources/HTML/js/bootstrap.min.js"></script>
+ 
 </body>
 </html>
