@@ -14,9 +14,9 @@
     <!-- 캘린더-이벤트 가져오기 -->
     <select id="getEvent" parameterType="int" resultType="EventVO">
         SELECT STUDENT_NUM, MEMO, ID, TITLE, ALLDAY, START_TIME AS "START", END_TIME AS "END",
-            URL_STR AS "URL", CLASSNAME, EDITABLE, STARTEDITABLE, RESOURCEEDITABLE, RENDERING, 
+            URL_STR AS "URL", CLASSNAME, EDITABLE, STARTEDITABLE, DURATIONEDITABLE, RESOURCEEDITABLE, RENDERING, 
             OVERLAP, CONSTRAINT_EVENT AS "CONSTRAINT", SOURCE_EVENT AS "SOURCE", 
-            BACKGROUNDCOLOR, BORDERCOLOR, TEXTCOLOR 
+            BACKGROUNDCOLOR, BORDERCOLOR, TEXTCOLOR, REFERENCE
         FROM EVENT
         WHERE STUDENT_NUM = #{student_num} OR CONSTRAINT_EVENT != 0
         ORDER BY START_TIME
@@ -27,16 +27,55 @@
         INSERT INTO EVENT VALUES (
             #{student_num}, #{memo}, 'EV'||EV_SEQ.NEXTVAL, #{title}, 
             <if test="allDay == true"> 1,</if>
-            <if test="allDay != true"> 0,</if>
-            TO_TIMESTAMP(#{start}, 'YYYY-MM-DD HH24:MI:SS'), TO_TIMESTAMP(#{end}, 'YYYY-MM-DD HH24:MI:SS'), null, null, 1,
-            1, 1, 1, 0, 0,
-            #{constraint}, #{source}, #{backgroundColor}, null, null
+            <if test="allDay == false"> 0,</if>
+            TO_TIMESTAMP(#{start}, 'YYYY-MM-DD HH24:MI:SS'), TO_TIMESTAMP(#{end}, 'YYYY-MM-DD HH24:MI:SS'), null, 
+            <if test="className == ''">null,</if>
+            <if test="className != ''">#{className},</if>
+            <if test="constraint == ''">1, 1, 1, 1, 0, 1,</if>
+            <if test="constraint != ''">0, 0, 0, 0, 0, 0,</if>
+            #{constraint}, null, #{backgroundColor}, null, null,
+            <if test="reference == ''">null</if>
+            <if test="reference != ''">#{reference}</if>
         )
     </insert>
     
-    <!-- 캘린더 - 수정하기!!!!! 예약 취소건 EVENT 테이블에 delete -->
-<!--     <delete id="deleteEvent" parameterType="string"> -->
-<!--         DELETE EVENT WHERE SOURCE_EVENT = #{sr_resv_num} -->
-<!--     </delete> -->
+    <!-- 캘린더 - 이벤트 수정하기 -->
+    <update id="modifyEvent" parameterType="EventVO">
+        UPDATE EVENT SET (
+            MEMO, TITLE, ALLDAY, START_TIME, END_TIME,
+            URL_STR, CLASSNAME, EDITABLE, STARTEDITABLE, DURATIONEDITABLE, RESOURCEEDITABLE, RENDERING, 
+            OVERLAP, CONSTRAINT_EVENT, SOURCE_EVENT,
+            BACKGROUNDCOLOR, BORDERCOLOR, TEXTCOLOR, REFERENCE
+        ) = ( SELECT 
+            #{memo}, #{title}, 
+            <if test="allDay == true"> 1,</if>
+            <if test="allDay == false"> 0,</if>
+            TO_TIMESTAMP(#{start}, 'YYYY-MM-DD HH24:MI:SS'), TO_TIMESTAMP(#{end}, 'YYYY-MM-DD HH24:MI:SS'), null, 
+            <if test="className == ''">null,</if>
+            <if test="className != ''">#{className},</if>
+            <if test="constraint == ''">1, 1, 1, 1, 0, 1,</if>
+            <if test="constraint != ''">0, 0, 0, 0, 0, 0,</if>
+            #{constraint}, null, #{backgroundColor}, null, null,
+            <if test="reference == ''">null</if>
+            <if test="reference != ''">#{reference}</if> 
+            FROM DUAL
+        )
+        WHERE ID = #{id} AND STUDENT_NUM = #{student_num}
+    </update>
+    
+    <!-- 캘린더 - 이벤트 삭제하기 -->
+    <delete id="deleteEvent" parameterType="EventVO">
+        DELETE EVENT WHERE ID = #{id} AND STUDENT_NUM = #{student_num}
+    </delete>
+    
+    <!-- 캘린더 - 이벤트 일정 드래그로 수정하기 -->
+    <update id="modifyEventDrag" parameterType="EventVO">
+        UPDATE EVENT SET 
+        <if test="start != ''">
+        START_TIME = (SELECT #{start} FROM DUAL),
+        </if>
+        END_TIME = (SELECT #{end} FROM DUAL)
+        WHERE ID = #{id} AND STUDENT_NUM = #{student_num}
+    </update>
     
 </mapper>
