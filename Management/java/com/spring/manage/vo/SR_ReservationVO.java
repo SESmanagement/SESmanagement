@@ -8,7 +8,7 @@ public class SR_ReservationVO { //
 	private String start_time; 	// 예약 시작시간
 	private String end_time; 	// 예약 종료시간
 	private String name;		// 학생 이름 (관리자 예약내역 조회시)
-	private String party_num;	// 학생 기수 (관리자 예약내역 조회시)
+	private String member_num;	// 학생 기수 (관리자 예약내역 조회시)
 	
 	public SR_ReservationVO() {}
 
@@ -68,19 +68,19 @@ public class SR_ReservationVO { //
 		this.name = name;
 	}
 
-	public String getParty_num() {
-		return party_num;
+	public String getmember_num() {
+		return member_num;
 	}
 
-	public void setParty_num(String party_num) {
-		this.party_num = party_num;
+	public void setmember_num(String member_num) {
+		this.member_num = member_num;
 	}
 
 	@Override
 	public String toString() {
 		return "SR_ReservationVO [sr_resv_num=" + sr_resv_num + ", studyroom_num=" + studyroom_num + ", sr_seat_num="
 				+ sr_seat_num + ", student_num=" + student_num + ", start_time=" + start_time + ", end_time=" + end_time
-				+ ", name=" + name + ", party_num=" + party_num + "]";
+				+ ", name=" + name + ", member_num=" + member_num + "]";
 	}
 
 }
