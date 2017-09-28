@@ -38,8 +38,6 @@
 
 	<!-- 별도 적용분 - 이후 삭제 처리 -->
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css" />
-<!-- 	<link rel="stylesheet" href="/manage/resources/css/style.css" /> -->
-<!-- 	<link rel="stylesheet" href="/manage/resources/css/jquery.datetimepicker.min.css" /> -->
 	<script src="/manage/resources/js/jquery-3.2.1.js"></script>
 	<script src="/manage/resources/js/jquery.datetimepicker.full.min.js"></script>
 	
@@ -93,7 +91,7 @@
         color: #666;
         font-size: 12px;
         text-shadow: 1px 1px 0px #fff;
-        background: #eaebec;
+/*         background: #eaebec; */
         margin: auto;
         text-align: center;
     }
@@ -149,30 +147,10 @@
         border-bottom: 1px solid #e0e0e0;
         border-left: 1px solid #e0e0e0;
         border-right: 1px solid #e0e0e0;
-    
-        background: #fbfbfb; /* Old browsers */
-        background: -moz-linear-gradient(top,  #fbfbfb 0%, #fafafa 100%); /* FF3.6+ */
-        background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#fbfbfb), color-stop(100%,#fafafa)); /* Chrome,Safari4+ */
-        background: -webkit-linear-gradient(top,  #fbfbfb 0%,#fafafa 100%); /* Chrome10+,Safari5.1+ */
-        background: -o-linear-gradient(top,  #fbfbfb 0%,#fafafa 100%); /* Opera 11.10+ */
-        background: -ms-linear-gradient(top,  #fbfbfb 0%,#fafafa 100%); /* IE10+ */
-        background: linear-gradient(to bottom,  #fbfbfb 0%,#fafafa 100%); /* W3C */
-        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fbfbfb', endColorstr='#fafafa',GradientType=0 ); /* IE6-9 */
     }
     
     table > tbody > tr:last-child > td{
         text-align: center;
-    }
-    
-    table > tbody > tr:hover > td {
-        background: #f2f2f2; /* Old browsers */
-        background: -moz-linear-gradient(top,  #f2f2f2 0%, #f0f0f0 100%); /* FF3.6+ */
-        background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#f2f2f2), color-stop(100%,#f0f0f0)); /* Chrome,Safari4+ */
-        background: -webkit-linear-gradient(top,  #f2f2f2 0%,#f0f0f0 100%); /* Chrome10+,Safari5.1+ */
-        background: -o-linear-gradient(top,  #f2f2f2 0%,#f0f0f0 100%); /* Opera 11.10+ */
-        background: -ms-linear-gradient(top,  #f2f2f2 0%,#f0f0f0 100%); /* IE10+ */
-        background: linear-gradient(to bottom,  #f2f2f2 0%,#f0f0f0 100%); /* W3C */
-        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f2f2f2', endColorstr='#f0f0f0',GradientType=0 ); /* IE6-9 */
     }
     
 </style>
@@ -472,8 +450,7 @@
         </div>
 
 <div class="container">
-			<h3 class="v-heading v-text-heading"><span>스터디룸 ${studyroom_num}</h1></span></h3>
-<%-- 			<h5 style="text-align:right">현재 시각 : ${sysdate } </h5> --%>
+	<h3 class="v-heading v-text-heading"><span>스터디룸 ${studyroom_num}</h1></span></h3>
 	<div id="leftside" style="display:inline-block" class="v-gallery-widget col-sm-6">
 		<table id="tb"> <!--  border="1" -->
 		  <thead>
@@ -512,9 +489,6 @@
 					<td colspan="4" style="text-align:center">
 						<button id="resvApply" class="btn v-btn v-btn-default v-small-button">예약 신청</button>
 						<button id="reset" class="btn v-btn v-btn-default v-small-button">전체 선택 취소</button>
-<!-- 						<button class="btn v-btn v-second-dark" style="border-color:#f5245f; font-size:12px;"> -->
-<!-- 						  <a href="/manage/studyroom/rooms">현황페이지로</a> -->
-<!-- 						</button> -->
 						<button class="btn v-btn v-btn-default v-small-button v-second-dark" style="border-color:#f5245f; font-size:12px;">
 						  <a href="/manage/studyroom/rooms">현황페이지로</a>
 						</button>
