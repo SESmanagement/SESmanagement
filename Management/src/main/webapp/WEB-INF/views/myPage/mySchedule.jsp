@@ -127,6 +127,12 @@
         background-color: #e5fce5!important;
     }
 
+    aside [class=fc-event] {
+        line-height: 20px;
+        width: 100px;
+        border: 1px solid;
+    }
+
 </style>
 </head>
 <body>
@@ -154,109 +160,35 @@
             eventLimit: true, // allow "more" link when too many events
             
             eventSources: [
-//             events: 
             {
              url: '/manage/myPage/getEvent',
              type: 'post',
              data: {"student_num": '${student_num}'},
                 success: function(result) {
-                	
-// // 	                        calendar.fullCalendar('removeEvents');
-// // //                         calendar.fullCalendar('addEventSource', events);         
-// //                         calendar.fullCalendar('rerenderEvents', result, true );
-	             
-	
-                 var eventArray = [];
-                 $(result).each(function(index, item) {
-                     eventArray.push({
-                            title: item.title,
-                            start: item.start,
-                            end: item.end,
-                            allDay: item.allDay,
-                            id: item.id,
-                            student_num: item.student_num,
-                            className: item.className,
-                            editable: item.editable,
-                            reference: item.reference,
-                     });
-//                     $('#calendar').fullCalendar( 'removeEventSource', item.id);
-                 }) // each
-
-
-// //                  $('#calendar').fullCalendar('addEventSource', eventArray);
-//                  $('#calendar').fullCalendar('renderEvents', eventArray, true); //  
-//                  $('#calendar').fullCalendar('removeEvents', result);
-//                  $('#calendar').fullCalendar('removeEvents', eventArray);
-
+	                 var eventArray = [];
+	                 $(result).each(function(index, item) {
+	                     eventArray.push({
+	                            title: item.title,
+	                            start: item.start,
+	                            end: item.end,
+	                            allDay: item.allDay,
+	                            id: item.id,
+	                            student_num: item.student_num,
+	                            className: item.className,
+	                            editable: item.editable,
+	                            reference: item.reference,
+	                     });
+	                  }) // each
 
 //                     $('#calendar').fullCalendar( 'addEventSource', result);         
 //                     $('#calendar').fullCalendar( 'refetchEvents' );
 //                     $('#calendar').fullCalendar( 'removeEventSources', result);
 //                  $('#calendar').fullCalendar('renderEvents', eventArray, true);
              }, // success
-//              error: function() {
-// 	              calendar.fullCalendar('unselect'); 
-// // 	              $('#calendar').fullCalendar('removeEvents');
-// 	          }
             } // events   ,
             
             ],
             
-            
-//             eventSources: [
-//                 // your event source
-//                 {
-//                     url: '/manage/myPage/getEvent',
-//                     type: 'POST',
-//                     data: {"student_num": '${student_num}'},
-//                     success: function(events) {
-// //                         calendar.fullCalendar('removeEvents', events);
-// //                         calendar.fullCalendar('addEventSource', events);         
-// //                         calendar.fullCalendar('rerenderEvents', events, true );
-
-                        
-//                        $(events).each(function(index, item) { //
-//                            // 이벤트가 중복으로 생긴다 (타입: 개인 일정)
-// //                         if (item.title) {
-// //                             alert("생성 아이디: " + item.id)
-//                                calendar.fullCalendar('renderEvent',
-//                                    {
-// //                                        title: $(this).attr('title'),
-// //                                        start: $(this).attr('start'),
-// //                                        end: $(this).attr('end'),
-// //                                        allDay: $(this).attr('allDay'),
-// //                                        id: $(this).attr('id'),
-// //                                        student_num: $(this).attr('student_num'),
-                                       
-//                                        title: item.title,
-//                                        start: item.start,
-//                                        end: item.end,
-//                                        allDay: item.allDay,
-//                                        id: item.id,
-//                                        student_num: item.student_num,
-//                                    },
-//                                    true // make the event "stick"
-//                                );
-// //                                calendar.fullCalendar('refetchEvents'); //refetchEvents
-// //                            } // if
-//                               calendar.fullCalendar('removeEventSource', item.id);
-// //                            calendar.fullCalendar('unselect');
-//                        }); // each
-// //                        calendar.fullCalendar('refetchEvents'); //refetchEvents
-//                     } // success
-// //                     error: function() {
-// //                         alert('there was an error while fetching events!');
-// //                     }
-                
-//                 } // eventSources
-                
-//                 // any other sources...
-                
-//             ],
-            
-//             viewRender: function(view, element) { 
-//                 $("#calendar").fullCalendar('refetchEvents'); // 'refresh'
-//             },
             
             // drop 처리
             droppable: true,
@@ -264,7 +196,6 @@
                 $('.draggable').data('event', { title: event.id }); // event.title
                 
                 if (confirm("일정을 정말 변경하시겠습니까?")) {
-                    alert("yes")
                     // 날짜 포맷  변경
                     var start_date = moment(event.start).format('YYYY/MM/DD HH:mm:SS');
                     var end_date = moment(event.end).format('YYYY/MM/DD HH:mm:SS');
@@ -284,9 +215,7 @@
             
             // Resize 처리
             eventResize: function(event, delta, revertFunc) {
-                alert(event.title + " end is now " + event.end.format());
-
-                if (confirm("is this okay?")) {
+                if (confirm("정말 시간을 변경하시겠습니까?")) {
                     // 날짜 포맷  변경
                     var start_date = moment(event.start).format('YYYY/MM/DD HH:mm:SS');
                     var end_date = moment(event.end).format('YYYY/MM/DD HH:mm:SS');
@@ -305,13 +234,6 @@
                 } else revertFunc();
 
             }, // eventResize
-            
-            
-            // 일정 중복 허용 ??????
-//             eventOverlap: function(stillEvent, movingEvent) {
-//                 return stillEvent.allDay && movingEvent.allDay;
-//             },
-            
             
             timeFormat: 'H(:mm)', // uppercase H for 24-hour clock
             
@@ -343,49 +265,28 @@
                     
                     // 이벤트 시간 입력
                     $("#startDate").datetimepicker({
-//                         format: "yyyy-mm-dd hh:ii:ss",
-//                         showMeridian: true,
-//                         autoclose: true,
-//                         todayBtn: true,
-//                         initialDate: new Date(start_date),
-
-                            format : 'Y/m/d H:i',
-                            value : start_date,
-                            onShow : function() {
-                                this.setOptions({
-                                    maxDate : jQuery('#endDate').val() ? jQuery(
-                                            '#endDate').val() : false,
-                                    maxTime : jQuery('#endDate').val() ? jQuery(
-                                    '#endDate').val() : false,
-                                })
-                            },
-                            timepicker : true
-// //                             allowTimes:['19:00', '20:00', '21:00', '22:00'],
-
+                        format : 'Y/m/d H:i',
+                        value : start_date,
+                        onShow : function() {
+                            this.setOptions({
+                                maxDate : $('#endDate').val() ? $('#endDate').val() : false,
+                                maxTime : $('#endDate').val().substring(11, 16) ? $('#endDate').val().substring(11, 16) : false,
+                            })
+                        },
+                        timepicker : true
                     });
                     
                     $("#endDate").datetimepicker({
-//                         format: "yyyy-mm-dd hh:ii:ss",
-//                         showMeridian: true,
-//                         autoclose: true,
-//                         todayBtn: true,
-//                         initialDate: new Date(end_date),
-//                         startDate: new Date(start_date), // 시작 날짜보다 앞선 날짜는 선택하지 못하게 한다.
-
                     	format : 'Y/m/d H:i',
                     	value : end_date,
                         onShow : function() {
                             this.setOptions({
-                                minDate : jQuery('#startDate').val() ? jQuery(
-                                        '#startDate').val() : false,
-                                minTime : jQuery('#startDate').val().substring(11, 16) ? jQuery(
-                                        '#startDate').val().substring(11, 16) : false
+                                minDate : $('#startDate').val() ? $('#startDate').val() : false,
+                                minTime : $('#startDate').val().substring(11, 16) ? $('#startDate').val().substring(11, 16) : false
                             })
                         },
                         timepicker : true
-// //                         allowTimes:['19:00', '20:00', '21:00', '22:00'],
                     });
-                    
                     
                     var title = "";
                     var memo = "";
@@ -436,10 +337,6 @@
                                     reference = "평가/시험";
                                     backgroundColor = "#fdffbc";    // 평가/시험
                                 } 
-    //                             else {
-    //                                 reference = "";
-    //                                 backgroundColor = "";
-    //                             }
                             }  
                             // if-#option
                         } // if-관리자
@@ -476,14 +373,8 @@
                 }, // select
                 
                 eventClick:function(event) {
-//                         clickEvent(event);
                     // 해당 이벤트의 id
                     var id = event.id;
-                    
-                    // 스터디룸, 소모임의 경우 수정/삭제버튼 숨기기
-//                     if (event.reference != null && (event.reference.includes("SRR") || event.reference.includes("GR"))) {
-//                     	$("#writerArea").css("display", "none");
-//                     };
                     
                     // 본인 작성 이벤트일 경우에는 수정/삭제버튼 확인 가능
                     $("#writerArea").css("visibility", "");
@@ -504,12 +395,14 @@
                         var start_date = moment(event.start).format('YYYY/MM/DD HH:mm:SS');
                         var end_date = moment(event.end).format('YYYY/MM/DD HH:mm:SS');
                         var id = event.id;
+                        var reference = event.reference;
                         
                         $("#eventTitle").val(title);
                         $("#eventMemo").val(memo);
                         $("#eventStart").val(start_date);
                         $("#eventEnd").val(end_date);
                         $("#eventId").val(id); // hidden
+                        $("#eventReference").val(reference); // hidden
                         
                         if (event.constraint != 0) {
                             if (event.constraint == 99) {
@@ -528,20 +421,14 @@
                         // 이벤트 클릭시 버튼의 이전 상태가 확인/취소 일 경우 -> 수정/삭제 버튼으로 변경
                         $("button").each(function(index, item) {
                         	if (item.id == "okBtn") {
-                        		alert(item.textContent);
                         		item.id = "modifyBtn";
                         		item.textContent = "수정";
                         		$("#okBtn").off("click");
-//                                 $(item).attr("id", "modifyBtn");
-//                                 $(item).val("수정");
                         	}
                         	if (item.id == "cancelBtn") {
-                        		alert(item.textContent);
                                 item.id = "deleteBtn";
                                 item.textContent= "삭제";
                                 $("#cancelBtn").off("click");
-//                         		$(item).attr("id", "deleteBtn");
-//                         		$(item).val("삭제");
                         	}
                         });
                         
@@ -556,7 +443,6 @@
 			        span.onclick = function() {
 			            modal.style.display = "none";
 			        }
-
             
                     // When the user clicks anywhere outside of the modal, close it
                     window.onclick = function(event) {
@@ -565,16 +451,8 @@
                         }
                     } // window.onclick
                     
-                    $("#modifyBtn").on("click", function(event) {
-                    	alert("수정수정");
+                    $("#modifyBtn").on("click", function() {
                         $("#deleteBtn").off("click"); // 삭제버튼 이벤트 삭제
-                        
-//                         if ($("#eventTitle").val().includes("스터디룸")) {
-//                             alert("수정이 불가합니다. 스터디룸 예약 페이지에서 확인하세요");
-//                             modal.style.display = "none";
-//                             return;
-//                         };
-                        
                         if (event.reference != null && event.reference.includes("SRR")) {
 	                         alert("수정이 불가합니다. 스터디룸 예약 페이지에서 확인하세요");
 	                         modal.style.display = "none";
@@ -586,14 +464,14 @@
                             modal.style.display = "none";
                             return;
                        };
+                       
+                       if (event.reference != null && event.reference.includes("BR")) {
+                           alert("수정이 불가합니다. 도서대여 페이지에서 확인하세요");
+                           modal.style.display = "none";
+                           return;
+                      };
                         
-//                         if ($("#eventTitle").val().includes("소모임")) {
-//                             alert("수정이 불가합니다. 소모임 페이지에서 확인하세요");
-//                             modal.style.display = "none";
-//                             return;
-//                         };
-                        
-                        
+                        // 각 텍스트 태그 수정 가능 상태로 변경
                         $("#eventTitle").attr("readOnly", false);
                         $("#eventMemo").attr("readOnly", false);
                         $("#eventStart").attr("readOnly", false);
@@ -607,41 +485,15 @@
                         
                         // 이벤트 시간 입력
                         $("#eventStart").datetimepicker({
-//                             format: "yyyy-mm-dd hh:ii:ss",
-//                             showMeridian: true,
-//                             autoclose: true,
-//                             todayBtn: true,
-//                             initialDate: new Date($("#eventStart").val()),
-
-                            format : 'Y/m/d H:i',
-//                             value : start_date,
-//                             onShow : function() {
-//                                 this.setOptions({
-//                                     maxDate : jQuery('#eventEnd').val() ? jQuery(
-//                                             '#eventEnd').val() : false,
-//                                     maxTime : jQuery('#eventEnd').val() ? jQuery(
-//                                     '#eventEnd').val() : false,
-//                                 })
-//                             },
                             timepicker : true
                         });
                         
                         $("#eventEnd").datetimepicker({
-//                             format: "yyyy-mm-dd hh:ii:ss",
-//                             showMeridian: true,
-//                             autoclose: true,
-//                             todayBtn: true,
-//                             initialDate: new Date($("#eventEnd").val()),
-//                             startDate: new Date($("#eventStart").datetimepicker({format: 'yyyy-mm-dd hh:ii'})), // 시작 날짜보다 앞선 날짜는 선택하지 못하게 한다. - 안먹힘..ㅠㅠ
-                            
                             format : 'Y/m/d H:i',
-//                             value : end_date,
                             onShow : function() {
                                 this.setOptions({
-                                    minDate : jQuery('#eventStart').val() ? jQuery(
-                                            '#eventStart').val() : false,
-                                    minTime : jQuery('#eventStart').val() ? jQuery(
-                                            '#eventStart').val() : false
+                                    minDate : $('#eventStart').val() ? $('#eventStart').val() : false,
+                                    minTime : $('#eventStart').val().substring(11, 16) ? $('#eventStart').val().substring(11, 16) : false
                                 })
                             },
                             timepicker : true
@@ -692,10 +544,8 @@
                                 
                              // 새로 체크된 기수 내역 constraintList_modify 배열에 담기
                                 $(document).on("click", ".checkboxEvent", function() {
-                                    alert("기수: " + this.value);
                                     if (constraintList_modify.indexOf(this.value) != -1) {
                                         var index = constraintList_modify.indexOf(this.value);
-                                        alert("인덱스: " + index);
                                         constraintList_modify.splice(index, 1);
                                     } else constraintList_modify.push(this.value);
                                 });
@@ -715,8 +565,6 @@
                         
                         // 수정 > 확인 버튼 누르기
                         $("#okBtn").click(function(event) {
-                            alert("확인버튼 클릭");
-                            
                          // db로 보낼 이벤트 수정 내역
                             var title = $("#eventTitle").val();
                             var memo = $("#eventMemo").val();
@@ -736,10 +584,8 @@
                                     else if (constraintList_modify.length == 1) constraint = constraintList_modify[0];
                                     else constraint = 0;
                                     
-                                
                                     // 공식 이벤트 구분
                                     if (constraint != 0) {
-                                        alert("옵션: "+ optionValue_modify);
                                         if (optionValue_modify == '') {
                                             alert("공식이벤트 구분을 선택해 주세요");
                                             $(".checkboxEvent").prop("checked", false);
@@ -787,80 +633,12 @@
                                     } // success
                                 }); // ajax
                                 
-//                                 var form = document.createElement("form");
-//                                 form.setAttribute("method", "post");
-//                                 form.setAttribute("action", "/manage/myPage/modifyEvent");
-                                
-//                                     var hidden1 = document.createElement("input");
-//                                     hidden1.setAttribute("type", "hidden");
-//                                     hidden1.setAttribute("name", "title");
-//                                     hidden1.setAttribute("value", title);
-//                                     form.appendChild(hidden1);
-                                    
-//                                     var hidden2 = document.createElement("input");
-//                                     hidden2.setAttribute("type", "hidden");
-//                                     hidden2.setAttribute("name", "start");
-//                                     hidden2.setAttribute("value", start_dt);
-//                                     form.appendChild(hidden2);
-                                    
-//                                     var hidden3 = document.createElement("input");
-//                                     hidden3.setAttribute("type", "hidden");
-//                                     hidden3.setAttribute("name", "end");
-//                                     hidden3.setAttribute("value", end_dt);
-//                                     form.appendChild(hidden3);
-                                    
-//                                     var hidden4 = document.createElement("input");
-//                                     hidden4.setAttribute("type", "hidden");
-//                                     hidden4.setAttribute("name", "memo");
-//                                     hidden4.setAttribute("value", memo);
-//                                     form.appendChild(hidden4);
-                                    
-//                                     var hidden6 = document.createElement("input");
-//                                     hidden6.setAttribute("type", "hidden");
-//                                     hidden6.setAttribute("name", "student_num");
-//                                     hidden6.setAttribute("value", student_num);
-//                                     form.appendChild(hidden6);
-                                    
-//                                     var hidden9 = document.createElement("input");
-//                                     hidden9.setAttribute("type", "hidden");
-//                                     hidden9.setAttribute("name", "id");
-//                                     hidden9.setAttribute("value", id);
-//                                     form.appendChild(hidden9);
-                                    
-//                                  // 관리자일 경우에만
-//                                     if (student_num == 1) {
-//                                         var hidden5 = document.createElement("input");
-//                                         hidden5.setAttribute("type", "hidden");
-//                                         hidden5.setAttribute("name", "constraint");
-//                                         hidden5.setAttribute("value", constraint);
-//                                         form.appendChild(hidden5);
-                                        
-                                        
-//                                         var hidden7 = document.createElement("input");
-//                                         hidden7.setAttribute("type", "hidden");
-//                                         hidden7.setAttribute("name", "backgroundColor");
-//                                         hidden7.setAttribute("value", backgroundColor);
-//                                         form.appendChild(hidden7);
-                                        
-//                                         var hidden8 = document.createElement("input");
-//                                         hidden8.setAttribute("type", "hidden");
-//                                         hidden8.setAttribute("name", "reference");
-//                                         hidden8.setAttribute("value", reference);
-//                                         form.appendChild(hidden8);
-                                        
-//                                     }
-                                    
-//                                 document.body.appendChild(form);
-//                                 form.submit();
-
                                 modal.style.display = "none"; // 창 닫기
                             
                             } else {
                                   alert("제목과 일정을 입력해 주세요.")
                                   calendar.fullCalendar('unselect');
                             }
-                            
-                            
                         }); // click-#okBtn
                         
                         // 수정 > 취소 버튼 누르기
@@ -869,12 +647,11 @@
                             if(cancelAnswer) modal.style.display = "none";
                             else return;
                         }); // click-#cancelBtn
-                        
                     }); // modifyBtn
                     
                     
                     // 클릭한 이벤트 삭제하기
-                    $("#deleteBtn").on("click", function(event) {
+                    $("#deleteBtn").on("click", function() {
                        // 스터디룸 삭제 불가 처리
                        if (event.reference != null && event.reference.includes("SRR")) {
                     	   alert("삭제가 불가합니다. 스터디룸 예약 페이지에서 확인하세요");
@@ -887,6 +664,13 @@
                           modal.style.display = "none";
                           return;
                      };
+                     
+                     // 도서대여 불가 처리
+                     if (event.reference != null && event.reference.includes("BR")) {
+                         alert("삭제가 불가합니다. 도서대여 페이지에서 확인하세요");
+                         modal.style.display = "none";
+                         return;
+                    };
                         
                         var answer = confirm("정말로 삭제하시겠습니까?");
                         if (answer) location.href="/manage/myPage/deleteEvent?id="+$("#eventId").val()+"&student_num=${vo.student_num}";
@@ -997,9 +781,7 @@
 </div>
         
 <div class="container">
-     <h5 style="text-align:right">현재 시각 : ${sysdate }</h5>
-     <h5 style="text-align:right">${vo.name} 님 : ${vo.student_num}</h5>
-     
+
          <!--Article-->
              <article class="col-sm-9">
                  <div class="post-info clearfix">
@@ -1009,7 +791,32 @@
                     </div>
                  </div>
              </article>
-</div>
+
+            <!--Right Sidebar-->
+            <aside class="sidebar right-sidebar col-sm-3">
+                <section class="widget v-search-widget clearfix">
+	                <div class="v-heading-v2 h5" style="display: inline-block">
+	                    <h4>일정 색상 구분</h4>
+	                </div>
+	                <div style="text-align:justify;">
+		                <div style="display: inline-block;">
+			                <div class="fc-event" style="background-color:#f5245f;">스터디룸</div>
+		                    <div class="fc-event" style="background-color:#ffb5ad; color:#1b0266; border:1px solid white;">소모임</div>
+		                    <div class="fc-event" style="background-color:#f48342;">33기 공지</div>
+		                    <div class="fc-event" style="background-color:#1aaaad;">34기 공지</div>
+		                    <div class="fc-event" style="background-color:#7405ba;">전체 공지</div>
+		                </div>
+		                <div style="display: inline-block;">
+		                    <div class="fc-event">개인 일정</div>
+		                    <div class="fc-event" style="background-color:#4286f4;">도서 대여요청</div>
+		                    <div class="fc-event" style="background-color:#002666;">도서 대여중</div>
+		                    <div class="fc-event" style="background-color:#a7b4cc;">도서 반납완료</div>
+		                    <div class="fc-event" style="background-color:#ff2626;">도서 연체중</div>
+	                    </div>
+                    </div>
+                </section>
+            </aside>
+</div> <!-- 컨테이너 -->
 
 
 <!-- modal -->
@@ -1044,17 +851,6 @@
                         </div>
                         <input type="checkbox" class="checkboxAllDay" id="checkAllDay"><label for="checkAllDay">하루종일</label>
                    </td>
-<!--                     <td> -->
-<!--                         <div id="inputDate" class="input-append date form_datetime" data-date=""> 2012-12-21T15:25:00Z -->
-<!--                             <input id="startDate" size="16" type="text" value="" readonly > -->
-<!--                             to -->
-<!--                             <input id="endDate" size="16" type="text" value="" readonly > -->
-<!--                             <span class="add-on"><i class="icon-remove"></i></span> -->
-<!--                             <span class="add-on"><i class="icon-th"></i></span> -->
-<!--                         </div> -->
-<!--                     <td> -->
-<!--                     </td> -->
-<!--                     </td> -->
                 </tr>
              
              <!-- 관리자 메뉴 -->
@@ -1075,8 +871,6 @@
             </c:if>
            
            </table>
-<!--             <input type="button" value="등록" id="addBtn" data-dismiss="modal"> -->
-<!--             <input type="reset" value="취소" id="addReset" data-dismiss="modal"> -->
       </div>
       <div class="modal-footer">
             <button type="button" id="addBtn" data-dismiss="modal" class="btn btn-success pull-left"><i class='fa fa-pencil'></i>  등록</button>
@@ -1099,6 +893,7 @@
                     <td>
                         <input type="text" id="eventTitle" readonly>
                         <input type="hidden" id="eventId">
+                        <input type="hidden" id="eventReference">
                     </td>
                 </tr>
                 <tr>
@@ -1115,7 +910,6 @@
                             <input type="text" class="form-control" name="end" id="eventEnd" readonly>
                         </div>
                    </td>
-<!--                     <td><input type="text" id="eventStart" readonly> to <input type="text" id="eventEnd" readonly></td> -->
                 </tr>
                 <tr>
                     <td>구분</td>
@@ -1125,14 +919,6 @@
                     <td><div id="adminArea1"><!-- 공식이벤트 여부 수정 --></div></td>
                     <td><div id="adminArea2"><!-- 공식이벤트 여부 수정 셀렉트박스 --></div></td>
                 </tr>   
-<!--                 <tr> -->
-<!--                     <td colspan="2"> -->
-<!--            <div id="writerArea"> -->
-<!--                         <input type="button" value="수정" id="modifyBtn" data-dismiss="modal"> -->
-<!--                         <input type="button" value="삭제" id="deleteBtn" data-dismiss="modal"> -->
-<!--             </div> -->
-<!--                    </td> -->
-<!--                 </tr> -->
            </table>
       </div>
       <div class="modal-footer">
@@ -1148,13 +934,8 @@
 <!--// BACK TO TOP // -->
     <div id="back-to-top" class="animate-top"><i class="fa fa-angle-up"></i></div>
     
-        <!-- datetimepicker -->
-<!--     <link rel="stylesheet" href="/manage/resources/date2/bootstrap-datetimepicker.css" /> -->
-<!--     <script src="/manage/resources/date2/bootstrap-datetimepicker.js"></script> -->
-    
-        <!-- datetimepicker -->
+    <!-- datetimepicker -->
     <link rel="stylesheet" href="/manage/resources/date/jquery.datetimepicker.css" />
-<!--     <script src="/manage/resources/date/jquery.datetimepicker.min.js"></script> -->
     <script src="/manage/resources/js/jquery.datetimepicker.full.min.js"></script>
 
  <%@ include file="../footer.jsp" %>
