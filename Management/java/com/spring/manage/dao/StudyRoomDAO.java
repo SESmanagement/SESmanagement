@@ -95,8 +95,4 @@ public interface StudyRoomDAO { //
 	// 관리자 메뉴 - 예약 내역 조회 결과 전체 게시글 수 가져오기
 	public int getTotal(HashMap map);
 
-	// 캘린더-이벤트 가지고 오기
-	public ArrayList<EventVO> getEvent(int student_num);
-
-
 }
