@@ -51,7 +51,7 @@ public class EventServiceImpl implements EventService {
 			vo.setClassName("");
 			
 		} else if (vo.getConstraint() == 99) {
-			vo.setBackgroundColor("#7405ba");
+			vo.setBackgroundColor("#1aaaad");
 			vo.setClassName("");
 			
 		} else vo.setClassName("draggable");
@@ -67,8 +67,6 @@ public class EventServiceImpl implements EventService {
 			return dao.getEvent(vo.getStudent_num());
 		}
 		else return null; //"false";
-		
-//		return dao.addEvent(vo);
 	}
 
 	@Override
@@ -94,8 +92,6 @@ public class EventServiceImpl implements EventService {
 			vo.setAllDay(true);
 		} else vo.setAllDay(false);
 
-		System.out.println("서비스임플 아이디: " + vo.getId());
-		System.out.println("수정 갯수: " +  dao.modifyEvent(vo));
 		if (dao.modifyEvent(vo) == 1) return "true";
 		else return "false";
 		
