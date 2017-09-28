@@ -27,26 +27,41 @@ public class AdminDAOImpl {
 	
 	public int lendBook(Map<String, Integer> map){
 		AdminDAO dao=sqlSession.getMapper(AdminDAO.class);
-		return dao.lendBook(map);
+		int result = dao.lendBook(map);
+		dao.modifyLendEvent(map);
+		return result;
 	}
 	
 	public int rejectBook(int num){
 		AdminDAO dao=sqlSession.getMapper(AdminDAO.class);
-		return dao.rejectBook(num);
+		int result = dao.rejectBook(num);
+		dao.deleteLendEvent(num);
+		return result;
 	}
 	
 	public int returnBook(int num){
 		AdminDAO dao=sqlSession.getMapper(AdminDAO.class);
-		return dao.returnBook(num);
+		int result = dao.returnBook(num);
+		dao.endLendEvent(num);
+		return result;
 	}
 	
 	public int updateDelayed(){
 		AdminDAO dao=sqlSession.getMapper(AdminDAO.class);
-		return dao.updateDelayed();
+		int result = dao.updateDelayed();
+		// 연체 리스트 가져오기
+		ArrayList<LendVO> delayedList = dao.getDelayedList(); 
+		// 연체 리스트의 개별 대여건별로 이벤트 테이블 업데이트
+		for (LendVO vo : delayedList) {
+			dao.delayedLendEvent(vo);
+		}
+		return result;
 	}
 	
 	public int returnDelayedBook(int num){
 		AdminDAO dao=sqlSession.getMapper(AdminDAO.class);
-		return dao.returnDelayedBook(num);
+		int result = dao.returnDelayedBook(num);
+		dao.endLendEvent(num);
+		return result;
 	}
 }
