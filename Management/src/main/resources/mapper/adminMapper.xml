@@ -71,5 +71,57 @@
 	WHERE num=#{num}
 </update>
 
+<!-- 캘린더관련 -->	
+<!-- 대출 승인 -->
+<update id="lendBook" parameterType="map">
+    UPDATE lend
+    SET status='lent', enddate = sysdate + #{daysOfLend}, startdate = sysdate
+    WHERE num = #{num}
+</update>
+
+<!-- 캘린더 : 도서 대출 승인시 대여요청일자 -> 반납예정일자로 변경 표시 -->
+<update id="modifyLendEvent" parameterType="map">
+    UPDATE EVENT SET (
+        MEMO, START_TIME, END_TIME, BACKGROUNDCOLOR, TEXTCOLOR
+    ) = ( SELECT 
+        '대여중 from '||TO_CHAR(SYSDATE, 'YY/MM/DD'), SYSDATE + #{daysOfLend}, SYSDATE + #{daysOfLend}, '#002666', '#FFFFFF'
+        FROM DUAL
+    )
+    WHERE REFERENCE = 'BR'||#{num}
+</update>
+	
+<!-- 캘린더 : 도서 대출 반려시 이벤트 삭제 -->
+<delete id="deleteLendEvent" parameterType="int">
+    DELETE EVENT WHERE REFERENCE = 'BR'||#{num}
+</delete>
+	
+<!-- 캘린더 : 도서 반납시 반납일자에 반납여부 표시 -->
+<update id="endLendEvent" parameterType="int">
+    UPDATE EVENT SET (
+        MEMO, START_TIME, END_TIME, BACKGROUNDCOLOR, TEXTCOLOR
+    ) = ( SELECT 
+        '반납완료', SYSDATE, SYSDATE, '#a7b4cc', '#FFFFFF'
+        FROM DUAL
+    )
+    WHERE REFERENCE = 'BR'||#{num}
+</update>
+	
+<!-- 도서 연체 리스트 가지고 오기 -->
+<select id="getDelayedList" resultType="LendVO">
+    SELECT * FROM LEND WHERE STATUS = 'DELAY_RETURNED'
+</select>
+
+<!-- 캘린더 : 도서 연체시 연체일자에 연체여부 표시 -->
+<update id="delayedLendEvent" parameterType="LendVO">
+	    UPDATE EVENT SET (
+	        MEMO, START_TIME, END_TIME, BACKGROUNDCOLOR, TEXTCOLOR
+	    ) = ( SELECT 
+	        '연체중 from '||TO_CHAR(#{enddate}, 'YY/MM/DD'), SYSDATE, SYSDATE, '#ff2626', '#FFFFFF'
+	        FROM DUAL
+	    )
+	    WHERE REFERENCE = 'BR'||#{num}
+</update>
+	
+
 	
 </mapper>
