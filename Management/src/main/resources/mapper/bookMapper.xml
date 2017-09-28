@@ -54,10 +54,40 @@
 </insert>
 
 <!-- 대출신청 -->
-<insert id="reserveBook" parameterType="map">
-	INSERT INTO lend (num, mem_num, booknum, startdate, status)
-	VALUES
-	(lend_seq.nextval, #{mem_num}, #{booknum}, sysdate, 'reserved')
+<!--<insert id="reserveBook" parameterType="map"> -->
+<!--	INSERT INTO lend (num, mem_num, booknum, startdate, status) -->
+<!--	VALUES -->
+<!--	(lend_seq.nextval, #{mem_num}, #{booknum}, sysdate, 'reserved') -->
+<!-- </insert> -->
+
+<!-- 캘린더관련-->
+<!-- 대출신청 : 파라미터 map => LendVO로 변경-->
+<insert id="reserveBook" parameterType="LendVO">
+    INSERT INTO lend (num, mem_num, booknum, startdate, status)
+    VALUES
+    (lend_seq.nextval, #{mem_num}, #{booknum}, sysdate, 'reserved')
+    
+    <selectKey keyProperty="num" resultType="int" order="AFTER"> 
+        SELECT LEND_SEQ.CURRVAL FROM DUAL
+    </selectKey>
+    
+</insert>
+
+<!-- 대여신청한 도서의 제목 가져오기 -->
+<select id="getBookTitle" parameterType="LendVO" resultType="String">
+    SELECT TITLE FROM BOOKS WHERE NUM = #{booknum}
+</select>
+
+<!-- 캘린더 - 대여요청건 EVENT 테이블에 insert , 반납예정일자만 insert 이후 리턴, 연체일자 추가하기-->
+<insert id="addEvent" parameterType="LendVO">
+    INSERT INTO EVENT VALUES (
+      #{mem_num}, '대여요청', 'EV'||EV_SEQ.NEXTVAL, #{title}, 1,
+      TO_TIMESTAMP(#{startdate}||' '||'00:00:00', 'YY/MM/DD HH24:MI:SS'),
+      TO_TIMESTAMP(#{startdate}||' '||'00:00:00', 'YY/MM/DD HH24:MI:SS'), null, null, 
+      0, 0, 0, 0, 0, 0, 0,
+      null, '#4286f4', null, '#000000', 'BR'||#{num}
+    )
+
 </insert>
 
 <!-- 대출이력 열람 -->
