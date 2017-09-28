@@ -85,7 +85,7 @@
       TO_TIMESTAMP(#{startdate}||' '||'00:00:00', 'YY/MM/DD HH24:MI:SS'),
       TO_TIMESTAMP(#{startdate}||' '||'00:00:00', 'YY/MM/DD HH24:MI:SS'), null, null, 
       0, 0, 0, 0, 0, 0, 0,
-      null, '#4286f4', null, '#000000', 'BR'||#{num}
+      null, '#4286f4', null, '#FFFFFF', 'BR'||#{num}
     )
 
 </insert>
