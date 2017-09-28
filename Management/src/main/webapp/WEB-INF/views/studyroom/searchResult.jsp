@@ -205,12 +205,6 @@
                  } // if
             }) // each
             
-            // 선택된 내역이 없을 경우, submit 취소
-//             if (checkList.length < 1) {
-//                 alert("선택된 내역이 없습니다.");
-//                 return;
-//             } // if 
-            
             var addRow = "";
             for (var i = 0; i < checkList.length; i++) {
             	  addRow += checkList[i]+"&nbsp;&nbsp&nbsp" // "스터디룸 "+
@@ -218,7 +212,6 @@
             $("#text-area_SR").append(addRow);
             studyroom_checkList = checkList;
             $("#next").attr("data-dissmiss", true); // ??????
-            
     	}) // click-#studyroomSubmit
     }); // click-#searchSR
     
@@ -299,27 +292,14 @@
 		$.ajax({
 			url : "/manage/studyroom/getStudyRoomInfo",
 			type : "post",
-			data : {
-				"studyroom_num" : studyroom_num
-			},
+			data : {"studyroom_num" : studyroom_num},
 			success : function(result) {
-				$(result).each(
-						function(index, item) {
+				$(result).each(function(index, item) {
 							$("#printStudyRoom").children("#" + item.seat_x + "_" + item.seat_y + "").text(item.sr_seat_num);
 							// $("#inside").children("#"+item.seat_x+"_"+item.seat_y+"").css("margin-right", 0);
 							$("#printStudyRoom").children("#" + item.seat_x + "_" + item.seat_y + "").attr("margin", "0px");
 							$("#printStudyRoom").children("#" + item.seat_x + "_" + item.seat_y + "").css("background-color", "");
-							//                             if (item.activate == 0) {
-							//                                 $("#showStudyRoom").children("#" + item.seat_x + "_" + item.seat_y+ "").addClass(
-							//                                         "btn v-btn v-midnight-blue");
-							//                             } else if (item.seated_status == 4) {
-							//                                 $("#showStudyRoom").children("#" + item.seat_x + "_" + item.seat_y+ "").addClass("btn v-btn");
-							//                                 $("#showStudyRoom").children("#" + item.seat_x + "_" + item.seat_y+ "").css("background-color","red"); // 풀예약으로 예약 불가
-							//                             } else
-							$("#printStudyRoom").children(
-									"#" + item.seat_x + "_" + item.seat_y + "")
-									.addClass("btn v-btn v-emerald");
-
+							$("#printStudyRoom").children("#" + item.seat_x + "_" + item.seat_y + "").addClass("btn v-btn v-emerald");
 						}) // each
 			} // success
 		}) // ajax
@@ -334,38 +314,21 @@
 			success : function(result) {
 				$(result).each(
 						function(index, item) {//*
-							$("#printStudyRoom").children(
-									"#" + item.seat_x + "_" + item.seat_y)
-									.text(item.facility_name);
-							$("#printStudyRoom").children(
-									"#" + item.seat_x + "_" + item.seat_y + "")
-									.css("background-color", "");
-							//                  $("#inside").children("#"+item.seat_x+"_"+item.seat_y).css("margin-right", 0);
+							$("#printStudyRoom").children("#" + item.seat_x + "_" + item.seat_y).text(item.facility_name);
+							$("#printStudyRoom").children("#" + item.seat_x + "_" + item.seat_y + "").css("background-color", "");
 							if (item.activate == 0) {
-								$("#printStudyRoom").children(
-										"#" + item.seat_x + "_" + item.seat_y
-												+ "").addClass(
-										"btn v-btn v-midnight-blue");
-							} else
-								$("#printStudyRoom").children(
-										"#" + item.seat_x + "_" + item.seat_y
-												+ "").addClass(
-										"btn v-btn v-peter-river");
+								$("#printStudyRoom").children("#" + item.seat_x + "_" + item.seat_y + "").addClass("btn v-btn v-midnight-blue");
+							} else $("#printStudyRoom").children("#" + item.seat_x + "_" + item.seat_y + "").addClass("btn v-btn v-peter-river");
 						}) // each
 			} // success
 		}) // ajax
-
 	};
 
 	// 스터디룸 텍스트 클릭시 해당 스터디룸 배치도 표시
-	$(document)
-			.on(
-					"click",
-					"label",
-					function() {
-						allocateStudyRoom(this);
-						document.getElementById("studyroom_title").innerHTML = this.textContent;
-					});
+	$(document).on("click","label",function() {
+		allocateStudyRoom(this);
+		document.getElementById("studyroom_title").innerHTML = this.textContent;
+	});
 
 	// 체크박스 전체 선택하기
 	$(document).on("click", "#checkAll", function() {
@@ -477,8 +440,6 @@
           }) // blur
     });
     
-    
-    
  // 확인 버튼 클릭시
     $(document).on("click", "#etcSubmit", function() {
         $("#text-area_etc").empty();
@@ -521,13 +482,11 @@
         }
         $("#text-area_etc").append(addRow);
         etc_checkList = checkList;
-//         $("#next").attr("data-dissmiss", true); // ??????
     }) // click-#etcSubmit
     
     // 제출 버튼 누르기
     $(document).on("click", "#submit", function() {
     	var array = [];
-//     	array.push($("#text-area_SR").text()+"_"+$("#text-area_date").text()+"_"+$("#text-area_etc").text());
     	array.push(studyroom_checkList+"_"+date_checkList+"_"+etc_checkList);
     	
     	var form = document.createElement("form");
@@ -881,7 +840,6 @@
 
     <!-- datetimepicker -->
     <link rel="stylesheet" href="/manage/resources/date/jquery.datetimepicker.css" />
-<!--     <script src="/manage/resources/date/jquery.datetimepicker.min.js"></script> -->
     <script src="/manage/resources/js/jquery.datetimepicker.full.min.js"></script>
 
 </html>
