@@ -39,7 +39,7 @@ public class AdminController {
 	}
 	
 	//대출 신청 목록 : 대출 승인
-	@RequestMapping(value="/lendBook", method=RequestMethod.GET)
+	@RequestMapping(value="/lendBook", produces = "application/text; charset=utf8", method=RequestMethod.GET)
 	public @ResponseBody String lendBook(int num, int daysOfLend){
 		Map<String, Integer> map=new HashMap<>();
 		map.put("num", num);
@@ -51,7 +51,7 @@ public class AdminController {
 	}
 	
 	//대출 신청 목록 : 대출 반려
-	@RequestMapping(value="/rejectBook", method=RequestMethod.GET)
+	@RequestMapping(value="/rejectBook", produces = "application/text; charset=utf8", method=RequestMethod.GET)
 	public @ResponseBody String rejectBook(int num){
 		if(repo.rejectBook(num)>0){
 			return "대출반려 되었습니다";
@@ -77,7 +77,7 @@ public class AdminController {
 	}
 	
 	//대출목록 : 반납
-	@RequestMapping(value="/returnBook", method=RequestMethod.GET)
+	@RequestMapping(value="/returnBook", produces = "application/text; charset=utf8", method=RequestMethod.GET)
 	public @ResponseBody String returnBook(int num){
 		if(repo.returnBook(num)>0){
 			return "반납 되었습니다";
@@ -101,7 +101,7 @@ public class AdminController {
 	}
 	
 	//연체 도서 반납
-	@RequestMapping(value="/returnDelayedBook", method=RequestMethod.GET)
+	@RequestMapping(value="/returnDelayedBook", produces = "application/text; charset=utf8", method=RequestMethod.GET)
 	public @ResponseBody String returnDelayedBook(int num){
 		if(repo.returnDelayedBook(num)>0){
 			return "반납 되었습니다";
