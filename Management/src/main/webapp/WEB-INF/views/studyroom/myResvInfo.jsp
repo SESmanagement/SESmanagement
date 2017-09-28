@@ -40,8 +40,6 @@
 
 	<!-- 별도 적용분 - 이후 삭제 처리 -->
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css" />
-<!-- 	<link rel="stylesheet" href="/manage/resources/css/style.css" /> -->
-<!-- 	<link rel="stylesheet" href="/manage/resources/css/jquery.datetimepicker.min.css" /> -->
 	<script src="/manage/resources/js/jquery-3.2.1.js"></script>
 	<script src="/manage/resources/js/jquery.datetimepicker.full.min.js"></script>
 	
@@ -216,8 +214,7 @@
         </div>
 
 <div class="container">
-		<h3 class="v-heading v-text-heading"><span>${sessionScope.vo.name } 님의 스터디룸 예약 현황</span></h3>
-<%-- 		<h5 style="text-align:right">현재 시각 : ${sysdate } </h5> --%>
+	<h3 class="v-heading v-text-heading"><span>${sessionScope.vo.name } 님의 스터디룸 예약 현황</span></h3>
 </div>
 
 <div class="container">
@@ -246,7 +243,7 @@
 		<c:set var="start_time" value="${vo.start_time }"></c:set>
 		<c:set var="end_time" value="${vo.end_time }"></c:set>
 				<td>
-			<c:if test="${now < start_date }"> <!-- 부등호 < 로 바꾸기 -->
+			<c:if test="${now < start_date }"> 
 					<input type="checkbox" id="${vo.sr_resv_num }" name="checkbox" class="checkbox" value="${vo.sr_resv_num }">
 					<label for="${vo.sr_resv_num }" style="color:white">${vo.sr_resv_num }</label>
 			</c:if>
@@ -256,7 +253,7 @@
 				<td>${vo.sr_seat_num}</td>
 				<td>${fn:substring(start_time, 11, 16)}</td>
 				<td>${fn:substring(end_time, 11, 16)}</td>
-				<td class="number"><input type="hidden" name="sr_resv_num" value="${vo.sr_resv_num }" ></td>
+				<input type="hidden" name="sr_resv_num" value="${vo.sr_resv_num }" >
 		</tr>
 		</c:forEach>
 		</c:if>
