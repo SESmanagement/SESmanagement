@@ -119,6 +119,14 @@
     .v-btn {
         background-color: #FFF;
     }
+    
+    aside [class=fc-event] {
+        line-height: 20px;
+        width: 100px;
+        color: white;
+        border-radius: 3px;
+        border: 1px solid;
+    }
 	
 </style>
 </head>
@@ -222,9 +230,6 @@
                     } // success
                 }) // ajax
                 
-                
-//         if (now_mm < '08:30' || now_mm > '22:00') alert("예약 가능시간이 아닙니다."); // 없애기-스터디룸이 떴다 안떴다 함
-        
         // 현재 시간보다 작은 예약시간대 체크 박스 선택 불가 처리
         $(".checkbox").each(function (index, item) {
             if (now_time >= $(item).val()) { // 부등호 >= 로 바꾸기!!!!!!!!
@@ -252,7 +257,6 @@
         if ($(this).css("background-color") == "rgb(255, 255, 255)") {
 	    	document.getElementById("right_studyroom_num").innerHTML = "";
 		} else document.getElementById("right_studyroom_num").innerHTML = "<h4>스터디룸 "+studyroom_num+"</h4>"; 
-        
         
 //      해당 스터디룸 배치
         $.ajax({ 
@@ -343,11 +347,6 @@
                     if (item.activate == 0) {
                         $("#rightside").children("#"+item.seat_x+"_"+item.seat_y+"").addClass("btn v-btn v-midnight-blue");
                     } 
-//                     else if (item.seated_status == 4) {
-//                     	$("#rightside").children("#"+item.seat_x+"_"+item.seat_y+"").addClass("btn v-btn");
-//                     	$("#rightside").children("#"+item.seat_x+"_"+item.seat_y+"").css("background-color", "grey"); // 풀예약으로 예약 불가
-//                     } else $("#rightside").children("#"+item.seat_x+"_"+item.seat_y+"").addClass("btn v-btn v-emerald");
-                    
                     else if (item.activate == 0) {
                         $("#"+item.room_x+"__"+item.room_y).addClass("btn v-btn v-midnight-blue");
                     } else if (item.seated_status == 4) {
@@ -387,10 +386,6 @@
 			else if ($(this).css("background-color") == "rgb(255, 255, 255)") { // 버튼색이 흰 색인 경우
 				return;
 			}
-// 			else if (this.getAttribute("class") == "btn v-btn") { // btn v-btn no
-// 				alert("예약 가능시간이 아니거나 현재 예약이 불가한 스터디룸입니다.\n다시 확인해 주세요");
-//                 return;
-//             }
 			var studyroom_num = $(this).text().substring(4,6);
 			location.href="/manage/studyroom/reserveRoomForm?studyroom_num="+studyroom_num;
 		});
@@ -593,7 +588,6 @@
                                     <td><input type="checkbox" id="checkbox4" class="checkbox" value="22" /><label for="checkbox4">10-11시</label></td>
                                     <td><input type="button" value="조회" id="submit" class="btn v-btn v-btn-default v-small-button"></td>
                                     <td>
-<!--                                        <input type="button" value="현시점 조회" id="now_submit" class="btn v-btn v-btn-default v-small-button"> -->
                                         <input type="button" value="현시점 조회" id="now_submit" class="btn v-btn v-second-dark" 
                                           style="border-color:#f5245f; font-size:12px; color:#f5245f!important;">
                                     </td>
@@ -602,8 +596,27 @@
                             </span>
                         </div>
                     </article>
+                    
+                    <!--Right Sidebar-->
+		            <aside class="sidebar right-sidebar col-sm-3">
+		                <section class="widget v-search-widget clearfix">
+		                    <div class="v-heading-v2 h5" style="display: inline-block">
+		                        <h4>상태 색상 구분</h4>
+		                    </div>
+		                    <div style="text-align:justify;">
+		                        <div style="display: inline-block;">
+		                            <div class="fc-event" style="background-color:#2ecc71;">예약가능</div>
+		                            <div class="fc-event" style="background-color:#FFA500;">현재 선택</div>
+
+		                        </div>
+		                        <div style="display: inline-block;">
+		                            <div class="fc-event" style="background-color:#808080;">예약불가</div>
+		                            <div class="fc-event" style="background-color:#2c3e50;">사용불가</div>
+		                            <div class="fc-event" style="background-color:#3498db;">부대시설</div>
+		                        </div>
+		                </section>
+		            </aside>
                 </div>
-        
         
                  <!--Article-->
             <section class="article-body-wrap">
