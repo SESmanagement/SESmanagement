@@ -69,11 +69,4 @@ public interface StudyRoomService {//
 	public HashMap<String, Object> getResvList(ArrayList<String> studyroom_checkList,
 			ArrayList<String> date_checkList, ArrayList<String> etc_checkList, int currentPage);
 
-//	// 관리자 메뉴 - 예약 내역 조회 결과 페이징
-//	public PageNavigator getNavi(ArrayList<String> studyroom_checkList,
-//			ArrayList<String> date_checkList, ArrayList<String> etc_checkList, int currentPage);
-	
-	// 캘린더-이벤트 가지고 오기
-	public ArrayList<EventVO> getEvent(int student_num);
-
 }
