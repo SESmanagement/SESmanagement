@@ -72,13 +72,6 @@
 </update>
 
 <!-- 캘린더관련 -->	
-<!-- 대출 승인 -->
-<update id="lendBook" parameterType="map">
-    UPDATE lend
-    SET status='lent', enddate = sysdate + #{daysOfLend}, startdate = sysdate
-    WHERE num = #{num}
-</update>
-
 <!-- 캘린더 : 도서 대출 승인시 대여요청일자 -> 반납예정일자로 변경 표시 -->
 <update id="modifyLendEvent" parameterType="map">
     UPDATE EVENT SET (
