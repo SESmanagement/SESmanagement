@@ -199,11 +199,4 @@ public class StudyRoomDAOImpl implements StudyRoomDAO { //
 		return mapper.getTotal(map);
 	}
 
-	// 캘린더-이벤트 가지고 오기
-	@Override
-	public ArrayList<EventVO> getEvent(int student_num) {
-		mapper = sqlSession.getMapper(StudyRoomMapper.class);
-		return mapper.getEvent(student_num);
-	}
-
 }
