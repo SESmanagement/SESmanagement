@@ -27,7 +27,6 @@ public class EventController {//
 	// 테스트 페이지로 이동
 	@RequestMapping(value = "testPage", method = RequestMethod.GET)
 	public String testPage(Model model, HttpSession session) {
-		System.out.println(service.getSysdate());
 		model.addAttribute("sysdate", service.getSysdate()); 
 		// 세션 가져오기 (학번)
 		MemberVO vo = (MemberVO) session.getAttribute("vo");
@@ -41,7 +40,6 @@ public class EventController {//
 	// 마이 페이지로 이동
 	@RequestMapping(value = "mySchedule", method = RequestMethod.GET)
 	public String mySchedule(Model model, HttpSession session) {
-		System.out.println("컨트롤러 달력페이지로 이동");
 		model.addAttribute("sysdate", service.getSysdate()); 
 		// 세션 가져오기 (학번)
 		MemberVO vo = (MemberVO) session.getAttribute("vo");
@@ -49,7 +47,6 @@ public class EventController {//
 		
 		model.addAttribute("student_num", student_num);
 		model.addAttribute("vo", vo);
-		
 		return "myPage/mySchedule";
 	}
 	
@@ -68,11 +65,6 @@ public class EventController {//
 						@RequestParam(value="backgroundColor", defaultValue="") String backgroundColor, 
 						@RequestParam(value="reference", defaultValue="") String reference, 
 						EventVO vo) { // 
-		System.out.println("컨트롤러 들어와라");
-		System.out.println("컨트롤러: " + start);
-		System.out.println("컨트롤러 constraint: " + constraint);
-		System.out.println("컨트롤러 reference: " + reference );
-		System.out.println("컨트롤러 backgroundColor: " + backgroundColor);
 			vo.setStudent_num(student_num);
 			vo.setTitle(title);
 			vo.setMemo(memo);
@@ -81,10 +73,6 @@ public class EventController {//
 			vo.setConstraint(constraint);
 			vo.setBackgroundColor(backgroundColor);
 			vo.setReference(reference);
-			
-//		String result = service.addEvent(vo);
-		
-//		return "redirect:mySchedule";
 		return service.addEvent(vo);
 	}
 	
@@ -96,15 +84,6 @@ public class EventController {//
 						@RequestParam(value="reference", defaultValue="") String reference, 
 						@RequestParam(value="id", defaultValue="") String id, 
 						EventVO vo) { // 
-		System.out.println("컨트롤러 수정");
-		System.out.println("컨트롤러 아이디: " + id);
-		System.out.println("컨트롤러 제목: " + title);
-		System.out.println("컨트롤러 메모: " + memo);
-		System.out.println("컨트롤러 시작: " + start);
-		System.out.println("컨트롤러 끝: " + end);
-		System.out.println("컨트롤러 기수: " + constraint);
-		System.out.println("컨트롤러 색상: " + backgroundColor);
-		System.out.println("컨트롤러 참조: " + reference);
 			vo.setStudent_num(student_num);
 			vo.setTitle(title);
 			vo.setMemo(memo);
@@ -124,15 +103,9 @@ public class EventController {//
 	// 이벤트 삭제하기
 	@RequestMapping(value = "deleteEvent", method = RequestMethod.GET)
 	public String deleteEvent(String id, int student_num, EventVO vo) {
-		System.out.println("컨트롤러: 이벤트 삭제");
-		System.out.println("아이디: " + id);
-		System.out.println("학번: " + student_num);
-		
 		vo.setId(id);
 		vo.setStudent_num(student_num);
 		String result = service.deleteEvent(vo);
-		System.out.println("삭제 결과: " + result);
-		
 		return "redirect:mySchedule";
 	}
 	
@@ -141,11 +114,6 @@ public class EventController {//
 	@ResponseBody
 	public String modifyEventDate(@RequestParam(value="start", defaultValue="") String start, 
 									String end, String id, int student_num, EventVO vo) { // 
-		System.out.println("컨트롤러 드래그로 수정하기");
-		System.out.println("컨트롤러 id: " + id);
-		System.out.println("컨트롤러 start: " + start);
-		System.out.println("컨트롤러 end: " + end);
-		System.out.println("컨트롤러 학번: " + student_num);
 		if (start.equals("")) vo.setStart(""); // eventResize의 경우에는 수정된 시작 시간이 없다!
 		else vo.setStart(start);
 		
@@ -155,20 +123,5 @@ public class EventController {//
 			
 		return service.modifyEventDrag(vo);
 	}
-	
-	// 리사이즈로 이벤트 날짜 수정하기
-//	@RequestMapping(value = "resizeEventDrag", method = RequestMethod.POST)
-//	@ResponseBody
-//	public String resizeEventDrag(String end, String id, int student_num, EventVO vo) { // 
-//		System.out.println("컨트롤러 리사이즈로 수정하기");
-//		System.out.println("컨트롤러 id: " + id);
-//		System.out.println("컨트롤러 end: " + end);
-//		System.out.println("컨트롤러 학번: " + student_num);
-//			vo.setEnd(end);
-//			vo.setId(id);
-//			vo.setStudent_num(student_num);
-//			
-//		return service.resizeEventDrag(vo);
-//	}
 	
 }
