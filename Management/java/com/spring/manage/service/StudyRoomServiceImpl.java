@@ -104,7 +104,6 @@ public class StudyRoomServiceImpl implements StudyRoomService {//
 	@Override
 	public boolean cancelMySRR(String checkList) {
 		String[] checkListArray = checkList.split(",");
-//		String[] resultArray = new String[checkListArray.length];
 		
 		// 배열 수만큼 예약 취소 처리
 		for (int i = 0; i < checkListArray.length; i++) {
@@ -309,7 +308,6 @@ public class StudyRoomServiceImpl implements StudyRoomService {//
 			srVO.setStudyroom_num(Integer.parseInt(array[0]));
 			if (dao.checkSeat_num(srVO) == null) {
 				
-				System.out.println("서비스임플: 룸번호 중복아님: " + Integer.parseInt(array[0]));
 				// 스터디룸 좌표 등록
 				String[] idArray = array[1].split("__");
 				srVO.setRoom_x(Integer.parseInt(idArray[0]));
@@ -358,7 +356,6 @@ public class StudyRoomServiceImpl implements StudyRoomService {//
 			for (int i = 0; i < etc_checkList.size(); i++) {
 				String option = etc_checkList.get(i).split(":")[0];
 				Object keyword = null;
-				System.out.println("서비스임플: " + option);
 				if (!option.equals("name")) { // 이름을 제외한 좌석번호, 학번, 기수는 숫자로 처리
 					keyword = Integer.parseInt(etc_checkList.get(i).split(":")[1]);
 				} else keyword = etc_checkList.get(i).split(":")[1];
@@ -370,18 +367,9 @@ public class StudyRoomServiceImpl implements StudyRoomService {//
 			}
 		}
 		
-		System.out.println("서비스임플 리스트: " + etc_checkListList);
-		for (HashMap a : etc_checkListList) {
-			System.out.println("서비스임플 맵: " + a);
-		}
-		
 		map.put("etc_checkListList", etc_checkListList);
-		// 검색 내역 db조회
-		// getBoardList(map, navi.getStartRecord(), navi.getCountPerPage()
-//		ArrayList<SR_ReservationVO> resvList = dao.getResvList(map, 0,10); // 먼저 totalRecordsCount를 가져온다 (첫번째 페이지만 가져옴)
 		
 		// 페이징 하기
-//		int totalRecordsCount = resvList.size();
 		int totalRecordsCount = dao.getTotal(map);
 		
 		PageNavigator navi = new PageNavigator(countPerPage, pagePerGroup, currentPage, totalRecordsCount); // navi 생성
@@ -390,27 +378,7 @@ public class StudyRoomServiceImpl implements StudyRoomService {//
 		
 		returnMap.put("resvList", resvList); // 조회 결과
 		returnMap.put("navi", navi);		 // 페이징
-//		return dao.getResvList(map, navi.getStartRecord(), navi.getCountPerPage());
 		return returnMap;
-	}
-
-//	@Override
-//	public PageNavigator getNavi(ArrayList<String> studyroom_checkList,
-//			ArrayList<String> date_checkList, ArrayList<String> etc_checkList, int currentPage) {
-//		int totalRecordsCount = dao.getTotal(studyroom_checkList, date_checkList, etc_checkList);
-//		PageNavigator navi = new PageNavigator(countPerPage, pagePerGroup, currentPage, totalRecordsCount);
-//		return navi;
-//	}
-	
-	// 캘린더-이벤트 가지고 오기
-	@Override
-	public ArrayList<EventVO> getEvent(int student_num) {
-		ArrayList<EventVO> eventList = dao.getEvent(student_num);
-		
-		for (EventVO vo : eventList) {
-			vo.setTitle("스터디룸 : "+vo.getMemo()); // 달력에 스터디룸  + 스터디룸번호-좌석번호 표시
-		}
-		return eventList;
 	}
 
 }
