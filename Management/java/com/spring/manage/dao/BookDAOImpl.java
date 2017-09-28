@@ -38,10 +38,14 @@ public class BookDAOImpl{
 		return dao.selectAll(search, rb);
 	}
 	
-	public int reserveBook(Map<String, Object> map){
-		BookDAO dao=sqlSession.getMapper(BookDAO.class);
-		return dao.reserveBook(map);
-	}
+	public int reserveBook(LendVO lendVO){ // // Map-> LendVO로 타입 수정 - 20170928
+	      BookDAO dao=sqlSession.getMapper(BookDAO.class);
+	      int result = dao.reserveBook(lendVO);
+	      lendVO.setStartdate(new SimpleDateFormat("yy/MM/dd").format(new Date())); // 대여요청일자(오늘)
+	      lendVO.setTitle(dao.getBookTitle(lendVO)); // 책 제목
+	      dao.addEvent(lendVO);
+	      return result;
+	   }
 	
 	public List<LendVO> borrowList(int startRecord, int countPerPage, String mem_num){
 		BookDAO dao=sqlSession.getMapper(BookDAO.class);
