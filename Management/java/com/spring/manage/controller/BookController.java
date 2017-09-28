@@ -105,12 +105,19 @@ public class BookController {
 	}
 
 	//대출 신청
-	@RequestMapping(value = "/borrowApply", produces = "application/text; charset=utf8", method = RequestMethod.GET)
-	public @ResponseBody String borrowApply(int booknum, String mem_num) {
+	@RequestMapping(value = "/borrowApply", method = RequestMethod.GET)
+	public @ResponseBody String borrowApply(int booknum, String mem_num, LendVO lendVO) {
 		Map<String, Object> map = new HashMap<>();
-		map.put("booknum", booknum);
-		map.put("mem_num", mem_num);
-		int result = repo.reserveBook(map);
+		
+		// mem_num을 LendVO에 담아서 보낸다. 20170928 수정
+		lendVO.setMem_num(mem_num);
+		lendVO.setBooknum(booknum);
+		int result = repo.reserveBook(lendVO);
+		
+//		map.put("booknum", booknum);
+//		map.put("mem_num", mem_num);
+//		int result = repo.reserveBook(map);
+
 		if (result > 0) {
 			return "정상적으로 신청되었습니다";
 		}
@@ -119,20 +126,18 @@ public class BookController {
 	
 	
 	//대출이력으로 이동
-	@RequestMapping(value = "/borrowList", produces = "application/text; charset=utf8", method = RequestMethod.GET)
+	@RequestMapping(value = "/borrowList", method = RequestMethod.GET)
 	public String borrowList(
 			HttpSession session, Model model,
 			@RequestParam(value="currentPage", defaultValue="1") int currentPage
 	) {
+		MemberVO member = (MemberVO)session.getAttribute("member");
+		int member_num = member.getStudent_num();
 		
-		MemberVO vo = (MemberVO)session.getAttribute("vo");
-		String mem_num = Integer.toString(vo.getStudent_num());
-		
-		
-		int totalRecordCount = repo.getBorrowCount(mem_num);
-		PageNavigator navi=new PageNavigator(10, currentPage, totalRecordCount);
+		int totalRecordCount = repo.getBorrowCount(member_num);
+		PageNavigator2 navi=new PageNavigator2(10, currentPage, totalRecordCount);
 		repoA.updateDelayed();
-		List<LendVO> borrowlist=repo.borrowList(navi.getStartRecord(), navi.getCountPerPage(), mem_num);
+		List<LendVO> borrowlist=repo.borrowList(navi.getStartRecord(), navi.getCountPerPage(), member_num);
 		for(LendVO l  : borrowlist){
 			switch(l.getStatus()){
 				case "reserved" : 
@@ -188,6 +193,7 @@ public class BookController {
 	public String registBook() {
 		return "admin/registBook";
 	}
+	
 	
 	// 책 등록하기
 	@RequestMapping(value = "/registBook", method = RequestMethod.POST)
