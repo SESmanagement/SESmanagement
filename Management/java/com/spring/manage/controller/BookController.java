@@ -105,7 +105,7 @@ public class BookController {
 	}
 
 	//대출 신청
-	@RequestMapping(value = "/borrowApply", method = RequestMethod.GET)
+	@RequestMapping(value = "/borrowApply", produces = "application/text; charset=utf8", method = RequestMethod.GET)
 	public @ResponseBody String borrowApply(int booknum, String mem_num) {
 		Map<String, Object> map = new HashMap<>();
 		map.put("booknum", booknum);
@@ -119,7 +119,7 @@ public class BookController {
 	
 	
 	//대출이력으로 이동
-	@RequestMapping(value = "/borrowList", method = RequestMethod.GET)
+	@RequestMapping(value = "/borrowList", produces = "application/text; charset=utf8", method = RequestMethod.GET)
 	public String borrowList(
 			HttpSession session, Model model,
 			@RequestParam(value="currentPage", defaultValue="1") int currentPage
