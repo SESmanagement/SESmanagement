@@ -42,8 +42,6 @@
 
 	<!-- 별도 적용분 - 이후 삭제 처리 -->
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css" />
-<!-- 	<link rel="stylesheet" href="/manage/resources/css/style.css" /> -->
-<!-- 	<link rel="stylesheet" href="/manage/resources/css/jquery.datetimepicker.min.css" /> -->
 	<script src="/manage/resources/js/jquery-3.2.1.js"></script>
 	<script src="/manage/resources/js/jquery.datetimepicker.full.min.js"></script>
 	
@@ -59,6 +57,12 @@
   width: 40%;
 /*   margin-top: 20%; */
 }
+
+aside {
+  width: 20%;
+  float: right;
+}
+
 .topside {
   float: top;
   height: 230px;
@@ -103,6 +107,14 @@ section {
  	padding-left: 2px;
  	padding-right: 2px;
  }
+ 
+ aside [class=fc-event] {
+    line-height: 20px;
+    width: 100px;
+    color: white;
+    border-radius: 3px;
+    border: 1px solid;
+}
  
 </style>
 </head>
@@ -184,7 +196,6 @@ section {
         
         studyroom_num = $(this).text().substring(4,6); // 스터디룸 번호
         sr_xy = $(this).attr("id");
-        alert("클릭아웃사이드: " + studyroom_num)
         
         $.ajax({
             url: "/manage/studyroom/getStudyRoomInfo",
@@ -193,7 +204,6 @@ section {
             success: function(result) {
                 $(result).each(function (index, item) {
                     $("#inside").children("#"+item.seat_x+"_"+item.seat_y+"").text(item.sr_seat_num);
-//                  $("#inside").children("#"+item.seat_x+"_"+item.seat_y+"").css("margin-right", 0);
                     $("#inside").children("#"+item.seat_x+"_"+item.seat_y+"").attr("margin", "0px");
                     if (item.activate == 0) {
                         $("#inside").children("#"+item.seat_x+"_"+item.seat_y+"").addClass("btn v-btn v-midnight-blue");
@@ -319,7 +329,6 @@ section {
 		// 해당 스터디룸 내 처리
 		// bottomside의 비활성화 버튼 클릭시
 	    if (this.id == "inactivateBottom") {
-			alert("inactivateBottom")
 			// 테이블 및 리스트 초기화
 			var selectedList = []; // 선택된 좌석 번호 또는 시설 번호를 담을 리스트 - DB업데이트시 사용
 	        var selectedIdList = []; // 선택된 좌석의 Id-좌표를 담을 리스트 - 취소시 사용
@@ -455,7 +464,6 @@ section {
 	           
 	     // bottomside의 등록 버튼
 	       if (this.id == "addBottom") {
-	          alert("addBottom")
 	          // 테이블 및 리스트 초기화
 	          var selectedList = []; // 선택된 좌석 번호 또는 시설 번호를 담을 리스트 - DB업데이트시 사용
 	          var selectedIdList = []; // 선택된 좌석의 Id-좌표를 담을 리스트 - 취소시 사용
@@ -537,13 +545,10 @@ section {
 	           
 	            // bottomside의 확인 버튼 클릭
 	            $(document).on("click", "#okBottom", function() {
-	            	alert("add > ok")
 	                if (selectedList.length < 1) {
 	                    alert("선택된 좌석이 없습니다. 다시 확인해 주세요")
 	                    return;
 	                }
-// 	                $("#okBottom").attr("type", "submit");
-// 	                $("#fmBottom").attr("action", "/manage/studyroom/addSR_Seat?selectedList="+selectedList);
 	                $("#selectedListBottom").val(selectedList);
 	                $("#fmBottom").attr("action", "/manage/studyroom/addSR_Seat");
 	                $("#fmBottom").submit();
@@ -551,16 +556,8 @@ section {
 	            
 	          // bottomside의 취소 버튼 클릭
 	            $(document).on("click", "#cancelBottom", function() {
-// 	                    // 리스트 초기화
-// 	                    selectedList = [];
-// 	                    selectedIdList = [];3
-// 	                    selectedClassList = [];
-// 	                    // 테이블 초기화
-// 	                    $("#selectedBottomTb").empty();
-                        // 리스트 및 테이블 초기화
-                        initiateList();
-	                    // 버튼 초기화
-	                    initiateBtn();
+                        initiateList(); // 리스트 및 테이블 초기화
+	                    initiateBtn(); // 버튼 초기화
 	                    $("#inside").empty(); // inside 섹션부분 초기화
 	                    allocateStudyRoom(); // 스터디룸 배치도 바탕
 	                    getStudyRoomLocation(); // 스터디룸 배치도
@@ -573,12 +570,10 @@ section {
 	                    document.getElementById("outside_studyroom_num").innerHTML = ""; 
 	                    return;
 	            }); // cancelBottom
-	            
 	       }// addBottom
 	       
 	      // bottomside의 삭제 버튼 클릭시
 	      if (this.id == "dropBottom") {
-	    	  alert("dropBottom")
 	            // 테이블 및 리스트 초기화
 	            var selectedList = []; // 선택된 좌석 번호 또는 시설 번호를 담을 리스트 - DB업데이트시 사용
 	            var selectedIdList = []; // 선택된 좌석의 Id-좌표를 담을 리스트 - 취소시 사용
@@ -645,8 +640,6 @@ section {
 	                        data: {"studyroom_num":studyroom_num},
 	                        success: function(result) { // 버튼을 두번 눌러야 함
 	                        	if (result.length > 1 || !$.isNumeric(selectedList[0].split("o")[1])) {
-// 						            $("#okBottom").attr("type", "submit");
-// 	                                $("#fmBottom").attr("action", "/manage/studyroom/dropSR_Seat?selectedList="+selectedList);
 				                    $("#selectedListBottom").val(selectedList);
 	                                $("#fmBottom").attr("action", "/manage/studyroom/dropSR_Seat");
 	                                $("#fmBottom").submit();
@@ -654,22 +647,11 @@ section {
 	                        	} else {
 	                                alert("최소 1개의 좌석이 필요하여 삭제가 불가합니다.") 
 	                                // 클래스-버튼 색 되돌리기
-	                                alert("id: #"+selectedIdList[0])
 	                                $("#"+selectedIdList[0]).removeClass();
 	                                $("#"+selectedIdList[0]).addClass(selectedClassList[0]);
 	                                
 	                                initiateBtn(); // 버튼 초기화
 	                                initiateList() // 테이블 및 리스트 초기화
-	                                
-// 	                                // 리스트 초기화
-// 	                                selectedList = [];
-// 	                                selectedClassList = [];
-// 	                                selectedIdList = [];
-// 	                                // 테이블 초기화
-// 	                                $("#selectedBottomTb").empty();
-	                                
-	                                
-	                                
 	                        	}
 	                        } // success
 	                    }) // ajax
@@ -700,14 +682,10 @@ section {
                         return;
                 }); // cancelBottom
 	      }; // dropBottom
-	    
-	      
 	      
 	      // 스터디룸 처리
 	      // topside의 비활성화 버튼 클릭시
 	      if (this.id =="inactivateTop") {
-	    	  alert("inactivateTop");
-	    	  
 	            $("#left-bottom").hide(); // bottomside의 해당 스터디룸 배치도 숨김
 	            $("#right-bottom").hide(); // bottomside의 해당 스터디룸 처리버튼 숨김
 	    	// 테이블 및 리스트 초기화
@@ -741,7 +719,6 @@ section {
 	            	if (this.getAttribute("class") == "btn v-btn v-concrete" ||
 	            			this.getAttribute("class") == "btn v-btn v-orange"	) {return;} // 빈 셀 선택시 변화X
 	            			
-	            	// 스터디룸 내부 배치도 표시하기 clickOutside() 안먹힘...ㅠㅠ
 	            	// inside 버튼 초기화
 			        $("#inside").children("button").removeClass();
 			        $("#inside").children("button").text("");
@@ -758,7 +735,6 @@ section {
 			            success: function(result) {
 			                $(result).each(function (index, item) {
 			                    $("#inside").children("#"+item.seat_x+"_"+item.seat_y+"").text(item.sr_seat_num);
-			//                  $("#inside").children("#"+item.seat_x+"_"+item.seat_y+"").css("margin-right", 0);
 			                    $("#inside").children("#"+item.seat_x+"_"+item.seat_y+"").attr("margin", "0px");
 			                    if (item.activate == 0) {
 			                        $("#inside").children("#"+item.seat_x+"_"+item.seat_y+"").addClass("btn v-btn v-midnight-blue");
@@ -779,13 +755,12 @@ section {
 			            success: function(result) {
 			                $(result).each(function (index, item) {//*
 			                    $("#inside").children("#"+item.seat_x+"_"+item.seat_y).text(item.facility_name);
-			//                  $("#inside").children("#"+item.seat_x+"_"+item.seat_y).css("margin-right", 0);
 			                    if (item.activate == 0) {
 			                        $("#inside").children("#"+item.seat_x+"_"+item.seat_y+"").addClass("btn v-btn v-midnight-blue");
 			                    } else  $("#inside").children("#"+item.seat_x+"_"+item.seat_y+"").addClass("btn v-btn v-peter-river");
 			                }) // each
 			            } // success
-			        }) // ajax - 스터디룸 내부 배치도 표시하기 clickOutside() 안먹힘...ㅠㅠ
+			        }) // ajax
 	            			
 	            	
 	            	// 테이블에 추가하기
@@ -811,7 +786,6 @@ section {
 	            
 	         // topside의 취소 버튼 클릭
 	            $(document).on("click", "#cancelTop", function() {
-	            	   alert("cancelTop")	
 	                    // 리스트 초기화
 	                    initiateList();
 	                    // 버튼 초기화
@@ -821,9 +795,6 @@ section {
 	                    getStudyRoomLocation(); // 스터디룸 배치도
 	                    $("#inside").empty(); // inside 섹션부분 초기화
 	                    allocateStudyRoom(); // 스터디룸 배치도 바탕
-	                    
-// 	                    // 버튼 클릭 이벤트 해제
-// 	                    $("#inside > button").off("click", "*");
 	                    
 	                    // 스터디룸 번호, 처리 버튼 이름 표시 해제
 	                    document.getElementById("top_btn_name").innerHTML = ""; 
@@ -837,8 +808,6 @@ section {
 	                    alert("선택된 좌석이 없습니다. 다시 확인해 주세요")
 	                    return;
 	                }
-// 	                $("#okTop").attr("type", "submit");
-// 	                $("#fmTop").attr("action", "/manage/studyroom/inactivateSR?selectedList="+selectedList);
 	                $("#selectedListTop").val(selectedList);
 	                $("#fmTop").attr("action", "/manage/studyroom/inactivateSR");
 	                $("#fmTop").submit();
@@ -873,15 +842,12 @@ section {
 	                 this.textContent = "";
 	                 this.classList.remove("v-sunflower");
 	                 this.classList.add("v-concrete");
-
 	                 
 	             } // if 
 	         }); // click-outside > orange 
 	         
 	         // topside의 등록 버튼
 	           if (this.id == "addTop") {
-	              alert("addTop")
-	              
 	              $("#left-bottom").hide(); // bottomside의 해당 스터디룸 배치도 숨김
                   $("#right-bottom").hide(); // bottomside의 해당 스터디룸 처리버튼 숨김
 	              // 테이블 및 리스트 초기화
@@ -911,7 +877,6 @@ section {
 	              document.getElementById("top_btn_name").innerHTML = "<h4>스터디룸 등록</h4>"; 
 
 	              // 셀 선택
-//	            $(document).on("click", "#inside > button", function() {
 	              $("#outside > button").on("click", function () {
 	                  if (this.getAttribute("class") == "btn v-btn v-emerald" ||
 	                  this.getAttribute("class") == "btn v-btn v-midnight-blue") {return;}  // class를 가진 셀 선택시 변화X  
@@ -965,7 +930,6 @@ section {
 	               
 	               // topside의 취소 버튼 클릭
 	                $(document).on("click", "#cancelTop", function() {
-	                       alert("cancelTop")   
 	                        // 리스트 초기화
 	                        initiateList();
 	                        // 버튼 초기화
@@ -975,9 +939,6 @@ section {
 	                        getStudyRoomLocation(); // 스터디룸 배치도
 	                        $("#inside").empty(); // inside 섹션부분 초기화
 	                        allocateStudyRoom(); // 스터디룸 배치도 바탕
-	                        
-//	                      // 버튼 클릭 이벤트 해제
-//	                      $("#inside > button").off("click", "*");
 	                        
 	                        // 스터디룸 번호, 처리 버튼 이름 표시 해제
 	                        document.getElementById("top_btn_name").innerHTML = ""; 
@@ -991,8 +952,7 @@ section {
 	                        alert("선택된 좌석이 없습니다. 다시 확인해 주세요")
 	                        return;
 	                    }
-// 	                    $("#okTop").attr("type", "submit");
-// 	                    $("#fmTop").attr("action", "/manage/studyroom/addSR?selectedList="+selectedList);
+	                    
 	                    $("#selectedListTop").val(selectedList);
 	                    $("#fmTop").attr("action", "/manage/studyroom/addSR");
 	                    $("#fmTop").submit();
@@ -1002,8 +962,6 @@ section {
 	           
 	           // topside의 삭제 버튼 클릭시
 	           if (this.id == "dropTop") {
-	               alert("dropTop")
-	               
 	                 $("#left-bottom").hide(); // bottomside의 해당 스터디룸 배치도 숨김
 	                 $("#right-bottom").hide(); // bottomside의 해당 스터디룸 처리버튼 숨김
 	                 // 테이블 및 리스트 초기화
@@ -1065,8 +1023,7 @@ section {
 	                         alert("선택된 좌석이 없습니다. 다시 확인해 주세요")
 	                         return;
 	                     }
-// 	                     $("#okTop").attr("type", "submit");
-// 	                     $("#fmTop").attr("action", "/manage/studyroom/dropSR?selectedList="+selectedList);
+	                     
 	                     $("#selectedListTop").val(selectedList);
 	                     $("#fmTop").attr("action", "/manage/studyroom/dropSR");
 	                     $("#fmTop").submit();
@@ -1088,9 +1045,6 @@ section {
 	                         getStudyRoomLocation(); // 스터디룸 배치도
 	                         $("#inside").empty(); // inside 섹션부분 초기화
 	                         allocateStudyRoom(); // 스터디룸 배치도 바탕
-	                         
-// 	                         // 버튼 클릭 이벤트 해제
-// 	                         $("#inside > button").off("click", "*");
 	                         
 	                         // 스터디룸 번호, 처리 버튼 이름 표시 해제
 	                         document.getElementById("top_btn_name").innerHTML = ""; 
@@ -1121,12 +1075,10 @@ section {
         </div>
 
 <div class="container">
-<%-- 	<h3 class="v-heading v-text-heading" ><span>${sessionScope.vo.name } 페이지 - 스터디룸 관리</h1></span></h3> --%>
-	            <a href="/manage/studyroom/searchResult">
-            <button id="searchTop" class="btn v-btn v-small-button v-second-dark" 
-                style="border-color:#f5245f; color:#f5245f!important; float: right;">예약현황 조회하기</button>
-            </a>
-<%-- 	<h5 style="text-align:right">현재 시각 : ${sysdate } </h5> --%>
+      <a href="/manage/studyroom/searchResult">
+	      <button id="searchTop" class="btn v-btn v-small-button v-second-dark" 
+	          style="border-color:#f5245f; color:#f5245f!important; float: right;">예약현황 조회하기</button>
+      </a>
 
 <div class="leftside" id="left-top">
     <div class="topside">
@@ -1146,9 +1098,7 @@ section {
     
     <div class="topside" id="right-top">
         <div class="v-heading-v2" style="display: inline-block">
-<!-- 	        <h3 class="" id="top_btn_line"> -->
 	        <div id="top_btn_name"><!-- 선택버튼 표시 --></div>
-<!-- 	        </h3> v-heading v-text-heading -->
 	    </div>
         <section id="btnTopSection">
             <div style="text-align: center">
@@ -1175,9 +1125,6 @@ section {
 			<button id="inactivateBottom" class="btn v-btn v-btn-default v-small-button">비활성화</button>
 			<button id="addBottom" class="btn v-btn v-btn-default v-small-button">등록</button>
 			<button id="dropBottom" class="btn v-btn v-btn-default v-small-button">삭제</button>
-	<!-- 		<button id="ok" class="btn v-btn v-btn-default v-small-button" disabled="disabled">확인</button> -->
-<!-- 			</div> 수정 버튼 삭제로 이제 필요없음!! // -->
-<!-- 			<div style="text-align: center"> 수정 버튼 삭제로 이제 필요없음!!-->
 			<form action="" method="post" id="fmBottom" style="display:inline-block">
 			<input type="button" id="okBottom" value="확인" class="btn v-btn v-btn-default v-small-button" disabled="disabled">
 			<input type="hidden" id="selectedListBottom" name="selectedList">
@@ -1188,6 +1135,23 @@ section {
 	</div>
 	
 </div> <!-- rightside -->
+
+<!--Right Sidebar-->
+<aside class="sidebar right-sidebar col-sm-3" style="width:15%!important; padding-right:0px; padding-left:0px;">
+    <section class="widget v-search-widget clearfix">
+        <div class="v-heading-v2 h5" style="display: inline-block">
+            <h4>상태 색상 구분</h4>
+        </div>
+        <div style="text-align:justify;">
+            <div style="display: inline-block;">
+                <div class="fc-event" style="background-color:#2ecc71;">예약가능</div>
+                <div class="fc-event" style="background-color:#FFA500;">현재 선택</div>
+                <div class="fc-event" style="background-color:#808080;">예약불가</div>
+                <div class="fc-event" style="background-color:#2c3e50;">사용불가</div>
+                <div class="fc-event" style="background-color:#3498db;">부대시설</div>
+            </div>
+    </section>
+</aside>
 
 </div> <!-- container -->
 
