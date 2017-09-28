@@ -28,4 +28,6 @@ public interface GroupMapper {
 	public int insert_penalty(GroupJoinVO gjvo);
 	public ArrayList<GroupJoinVO> penalty_list(GroupJoinVO gjvo);
 	public int modify_penalty(GroupJoinVO gjvo);
+	// 캘린더에 소모임 이벤트 추가
+	public void addEvent(GroupJoinVO vo);
 }
