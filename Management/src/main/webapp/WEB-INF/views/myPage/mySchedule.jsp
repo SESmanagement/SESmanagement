@@ -165,20 +165,20 @@
              type: 'post',
              data: {"student_num": '${student_num}'},
                 success: function(result) {
-	                 var eventArray = [];
-	                 $(result).each(function(index, item) {
-	                     eventArray.push({
-	                            title: item.title,
-	                            start: item.start,
-	                            end: item.end,
-	                            allDay: item.allDay,
-	                            id: item.id,
-	                            student_num: item.student_num,
-	                            className: item.className,
-	                            editable: item.editable,
-	                            reference: item.reference,
-	                     });
-	                  }) // each
+                     var eventArray = [];
+                     $(result).each(function(index, item) {
+                         eventArray.push({
+                                title: item.title,
+                                start: item.start,
+                                end: item.end,
+                                allDay: item.allDay,
+                                id: item.id,
+                                student_num: item.student_num,
+                                className: item.className,
+                                editable: item.editable,
+                                reference: item.reference,
+                         });
+                      }) // each
 
 //                     $('#calendar').fullCalendar( 'addEventSource', result);         
 //                     $('#calendar').fullCalendar( 'refetchEvents' );
@@ -277,8 +277,8 @@
                     });
                     
                     $("#endDate").datetimepicker({
-                    	format : 'Y/m/d H:i',
-                    	value : end_date,
+                        format : 'Y/m/d H:i',
+                        value : end_date,
                         onShow : function() {
                             this.setOptions({
                                 minDate : $('#startDate').val() ? $('#startDate').val() : false,
@@ -420,16 +420,16 @@
                         
                         // 이벤트 클릭시 버튼의 이전 상태가 확인/취소 일 경우 -> 수정/삭제 버튼으로 변경
                         $("button").each(function(index, item) {
-                        	if (item.id == "okBtn") {
-                        		item.id = "modifyBtn";
-                        		item.textContent = "수정";
-                        		$("#okBtn").off("click");
-                        	}
-                        	if (item.id == "cancelBtn") {
+                            if (item.id == "okBtn") {
+                                item.id = "modifyBtn";
+                                item.textContent = "수정";
+                                $("#okBtn").off("click");
+                            }
+                            if (item.id == "cancelBtn") {
                                 item.id = "deleteBtn";
                                 item.textContent= "삭제";
                                 $("#cancelBtn").off("click");
-                        	}
+                            }
                         });
                         
                         // 이벤트 클릭시 수정->공식이벤트 구분부분 숨김
@@ -440,9 +440,9 @@
                     })
                     
                  // When the user clicks on <span> (x), close the modal
-			        span.onclick = function() {
-			            modal.style.display = "none";
-			        }
+                    span.onclick = function() {
+                        modal.style.display = "none";
+                    }
             
                     // When the user clicks anywhere outside of the modal, close it
                     window.onclick = function(event) {
@@ -454,9 +454,9 @@
                     $("#modifyBtn").on("click", function() {
                         $("#deleteBtn").off("click"); // 삭제버튼 이벤트 삭제
                         if (event.reference != null && event.reference.includes("SRR")) {
-	                         alert("수정이 불가합니다. 스터디룸 예약 페이지에서 확인하세요");
-	                         modal.style.display = "none";
-	                         return;
+                             alert("수정이 불가합니다. 스터디룸 예약 페이지에서 확인하세요");
+                             modal.style.display = "none";
+                             return;
                         };
                         
                         if (event.reference != null && event.reference.includes("GR")) {
@@ -553,7 +553,7 @@
                              var optionValue_modify = $("#option_modify").val();
                              // 새로 체크된 옵션 내역 #option_modify에 담기
                              $(document).on("click", "#option_modify", function() {
-                            	 optionValue_modify = $("#option_modify").val();
+                                 optionValue_modify = $("#option_modify").val();
                              });
                             
                             } else { // 관리자가 아닌 경우
@@ -583,6 +583,12 @@
                                     if (constraintList_modify.length == 2) constraint = 99;
                                     else if (constraintList_modify.length == 1) constraint = constraintList_modify[0];
                                     else constraint = 0;
+                                    
+                                    // length가 안먹는게 말이 됨????
+//                                     if (constraintList_modify.includes(33) && !constraintList_modify.includes(34)) constraint = 33;
+//                                     else if (constraintList_modify.includes(34) && !constraintList_modify.includes(33)) constraint = 34;
+//                                     else if (constraintList_modify.includes(33) && constraintList_modify.includes(34)) constraint = 99;
+                                    
                                     
                                     // 공식 이벤트 구분
                                     if (constraint != 0) {
@@ -652,9 +658,10 @@
                     
                     // 클릭한 이벤트 삭제하기
                     $("#deleteBtn").on("click", function() {
+                    	$("#modifyBtn").off("click");
                        // 스터디룸 삭제 불가 처리
                        if (event.reference != null && event.reference.includes("SRR")) {
-                    	   alert("삭제가 불가합니다. 스터디룸 예약 페이지에서 확인하세요");
+                           alert("삭제가 불가합니다. 스터디룸 예약 페이지에서 확인하세요");
                            modal.style.display = "none";
                            return;
                       };
@@ -795,24 +802,24 @@
             <!--Right Sidebar-->
             <aside class="sidebar right-sidebar col-sm-3">
                 <section class="widget v-search-widget clearfix">
-	                <div class="v-heading-v2 h5" style="display: inline-block">
-	                    <h4>일정 색상 구분</h4>
-	                </div>
-	                <div style="text-align:justify;">
-		                <div style="display: inline-block;">
-			                <div class="fc-event" style="background-color:#f5245f;">스터디룸</div>
-		                    <div class="fc-event" style="background-color:#ffb5ad; color:#1b0266; border:1px solid white;">소모임</div>
-		                    <div class="fc-event" style="background-color:#f48342;">33기 공지</div>
-		                    <div class="fc-event" style="background-color:#1aaaad;">34기 공지</div>
-		                    <div class="fc-event" style="background-color:#7405ba;">전체 공지</div>
-		                </div>
-		                <div style="display: inline-block;">
-		                    <div class="fc-event">개인 일정</div>
-		                    <div class="fc-event" style="background-color:#4286f4;">도서 대여요청</div>
-		                    <div class="fc-event" style="background-color:#002666;">도서 대여중</div>
-		                    <div class="fc-event" style="background-color:#a7b4cc;">도서 반납완료</div>
-		                    <div class="fc-event" style="background-color:#ff2626;">도서 연체중</div>
-	                    </div>
+                    <div class="v-heading-v2 h5" style="display: inline-block">
+                        <h4>일정 색상 구분</h4>
+                    </div>
+                    <div style="text-align:justify;">
+                        <div style="display: inline-block;">
+                            <div class="fc-event" style="background-color:#f5245f;">스터디룸</div>
+                            <div class="fc-event" style="background-color:#ffb5ad; color:#1b0266; border:1px solid white;">소모임</div>
+                            <div class="fc-event" style="background-color:#f48342;">33기 공지</div>
+                            <div class="fc-event" style="background-color:#1aaaad;">34기 공지</div>
+                            <div class="fc-event" style="background-color:#7405ba;">전체 공지</div>
+                        </div>
+                        <div style="display: inline-block;">
+                            <div class="fc-event">개인 일정</div>
+                            <div class="fc-event" style="background-color:#4286f4;">도서 대여요청</div>
+                            <div class="fc-event" style="background-color:#002666;">도서 대여중</div>
+                            <div class="fc-event" style="background-color:#a7b4cc;">도서 반납완료</div>
+                            <div class="fc-event" style="background-color:#ff2626;">도서 연체중</div>
+                        </div>
                     </div>
                 </section>
             </aside>
